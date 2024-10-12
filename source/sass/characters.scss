@@ -1,6 +1,7 @@
 .lux-track,
 .lux,
-.parent-9 {
+.parent-9,
+.dash-bb {
 	--defaultPostImage: url(https://files.jcink.net/uploads2/godlybehaviour/GB24/forum_guidebook_min.jpg);
 	
     &,
@@ -69,7 +70,7 @@
         --bg-accent-50: var(--accent-50);
         --text-accent: var(--accent);
     }
-    &.wthi .lux-bb {
+    &.wthi .dash-bb {
         //wthi only
         --bg-accent: var(--accent);
         --bg-accent-transparent: var(--accent-60);
