@@ -196,6 +196,70 @@
             });
         });
     });
+</script>,
+                    <div class="charts--thread-status charts--breakdown">
+    <h2>where the hell is</h2>
+    <canvas id="wthi"></canvas>
+</div>
+<script>
+    fetch(`https://opensheet.elk.sh/${sheetID}/Threads`)
+    .then((response) => response.json())
+    .then((threadData) => {
+        fetch(`https://opensheet.elk.sh/${sheetID}/Sites`)
+        .then((response) => response.json())
+        .then((siteData) => {
+            //set overall variables
+            let siteName = 'where the hell is';
+            let siteObject = siteName !== 'all' ? siteData.filter(item => item.Site === siteName) : siteData;
+            let threadStats = createThreadStats(threadData, siteObject);
+
+            /*Thread Status*/
+            new Chart(document.getElementById('wthi'), {
+                type: 'pie',
+                data: {
+                    labels: threadStats[0].status.tags.map(item => item.toUpperCase()),
+                    datasets: [{
+                        data: threadStats[0].status.totals,
+                        backgroundColor: chartColors,
+                        borderWidth: 0
+                    }]
+                },
+                options: chartOptions
+            });
+        });
+    });
+</script>,
+                    <div class="charts--thread-status charts--breakdown">
+    <h2>southern winds weyr</h2>
+    <canvas id="sww"></canvas>
+</div>
+<script>
+    fetch(`https://opensheet.elk.sh/${sheetID}/Threads`)
+    .then((response) => response.json())
+    .then((threadData) => {
+        fetch(`https://opensheet.elk.sh/${sheetID}/Sites`)
+        .then((response) => response.json())
+        .then((siteData) => {
+            //set overall variables
+            let siteName = 'southern winds weyr';
+            let siteObject = siteName !== 'all' ? siteData.filter(item => item.Site === siteName) : siteData;
+            let threadStats = createThreadStats(threadData, siteObject);
+
+            /*Thread Status*/
+            new Chart(document.getElementById('sww'), {
+                type: 'pie',
+                data: {
+                    labels: threadStats[0].status.tags.map(item => item.toUpperCase()),
+                    datasets: [{
+                        data: threadStats[0].status.totals,
+                        backgroundColor: chartColors,
+                        borderWidth: 0
+                    }]
+                },
+                options: chartOptions
+            });
+        });
+    });
 </script>
                 </div>
             </section>
