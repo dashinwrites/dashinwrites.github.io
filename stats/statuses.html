@@ -99,38 +99,7 @@
         <main>
             <section class="charts">
                 <div class="charts--triple">
-                    <div class="charts--thread-status charts--breakdown">
-    <h2>site name from sheet</h2>
-    <canvas id="siteidfromsheet"></canvas>
-</div>
-<script>
-    fetch(`https://opensheet.elk.sh/${sheetID}/Threads`)
-    .then((response) => response.json())
-    .then((threadData) => {
-        fetch(`https://opensheet.elk.sh/${sheetID}/Sites`)
-        .then((response) => response.json())
-        .then((siteData) => {
-            //set overall variables
-            let siteName = 'site name from sheet';
-            let siteObject = siteName !== 'all' ? siteData.filter(item => item.Site === siteName) : siteData;
-            let threadStats = createThreadStats(threadData, siteObject);
-
-            /*Thread Status*/
-            new Chart(document.getElementById('siteidfromsheet'), {
-                type: 'pie',
-                data: {
-                    labels: threadStats[0].status.tags.map(item => item.toUpperCase()),
-                    datasets: [{
-                        data: threadStats[0].status.totals,
-                        backgroundColor: chartColors,
-                        borderWidth: 0
-                    }]
-                },
-                options: chartOptions
-            });
-        });
-    });
-</script>
+                    
                 </div>
                 <div class="charts--single" style="max-width: 500px;">
                     <div class="charts--thread-status charts--breakdown">
@@ -164,7 +133,7 @@
             });
         });
     });
-</script>,
+</script>
                     <div class="charts--thread-status charts--breakdown">
     <h2>godly behaviour</h2>
     <canvas id="gb"></canvas>
@@ -196,7 +165,7 @@
             });
         });
     });
-</script>,
+</script>
                     <div class="charts--thread-status charts--breakdown">
     <h2>where the hell is</h2>
     <canvas id="wthi"></canvas>
@@ -228,7 +197,7 @@
             });
         });
     });
-</script>,
+</script>
                     <div class="charts--thread-status charts--breakdown">
     <h2>southern winds weyr</h2>
     <canvas id="sww"></canvas>
