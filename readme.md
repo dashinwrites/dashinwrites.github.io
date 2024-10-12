@@ -35,3 +35,5 @@ And replace `site name from sheet` as in Step 2 and then `siteidfromsheet` with 
 **Change Chart Colors**
 1. If you have different chart colors in mind, go to `source/js/settings.js`. Find `const chartColors`. Add colors you want inside strings within this array, and remove colors you don't want. The charts will use them in order every time, so put your preferred colors at the start of the array!
 2. Don't forget to `yarn build` and push your changes to Github to see them live!# thread-tracker
+# thread-tracker
+# thread-tracker
