@@ -120,7 +120,8 @@
     --bg-color: var(--accent);
     --bg-color-transparent: var(--accent-20);
     --text-color: var(--accent);
-    --border-color: var(--accent); }
+    --border-color: var(--accent);
+    --text-accent: var(--accent); }
   .lux-track et-wrap,
   .lux-track et-comm,
   .lux-track et-social,
