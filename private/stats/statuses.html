@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        @@include('../../source/templates/head.html', {
+            "prefix": "../dist",
+            "siteTitle": "Lux | Site Tracker"
+        })
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script>let statusChart = {};</script>
+    </head>
+    <body>
+        @@include('../../source/templates/nav.html', {
+            "prefix": ".."
+        })
+        <main>
+            <section class="charts">
+                <div class="charts--triple">
+                    @@include('../../source/templates/status.html', {
+                        "sitename": "site name from sheet",
+                        "siteID": "siteidfromsheet"
+                    })
+                </div>
+                <div class="charts--single" style="max-width: 500px;">
+                    @@include('../../source/templates/status.html', {
+                        "sitename": "all",
+                        "siteID": "all"
+                    })
+                </div>
+            </section>
+        </main>
+        @@include('../../source/templates/foot.html', {
+            "prefix": "../dist"
+        })
+    </body>
+</html>

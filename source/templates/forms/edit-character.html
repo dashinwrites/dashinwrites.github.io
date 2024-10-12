@@ -1,0 +1,120 @@
+<h1>Edit Character</h1>
+<form data-form="edit-character">
+    <label class="fullWidth">
+        <b>Character</b>
+        <span><select required id="character" required>
+            <option value="">(select)</option>
+        </select></span>
+    </label>
+    <div class="field-wrap fullWidth adjustable accordion updates">
+        <b>Updates</b>
+        <div class="multiselect">
+            <label>
+                <span><input type="checkbox" class="editOption" value="vibes" data-if-class="ifVibes" /></span>
+                <b>Rewrite Vibes</b>
+            </label>
+            <label>
+                <span><input type="checkbox" class="editOption" value="addLinks" data-if-class="ifAddLinks" /></span>
+                <b>Add Links</b>
+            </label>
+            <label>
+                <span><input type="checkbox" class="editOption" value="removeLinks" data-if-class="ifRemoveLinks" /></span>
+                <b>Remove Links</b>
+            </label>
+            <label>
+                <span><input type="checkbox" class="editOption siteSpecific" value="changeBasics" data-if-class="ifBasics" /></span>
+                <b>Change Basic Info</b>
+            </label>
+            <label>
+                <span><input type="checkbox" class="editOption siteSpecific" value="addShip" data-if-class="ifAddShip" /></span>
+                <b>Add Relationship(s)</b>
+            </label>
+            <label>
+                <span><input type="checkbox" class="editOption siteSpecific" value="removeShip" data-if-class="ifRemoveShip" /></span>
+                <b>Remove Relationship(s)</b>
+            </label>
+            <label>
+                <span><input type="checkbox" class="editOption siteSpecific" value="addTags" data-if-class="ifAddTags" /></span>
+                <b>Add Tags</b>
+            </label>
+            <label>
+                <span><input type="checkbox" class="editOption siteSpecific" value="removeTags" data-if-class="ifRemoveTags" /></span>
+                <b>Remove Tags</b>
+            </label>
+        </div>
+    </div>
+    <label class="fullWidth hidden ifVibes">
+        <b>Vibes</b>
+        <span><textarea type="text" id="vibes" placeholder="(Optional)"></textarea></span>
+    </label>
+    <div class="field-wrap fullWidth adjustable hidden ifAddLinks">
+        <b>Links</b>
+        <div class="rows"></div>
+        <div class="multi-buttons" data-row-type="links">
+            <button type="button" onclick="addRow(this)">+ New Row</button>
+            <button type="button" onclick="removeRow(this)">- Remove Row</button>
+        </div>
+    </div>
+    <div class="field-wrap fullWidth hidden ifRemoveLinks">
+        <b>Remove Links</b>
+        <div class="clip-remove-links clip-character-warning">
+            <p>Please select a character first.</p>
+        </div>
+    </div>
+    <label class="fullWidth hidden ifSiteSpecific">
+        <b>Site</b>
+        <span><select id="characterSite">
+            <option value="">Please select a character first.</option>
+        </select></span>
+    </label>
+    <div class="field-wrap fullWidth adjustable hidden ifBasics">
+        <b>Basic Info</b>
+        <div class="grid clip-basics">
+            <label>
+                <b>Gender</b>
+                <span><input type="text" id="gender" placeholder="Gender" /></span>
+            </label>
+            <label>
+                <b>Pronouns</b>
+                <span><input type="text" id="pronouns" placeholder="Pronouns" /></span>
+            </label>
+            <label>
+                <b>Age</b>
+                <span><input type="text" id="ageValue" placeholder="00" /></span>
+            </label>
+            <label>
+                <b>Face</b>
+                <span><input type="text" id="face" placeholder="Face" /></span>
+            </label>
+            <label class="fullWidth">
+                <b>Image URL</b>
+                <span><input type="text" id="image" placeholder="URL" /></span>
+            </label>
+        </div>
+    </div>
+    <div class="field-wrap fullWidth adjustable hidden ifAddShip">
+        <b>Add Relationships</b>
+        <div class="rows"></div>
+        <div class="multi-buttons" data-row-type="add-ships">
+            <button type="button" onclick="addRow(this)">+ New Row</button>
+            <button type="button" onclick="removeRow(this)">- Remove Row</button>
+        </div>
+    </div>
+    <div class="field-wrap fullWidth adjustable accordion remove-tags hidden ifRemoveShip">
+        <b>Remove Relationships</b>
+        <div class="clip-remove-ships clip-multi-warning">
+            <p>Please select a character and a site first.</p>
+        </div>
+    </div>
+    <div class="field-wrap fullWidth adjustable accordion tags hidden ifAddTags">
+        <b>Add Tags</b>
+        <div class="clip-tags"></div>
+    </div>
+    <div class="field-wrap fullWidth adjustable accordion remove-tags hidden ifRemoveTags">
+        <b>Remove Tags</b>
+        <div class="clip-remove-tags clip-multi-warning">
+            <p>Please select a character and a site first.</p>
+        </div>
+    </div>
+    <button type="submit" class="fullWidth">Submit</button>
+</form>

@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Lux | Site Tracker</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!--Styles-->
+<link rel="stylesheet" href="../dist/css/styles.css" />
+<link rel="stylesheet" href="../dist/css/characters.css" />
+
+<!--Fonts-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair:ital,opsz,wght@0,5..1200,300..900;1,5..1200,300..900&display=swap" rel="stylesheet">
+
+<!--Icons-->
+<link href="https://dawneggleton.github.io/css/all.css" rel="stylesheet" />
+
+<!--Script Libraries-->
+<script type='text/javascript' src='https://files.jcink.net/html/jquery-1.7.2.min.js'></script>
+<script type='text/javascript' src='https://files.jcink.net/html/jquery.cookie-1.3.1.js'></script> 
+<script type='text/javascript' src="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/2.2.2/isotope.pkgd.min.js"></script>
+
+<!--Settings-->
+<script type='text/javascript' src='../dist/js/settings.js'></script>
+    </head>
+    <body>
+        <div class="backdrop horizontal"></div>
+<div class="backdrop vertical"></div>
+<nav class="nav">
+    <div class="nav--inner">
+        <a href="../index.html">
+            <i class="fa-light fa-house"></i>
+            <span>Home</span>
+        </a>
+        <button onClick="openSubmenu(this)" data-menu="sites">
+            <i class="fa-light fa-sitemap"></i>
+            <span>Sites</span>
+        </button>
+        <button onClick="openSubmenu(this)" data-menu="characters">
+            <i class="fa-light fa-users"></i>
+            <span>Muses</span>
+        </button>
+        <button onClick="openSubmenu(this)" data-menu="threads">
+            <i class="fa-light fa-books"></i>
+            <span>Threads</span>
+        </button>
+        <button onClick="openSubmenu(this)" data-menu="stats">
+            <i class="fa-light fa-chart-pie"></i>
+            <span>Stats</span>
+        </button>
+        <button onClick="openSubmenu(this)" data-menu="admin">
+            <i class="fa-light fa-wrench"></i>
+            <span>Admin</span>
+        </button>
+        <button class="toggle--theme" onClick="toggleTheme()">
+            <i class="fa-light fa-brightness mode--light"></i>
+            <span class="mode--light">Light</span>
+            <i class="fa-light fa-brightness-low mode--dark"></i>
+            <span class="mode--dark">Dark</span>
+        </button>
+    </div>
+</nav>
+<nav class="subnav" data-menu="sites">
+    <div class="subnav--inner"></div>
+</nav>
+<nav class="subnav" data-menu="characters">
+    <div class="subnav--inner">
+        <a href="../characters/index.html">View All</a>
+    </div>
+</nav>
+<nav class="subnav" data-menu="threads">
+    <div class="subnav--inner">
+        <a href="../threads/index.html">View All</a>
+    </div>
+</nav>
+<nav class="subnav" data-menu="stats">
+    <div class="subnav--inner">
+        <a href="../stats/index.html">View Combined</a>
+        <a href="../stats/statuses.html">Status Comparison</a>
+    </div>
+</nav>
+<nav class="subnav" data-menu="admin">
+    <div class="subnav--inner">
+        <a href="../admin/new-site.html">Add Site</a>
+        <a href="../admin/new-tag.html">Add Tags</a>
+        <a href="../admin/new-partner.html">Add Partner</a>
+        <a href="../admin/new-character.html">Add Character</a>
+        <a href="../admin/new-thread.html">Add Thread</a>
+        <a href="../admin/update-tag.html">Edit Tags</a>
+        <a href="../admin/update-partner.html">Edit Partner</a>
+        <a href="../admin/update-character.html">Edit Character</a>
+        <a href="../admin/update-thread.html">Edit Thread</a>
+    </div>
+</nav>
+        <main>
+            <section class="form">
+                <h1>Edit Character</h1>
+<form data-form="edit-character">
+    <label class="fullWidth">
+        <b>Character</b>
+        <span><select required id="character" required>
+            <option value="">(select)</option>
+        </select></span>
+    </label>
+    <div class="field-wrap fullWidth adjustable accordion updates">
+        <b>Updates</b>
+        <div class="multiselect">
+            <label>
+                <span><input type="checkbox" class="editOption" value="vibes" data-if-class="ifVibes" /></span>
+                <b>Rewrite Vibes</b>
+            </label>
+            <label>
+                <span><input type="checkbox" class="editOption" value="addLinks" data-if-class="ifAddLinks" /></span>
+                <b>Add Links</b>
+            </label>
+            <label>
+                <span><input type="checkbox" class="editOption" value="removeLinks" data-if-class="ifRemoveLinks" /></span>
+                <b>Remove Links</b>
+            </label>
+            <label>
+                <span><input type="checkbox" class="editOption siteSpecific" value="changeBasics" data-if-class="ifBasics" /></span>
+                <b>Change Basic Info</b>
+            </label>
+            <label>
+                <span><input type="checkbox" class="editOption siteSpecific" value="addShip" data-if-class="ifAddShip" /></span>
+                <b>Add Relationship(s)</b>
+            </label>
+            <label>
+                <span><input type="checkbox" class="editOption siteSpecific" value="removeShip" data-if-class="ifRemoveShip" /></span>
+                <b>Remove Relationship(s)</b>
+            </label>
+            <label>
+                <span><input type="checkbox" class="editOption siteSpecific" value="addTags" data-if-class="ifAddTags" /></span>
+                <b>Add Tags</b>
+            </label>
+            <label>
+                <span><input type="checkbox" class="editOption siteSpecific" value="removeTags" data-if-class="ifRemoveTags" /></span>
+                <b>Remove Tags</b>
+            </label>
+        </div>
+    </div>
+    <label class="fullWidth hidden ifVibes">
+        <b>Vibes</b>
+        <span><textarea type="text" id="vibes" placeholder="(Optional)"></textarea></span>
+    </label>
+    <div class="field-wrap fullWidth adjustable hidden ifAddLinks">
+        <b>Links</b>
+        <div class="rows"></div>
+        <div class="multi-buttons" data-row-type="links">
+            <button type="button" onclick="addRow(this)">+ New Row</button>
+            <button type="button" onclick="removeRow(this)">- Remove Row</button>
+        </div>
+    </div>
+    <div class="field-wrap fullWidth hidden ifRemoveLinks">
+        <b>Remove Links</b>
+        <div class="clip-remove-links clip-character-warning">
+            <p>Please select a character first.</p>
+        </div>
+    </div>
+    <label class="fullWidth hidden ifSiteSpecific">
+        <b>Site</b>
+        <span><select id="characterSite">
+            <option value="">Please select a character first.</option>
+        </select></span>
+    </label>
+    <div class="field-wrap fullWidth adjustable hidden ifBasics">
+        <b>Basic Info</b>
+        <div class="grid clip-basics">
+            <label>
+                <b>Gender</b>
+                <span><input type="text" id="gender" placeholder="Gender" /></span>
+            </label>
+            <label>
+                <b>Pronouns</b>
+                <span><input type="text" id="pronouns" placeholder="Pronouns" /></span>
+            </label>
+            <label>
+                <b>Age</b>
+                <span><input type="text" id="ageValue" placeholder="00" /></span>
+            </label>
+            <label>
+                <b>Face</b>
+                <span><input type="text" id="face" placeholder="Face" /></span>
+            </label>
+            <label class="fullWidth">
+                <b>Image URL</b>
+                <span><input type="text" id="image" placeholder="URL" /></span>
+            </label>
+        </div>
+    </div>
+    <div class="field-wrap fullWidth adjustable hidden ifAddShip">
+        <b>Add Relationships</b>
+        <div class="rows"></div>
+        <div class="multi-buttons" data-row-type="add-ships">
+            <button type="button" onclick="addRow(this)">+ New Row</button>
+            <button type="button" onclick="removeRow(this)">- Remove Row</button>
+        </div>
+    </div>
+    <div class="field-wrap fullWidth adjustable accordion remove-tags hidden ifRemoveShip">
+        <b>Remove Relationships</b>
+        <div class="clip-remove-ships clip-multi-warning">
+            <p>Please select a character and a site first.</p>
+        </div>
+    </div>
+    <div class="field-wrap fullWidth adjustable accordion tags hidden ifAddTags">
+        <b>Add Tags</b>
+        <div class="clip-tags"></div>
+    </div>
+    <div class="field-wrap fullWidth adjustable accordion remove-tags hidden ifRemoveTags">
+        <b>Remove Tags</b>
+        <div class="clip-remove-tags clip-multi-warning">
+            <p>Please select a character and a site first.</p>
+        </div>
+    </div>
+    <button type="submit" class="fullWidth">Submit</button>
+</form>
+            </section>
+        </main>
+        <!--Scripts-->
+<script type='text/javascript' src='../dist/js/functions.js'></script>
+<script type='text/javascript' src='../dist/js/scripts.js'></script>
+    </body>
+</html>

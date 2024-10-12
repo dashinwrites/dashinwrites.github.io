@@ -1,0 +1,96 @@
+.nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: var(--size--menu-width);
+  height: 100vh;
+  background: var(--bg--secondary);
+  padding: var(--space--sm);
+  z-index: 4; }
+  @media (min-width: 769px) {
+    .nav {
+      padding: var(--space--md); } }
+  .nav--inner {
+    display: grid;
+    gap: var(--space--xs); }
+    .nav--inner button,
+    .nav--inner a {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: var(--space--sm);
+      width: calc(var(--size--menu-width) - (2 * var(--space--sm)));
+      aspect-ratio: 1 / 1;
+      color: var(--text--primary);
+      font-size: 0.5rem;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      font-weight: 900;
+      text-align: center;
+      background: var(--bg--primary);
+      border-radius: 5px;
+      line-height: 100%;
+      transition-duration: 0.3s;
+      border: none;
+      cursor: pointer; }
+      @media (min-width: 769px) {
+        .nav--inner button,
+        .nav--inner a {
+          width: calc(var(--size--menu-width) - (2 * var(--space--md))); } }
+      .nav--inner button i,
+      .nav--inner a i {
+        font-size: 0.8rem; }
+        @media (min-width: 601px) {
+          .nav--inner button i,
+          .nav--inner a i {
+            font-size: 1rem; } }
+      .nav--inner button:hover, .nav--inner button.is-open,
+      .nav--inner a:hover,
+      .nav--inner a.is-open {
+        background: var(--accent);
+        color: var(--text--on-accent); }
+      .nav--inner button span,
+      .nav--inner a span {
+        display: none; }
+        @media (min-width: 769px) {
+          .nav--inner button span,
+          .nav--inner a span {
+            display: block; } }
+
+.subnav {
+  position: fixed;
+  top: 0;
+  left: calc(-1 * var(--size--submenu-width));
+  width: var(--size--submenu-width);
+  background: var(--bg--quaternary);
+  z-index: 3;
+  height: 100vh;
+  padding: var(--space--md);
+  transition-duration: 0.3s;
+  opacity: 0; }
+  .subnav.is-open {
+    left: var(--size--menu-width);
+    opacity: 1; }
+  .subnav--inner {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space--xs); }
+    .subnav--inner > strong {
+      text-transform: uppercase;
+      font-weight: 900;
+      font-size: 0.625rem;
+      letter-spacing: 0.1em;
+      line-height: 160%;
+      margin: var(--space--md) 0 0; }
+    .subnav--inner a {
+      background: var(--bg--primary);
+      border-radius: 3px;
+      padding: var(--space--xs) var(--space--sm);
+      color: var(--text--primary);
+      font-size: 0.5rem;
+      text-transform: uppercase;
+      letter-spacing: 0.2em; }
+      .subnav--inner a:hover {
+        background: var(--accent);
+        color: var(--text--on-accent); }
