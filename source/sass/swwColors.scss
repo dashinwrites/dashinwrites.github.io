@@ -1,8 +1,8 @@
 .lux-track {
     // --character-bg: rgb(var(--rgb, transparent));
-    --character-bg: linear-gradient(to right, rgba(var(--grad-a),0.15), rgba(var(--grad-b),0.15));
+    --rgba: linear-gradient(to right, rgba(var(--grad-a),0.15), rgba(var(--grad-b),0.15));
     // --character-bg-transparent: rgba(var(--rgb), 0.3);
-    --character-bg-transparent: linear-gradient(to right, rgba(var(--grad-a),0.3), rgba(var(--grad-b),0.3));
+    --rgba: linear-gradient(to right, rgba(var(--grad-a),0.3), rgba(var(--grad-b),0.3));
     --character-text: rgb(var(--rgb-dark, var(--rgb, transparent)));
 
     --accent: rgb(var(--rgb));
