@@ -2038,7 +2038,7 @@ function formatSingleInstance(character) {
         <div class="character--wrap">
             <div class="character--image"><img src="${character.basics.image}" loading="lazy" /></div>
             <div class="character--main">
-                <a href="${character.sites.URL}/?showuser=${character.id}" target="_blank" class="character--title">${capitalize(character.character)}</a>
+                <a href="${character.sites.URL}/${character.sites.Directory}${character.id}" target="_blank" class="character--title">${capitalize(character.character)}</a>
                 <div class="character--basics">
                     ${character.basics.gender ? `<span>${character.basics.gender}</span>` : ''}
                     ${character.basics.pronouns ? `<span>${character.basics.pronouns}</span>` : ''}
@@ -2105,7 +2105,7 @@ function formatMultipleInstance(character, sites) {
                 <div class="character--tabs">
                     <div class="character--tab">
                         <div class="character--links">
-                            <a href="${site.URL}/?showuser=${siteInstance.id}" target="_blank">View Application</a>
+                            <a href="${site.URL}/${site.Directory}${siteInstance.id}" target="_blank">View Application</a>
                             ${character.links.map(item => `<a href="${item.url}" target="_blank">${item.title}</a>`).join('')}
                         </div>
                     </div>
