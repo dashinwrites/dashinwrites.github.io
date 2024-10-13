@@ -1160,7 +1160,7 @@ section.links {
   margin-bottom: var(--space--sm);
   border-radius: 10px;
   padding: var(--space--md);
-  background: rgba(var(--rgb), 0.15); }
+  background: var(--character-bg); }
   .character--wrap {
     display: -ms-grid;
     display: grid;
