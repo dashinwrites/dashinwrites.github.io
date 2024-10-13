@@ -211,7 +211,8 @@
     }
 
     &.finore,
-    &.gb-735 {
+    &.gb-735,
+    &.wthi-22 {
         --rgb: 119,64,96;
         --img: url('https://64.media.tumblr.com/5f6d8919b3a90e100cb97b406d4e2d07/594cf9662bb24eff-9d/s540x810/bc40e7eee9f4a6d3d44277cec7879f8423a806e8.gif');
     }
@@ -368,11 +369,18 @@
     }
     
     // michalis
+    &.michalis,
+    &.mik,
     &.gb-158 {
         --rgb: 147,92,132;
         --img: url('https://images.mubicdn.net/images/cast_member/835761/cache-619273-1607929424/image-w856.jpg');
     }
     
+    &.nathaniel,
+    &.nate,
+    &.wthi-42 {
+        --rgb: 253,184,70;
+    }
     &.nicolas,
     &.col,
     &.gb-378 {
@@ -381,7 +389,8 @@
     }
 
     &.rhee,
-    &.gb-496 {
+    &.gb-496,
+    &.wthi-37 {
         --rgb: 177,83,10;
         --img: url('https://64.media.tumblr.com/18aab154f2e129a721f32bfbf773193b/c3e191644dd03183-cd/s540x810/67e305613361893315863403e83dae6d163d9323.gif');
     }
@@ -422,6 +431,12 @@
 
     &.thealdrae {
         --rgb: 62,165,118;
+    }
+
+    &.valerian,
+    &.val,
+    &.wthi-28 {
+        --rgb:  221,56,250;
     }
     
     &.wren {
