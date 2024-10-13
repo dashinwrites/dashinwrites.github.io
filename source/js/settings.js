@@ -4,4 +4,4 @@ const oldSheetID = `1XNHsAlHv62PHeXuyWfbegNueYi9QdeyvUPlJ0Qu64i0`;
 const successMessage = `<p class="fullWidth">Submission successful!</p>
 <button onclick="location.reload();" type="button" class="fullWidth submit">Back to form</button>`;
 const threadTags = ["vital", "priority", "rapidfire", "romantic", "family", "friends", "coworkers"];
-const chartColors = ['#2E2E2E', '#FFD700', '#D32F2F', '#F5F5F5', '#37474F', '#FFB74D', '#81C784', '#7E57C2'];
+const chartColors = ['#4A4A4A', '#D4AF37', '#B05A5A', '#E0E0E0', '#546E7A', '#E0A96D', '#A5C8A7', '#8E79B1'];
