@@ -45,34 +45,40 @@ function initMenus() {
             }
         });
 
+
+
         data.forEach((site, i) => {
+            let prefix = `..`;
+            if (document.querySelector('body').classList.contains('index')) {
+                prefix = '.';
+            }
             if(i === 0) {
                 document.querySelector('.subnav[data-menu="sites"] .subnav--inner')
-                    .insertAdjacentHTML('beforeend', `<strong>${site.Status}</strong><a href="${site.URL}" target="_blank" class="${site.Status}">${site.Site}</a>`);
+                .insertAdjacentHTML('beforeend', `<strong>${site.Status}</strong><a href="${prefix}/characters/${site.ID}.html" class="${site.Status}">${site.Site}</a>`);
                 document.querySelector('.subnav[data-menu="characters"] .subnav--inner')
-                    .insertAdjacentHTML('beforeend', `<strong>${site.Status}</strong><a href="../characters/${site.ID}.html" class="${site.Status}">${site.Site}</a>`);
+                    .insertAdjacentHTML('beforeend', `<strong>${site.Status}</strong><a href="${prefix}/characters/${site.ID}.html" class="${site.Status}">${site.Site}</a>`);
                 document.querySelector('.subnav[data-menu="threads"] .subnav--inner')
-                    .insertAdjacentHTML('beforeend', `<strong>${site.Status}</strong><a href="../threads/${site.ID}.html" class="${site.Status}">${site.Site}</a>`);
+                    .insertAdjacentHTML('beforeend', `<strong>${site.Status}</strong><a href="${prefix}/threads/${site.ID}.html" class="${site.Status}">${site.Site}</a>`);
                 document.querySelector('.subnav[data-menu="stats"] .subnav--inner')
-                    .insertAdjacentHTML('beforeend', `<strong>${site.Status}</strong><a href="../stats/${site.ID}.html" class="${site.Status}">${site.Site}</a>`);
+                    .insertAdjacentHTML('beforeend', `<strong>${site.Status}</strong><a href="${prefix}/stats/${site.ID}.html" class="${site.Status}">${site.Site}</a>`);
             } else if(site.Status !== data[i - 1].Status) {
                 document.querySelector('.subnav[data-menu="sites"] .subnav--inner')
                     .insertAdjacentHTML('beforeend', `<strong>${site.Status}</strong><a href="${site.URL}" target="_blank" class="${site.Status}">${site.Site}</a>`);
                 document.querySelector('.subnav[data-menu="characters"] .subnav--inner')
-                    .insertAdjacentHTML('beforeend', `<strong>${site.Status}</strong><a href="../characters/${site.ID}.html" class="${site.Status}">${site.Site}</a>`);
+                    .insertAdjacentHTML('beforeend', `<strong>${site.Status}</strong><a href="${prefix}/characters/${site.ID}.html" class="${site.Status}">${site.Site}</a>`);
                 document.querySelector('.subnav[data-menu="threads"] .subnav--inner')
-                    .insertAdjacentHTML('beforeend', `<strong>${site.Status}</strong><a href="../threads/${site.ID}.html" class="${site.Status}">${site.Site}</a>`);
+                    .insertAdjacentHTML('beforeend', `<strong>${site.Status}</strong><a href="${prefix}/threads/${site.ID}.html" class="${site.Status}">${site.Site}</a>`);
                 document.querySelector('.subnav[data-menu="stats"] .subnav--inner')
-                    .insertAdjacentHTML('beforeend', `<strong>${site.Status}</strong><a href="../stats/${site.ID}.html" class="${site.Status}">${site.Site}</a>`);
+                    .insertAdjacentHTML('beforeend', `<strong>${site.Status}</strong><a href="${prefix}/stats/${site.ID}.html" class="${site.Status}">${site.Site}</a>`);
             } else {
                 document.querySelector('.subnav[data-menu="sites"] .subnav--inner')
                     .insertAdjacentHTML('beforeend', `<a href="${site.URL}" target="_blank" class="${site.Status}">${site.Site}</a>`);
                 document.querySelector('.subnav[data-menu="characters"] .subnav--inner')
-                    .insertAdjacentHTML('beforeend', `<a href="../characters/${site.ID}.html" class="${site.Status}">${site.Site}</a>`);
+                    .insertAdjacentHTML('beforeend', `<a href="${prefix}/characters/${site.ID}.html" class="${site.Status}">${site.Site}</a>`);
                 document.querySelector('.subnav[data-menu="threads"] .subnav--inner')
-                    .insertAdjacentHTML('beforeend', `<a href="../threads/${site.ID}.html" class="${site.Status}">${site.Site}</a>`);
+                    .insertAdjacentHTML('beforeend', `<a href="${prefix}/threads/${site.ID}.html" class="${site.Status}">${site.Site}</a>`);
                 document.querySelector('.subnav[data-menu="stats"] .subnav--inner')
-                    .insertAdjacentHTML('beforeend', `<a href="../stats/${site.ID}.html" class="${site.Status}">${site.Site}</a>`);
+                    .insertAdjacentHTML('beforeend', `<a href="${prefix}/stats/${site.ID}.html" class="${site.Status}">${site.Site}</a>`);
             }
         });
     });
@@ -1682,7 +1688,7 @@ function populateThreads(array, siteObject) {
         
         let thread = {
             character: JSON.parse(array[i].Character),
-            description: array[i].description,
+            description: array[i].Description,
             featuring: JSON.parse(array[i].Featuring),
             date: array[i].ICDate,
             updated: array[i].LastUpdated,
@@ -1697,6 +1703,11 @@ function populateThreads(array, siteObject) {
     }
     document.querySelector('#threads--rows').insertAdjacentHTML('beforeend', html);
 
+    //standardize
+    characters = characters.map(item => item.toLowerCase());
+    partners = partners.map(item => item.toLowerCase());
+    featuring = featuring.map(item => item.toLowerCase());
+    
     //sort appendable filters
     characters.sort();
     partners.sort();
@@ -1756,7 +1767,7 @@ function getDetailedDelay(date) {
     } else if (elapsed > 7) {
         delayClass = '> One Week';
     } else {
-        delayClass = '< One Week>';
+        delayClass = '< One Week';
     }
     return delayClass;
 }
@@ -1882,10 +1893,10 @@ function formatThread(thread) {
                     <span class="thread--ic-date">Set <span>${thread.date}</span></span>
                     <span class="thread--last-post">Last Active <span>${thread.updated}</span></span>
                 </div>
+                ${thread.description && thread.description !== '' ? `<p>${thread.description}</p>` : ''}                
                 <span class="bigger">Writing as <a class="thread--character" href="${thread.site.URL}/${thread.site.Directory}${thread.character.id}">${thread.character.name}</a></span>
                 <span class="thread--feature">ft. ${featuringText}</span>
                 <span class="thread--partners italic">Writing with ${partnersText}</span>
-                ${thread.description && thread.description !== '' ? `<p>${thread.description}</p>` : ''}
             </div>
             <div class="thread--buttons">${buttons}</div>
         </div>
@@ -2005,7 +2016,7 @@ function formatCharacter(character, viewAll, sites) {
     }
     return formatSingleInstance(character);
 }
-function formatSingleInstance(character) {
+function formatSingleInstance(character, sites) {
     let tagsString = ``;
     for(type in character.tags) {
         character.tags[type].tags.forEach((set, i) => {
@@ -2032,7 +2043,7 @@ function formatSingleInstance(character) {
         } else {
             return 0
         }
-    })
+    });
     
     return `<div class="character lux-track grid-item ${tagsString} ${character.character.split(' ')[0]}">
         <div class="character--wrap">
@@ -2201,7 +2212,7 @@ function createThreadStats(data, site) {
     let partnerNames = [];
     threadPartners.forEach(thread => {
         thread.forEach(threadPartner => {
-            partnerNames.push(threadPartner.writer);
+            partnerNames.push(threadPartner.writer.trim().toLowerCase());
         });
     });
 
@@ -2243,22 +2254,90 @@ function createThreadStats(data, site) {
         },
     }
 
-    activeThreads.forEach(thread => {
-        countStats(stats.type, thread.Type);
+    //keep all these separate for correct sorting... even if it's an absolute pain
+    let statusThreads = [...activeThreads];
+    statusThreads.sort((a, b) => {
+        if(a.Status < b.Status) {
+            return -1;
+        } else if(a.Status > b.Status) {
+            return 1;
+        } else {
+            return 0;
+        }
+    });
+    statusThreads.forEach(thread => {
         countStats(stats.status, thread.Status);
     });
 
+    let typeThreads = [...activeThreads];
+    typeThreads.sort((a, b) => {
+        if(a.Type < b.Type) {
+            return -1;
+        } else if(a.Type > b.Type) {
+            return 1;
+        } else {
+            return 0;
+        }
+    });
+    typeThreads.forEach(thread => {
+        countStats(stats.type, thread.Type);
+    });
+    partnerNames.sort();
     partnerNames.forEach(partner => {
         countStats(stats.partners, partner);
     });
 
-    icThreads.forEach(thread => {
+    let icStatusThreads = [...icThreads];
+    icStatusThreads.sort((a, b) => {
+        if(a.Status < b.Status) {
+            return -1;
+        } else if(a.Status > b.Status) {
+            return 1;
+        } else {
+            return 0;
+        }
+    });
+    icStatusThreads.forEach(thread => {
         countStats(icStats.status, thread.Status);
+    });
+    let icDelayThreads = [...icThreads];
+    icDelayThreads.sort((a, b) => {
+        if(new Date(a.ICDate) > new Date(b.ICDate)) {
+            return -1;
+        } else if(new Date(a.ICDate) < new Date(b.ICDate)) {
+            return 1;
+        } else {
+            return 0;
+        }
+    });
+    icDelayThreads.forEach(thread => {
         countStats(icStats.replies, thread.Delay);
     });
 
-    commThreads.forEach(thread => {
+    let commStatusThreads = [...commThreads];
+    commStatusThreads.sort((a, b) => {
+        if(a.Status < b.Status) {
+            return -1;
+        } else if(a.Status > b.Status) {
+            return 1;
+        } else {
+            return 0;
+        }
+    });
+    commStatusThreads.forEach(thread => {
         countStats(commStats.status, thread.Status);
+    });
+    let commDelayThreads = [...commThreads];
+    commDelayThreads.sort((a, b) => {
+        if(new Date(a.ICDate) > new Date(b.ICDate)) {
+            return -1;
+        } else if(new Date(a.ICDate) < new Date(b.ICDate)) {
+            return 1;
+        } else {
+            return 0;
+        }
+    });
+    commDelayThreads.forEach(thread => {
         countStats(commStats.replies, thread.Delay);
     });
 
