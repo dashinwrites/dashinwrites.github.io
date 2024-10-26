@@ -619,6 +619,19 @@
   .dash-bb.nate,
   .dash-bb.wthi-42 {
     --rgb: 253,184,70; }
+  .lux-track.nicodemo, .lux-track.nico, .lux-track.gb-936,
+  .lux.nicodemo,
+  .lux.nico,
+  .lux.gb-936,
+  .parent-9.nicodemo,
+  .parent-9.nico,
+  .parent-9.gb-936,
+  .dash-bb.nicodemo,
+  .dash-bb.nico,
+  .dash-bb.gb-936 {
+    --rgb: 246, 230, 97;
+    --rgb-dark: 188, 168, 98;
+    --img: url('https://i.pinimg.com/564x/c0/a5/53/c0a55362ea58c26d90e05bf762506431.jpg'); }
   .lux-track.nicolas, .lux-track.col, .lux-track.gb-378,
   .lux.nicolas,
   .lux.col,
