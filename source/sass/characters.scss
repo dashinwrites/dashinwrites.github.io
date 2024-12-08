@@ -1,7 +1,8 @@
 .lux-track,
 .lux,
 .parent-9,
-.dash-bb {
+.gb-9.parent-0,
+.account-9.parent-0 {
 	--defaultPostImage: url(https://files.jcink.net/uploads2/godlybehaviour/GB24/forum_guidebook_min.jpg);
 	
     &,
@@ -22,7 +23,9 @@
     & et-wrap,
     & et-comm,
     & et-social,
-	&.wthi .lux.bb {
+	&.wthi .lux.bb,
+    & ner-wrap,
+    & ner-comm {
         //shared
         .light & {
             --accent: rgb(var(--rgb-dark, var(--rgb)));
@@ -62,13 +65,21 @@
     }
     & et-wrap,
     & et-comm,
-    & et-social {
+    & et-social,
+    & ner-wrap,
+    & ner-comm {
         //gb:et only
         --border-accent: var(--accent);
         --bg-accent: var(--accent);
         --bg-accent-solid: var(--accent);
         --bg-accent-30: var(--accent-30);
         --bg-accent-50: var(--accent-50);
+        --text-accent: var(--accent);
+        --border-accent: var(--accent);
+        --border-accent-transparent: var(--accent-30);
+        --bg-accent: var(--accent);
+        --bg-accent-transparent: var(--accent-30);
+        --bg-accent-transparent-alt: var(--accent-50);
         --text-accent: var(--accent);
     }
     &.wthi .dash-bb {
@@ -94,6 +105,24 @@
         background-position: var(--postImagePosition, center);
         background-image: var(--postImage, var(--defaultPostImage));
         z-index: 1;
+    }
+    ner-image {
+        &::before {
+            content: '';
+            width: calc(100% - (2 * var(--space-xs)));
+            height: calc(100% - (2 * var(--space-xs)));
+            position: absolute;
+            top: var(--space-xs);
+            left: var(--space-xs);
+            border-radius: 2px;
+            background-size: cover;
+            background-position: var(--nerPosition, var(--postImagePosition, center));
+            background-image: var(--nerImage, var(--postImage, var(--defaultPostImage)));
+            z-index: 2;
+        }
+        &:only-child::before {
+            background-image: var(--nerWideImage, var(--nerImage, var(--postImage, var(--defaultPostImage))));
+        }
     }
     et-tag {
         order: 10;
@@ -125,6 +154,9 @@
     &.gb-991 {
         --rgb: 22, 29, 60;
         --postImage: url('https://i.pinimg.com/736x/64/41/cb/6441cb856542cfad39d486bd821c810f.jpg');
+        --postImagePosition: top;
+        --nerPosition: center;
+        --nerImage: url('https://i.pinimg.com/736x/64/41/cb/6441cb856542cfad39d486bd821c810f.jpg');
     }
     
     &.ailbhe,
