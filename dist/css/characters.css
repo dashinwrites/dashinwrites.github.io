@@ -297,6 +297,12 @@
   .gb-9.parent-0.gb et-image.dashpost img,
   .account-9.parent-0.gb et-image.dashpost img {
     content: var(--img); }
+  .lux-track.gb ner-image.dashpost img,
+  .lux.gb ner-image.dashpost img,
+  .parent-9.gb ner-image.dashpost img,
+  .gb-9.parent-0.gb ner-image.dashpost img,
+  .account-9.parent-0.gb ner-image.dashpost img {
+    content: var(--nerImage); }
   .lux-track.adanya, .lux-track.gb-991,
   .lux.adanya,
   .lux.gb-991,
@@ -877,7 +883,8 @@
   .account-9.parent-0.gb-10 {
     --rgb-dark: 163,44,36;
     --rgb: 163,49,42;
-    --img: url('https://64.media.tumblr.com/7817f40d8c225e5cf2759cc1ce29c83f/458ba54d4395c75e-0b/s540x810/b4a7118a51f363b56fde843cf32e3539cd2400dd.gif'); }
+    --img: url('https://64.media.tumblr.com/7817f40d8c225e5cf2759cc1ce29c83f/458ba54d4395c75e-0b/s540x810/b4a7118a51f363b56fde843cf32e3539cd2400dd.gif');
+    --nerImage: url('https://64.media.tumblr.com/7817f40d8c225e5cf2759cc1ce29c83f/458ba54d4395c75e-0b/s540x810/b4a7118a51f363b56fde843cf32e3539cd2400dd.gif'); }
   .lux-track.royal, .lux-track.gb-83,
   .lux.royal,
   .lux.gb-83,
