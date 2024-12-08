@@ -297,18 +297,14 @@
   .gb-9.parent-0.gb et-image.dashpost img,
   .account-9.parent-0.gb et-image.dashpost img {
     content: var(--img); }
-  .lux-track.adanya, .lux-track.danya, .lux-track.gb-991,
+  .lux-track.adanya, .lux-track.gb-991,
   .lux.adanya,
-  .lux.danya,
   .lux.gb-991,
   .parent-9.adanya,
-  .parent-9.danya,
   .parent-9.gb-991,
   .gb-9.parent-0.adanya,
-  .gb-9.parent-0.danya,
   .gb-9.parent-0.gb-991,
   .account-9.parent-0.adanya,
-  .account-9.parent-0.danya,
   .account-9.parent-0.gb-991 {
     --rgb: 22, 29, 60;
     --postImage: url('https://i.pinimg.com/736x/64/41/cb/6441cb856542cfad39d486bd821c810f.jpg');
