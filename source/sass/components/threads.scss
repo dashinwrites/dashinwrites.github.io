@@ -211,7 +211,8 @@
         padding: var(--space--md) var(--space--lg);
     }
 
-    &.status--mine {
+    &.status--mine,
+    &:has([data-status="mine"]) {
         background: rgba(var(--rgb), 0.25);
     }
 
@@ -271,6 +272,13 @@
                 opacity: 0.8;
                 letter-spacing: 0.1em;
             }
+        }
+
+        & > p {
+            border-bottom: 1px solid var(--accent, var(--bg--quintenary));
+            padding: var(--space--xs) 0 var(--space--sm);
+            line-height: 160%;
+            margin: 0 0 var(--space--xs);
         }
     }
 
