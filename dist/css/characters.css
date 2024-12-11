@@ -197,12 +197,12 @@
     border: 0;
     overflow: hidden;
     border-radius: 3px;
-    content: var(--img); }
+    content: var(----postImage); }
   .lux-track.gb et-image.dashpost img,
   .lux.gb et-image.dashpost img,
   .parent-9.gb et-image.dashpost img,
   .dash-bb.gb et-image.dashpost img {
-    content: var(--img); }
+    content: var(----postImage); }
   .lux-track.ailbhe, .lux-track.gb-241,
   .lux.ailbhe,
   .lux.gb-241,
@@ -220,7 +220,7 @@
   .dash-bb.aislin,
   .dash-bb.gb-921 {
     --rgb: 156, 64, 61;
-    --img: url('https://64.media.tumblr.com/b7d66fd6bc08f15ac774ff31273e9a8f/01b3e6d04957fc1c-6a/s540x810/ce53791cc9bca20cd5d6b93b21d67d5eb58302a0.gif'); }
+    --postImage: url('https://64.media.tumblr.com/b7d66fd6bc08f15ac774ff31273e9a8f/01b3e6d04957fc1c-6a/s540x810/ce53791cc9bca20cd5d6b93b21d67d5eb58302a0.gif'); }
   .lux-track.alexander, .lux-track.alex, .lux-track.gb-21,
   .lux.alexander,
   .lux.alex,
@@ -232,7 +232,7 @@
   .dash-bb.alex,
   .dash-bb.gb-21 {
     --rgb: 172,83,65;
-    --img: url('https://64.media.tumblr.com/b16bc5359d249ffc368b78d01e541c33/c636986419be80de-cf/s540x810/98df35b5ef9b2bc36e6a684a0dcaebf203752300.gif'); }
+    --postImage: url('https://64.media.tumblr.com/b16bc5359d249ffc368b78d01e541c33/c636986419be80de-cf/s540x810/98df35b5ef9b2bc36e6a684a0dcaebf203752300.gif'); }
   .lux-track.ariel, .lux-track.gb-297,
   .lux.ariel,
   .lux.gb-297,
@@ -241,7 +241,7 @@
   .dash-bb.ariel,
   .dash-bb.gb-297 {
     --rgb: 183,49,65;
-    --img: url('https://nypost.com/wp-content/uploads/sites/2/2022/10/luke-grimes-cover.jpg'); }
+    --postImage: url('https://nypost.com/wp-content/uploads/sites/2/2022/10/luke-grimes-cover.jpg'); }
   .lux-track.artemisia, .lux-track.gb-218,
   .lux.artemisia,
   .lux.gb-218,
@@ -251,7 +251,7 @@
   .dash-bb.gb-218 {
     --rgb: 224,180,132;
     --rgb-dark: 204,160,112;
-    --img: url('https://66.media.tumblr.com/6be1569258e0ba176130284872618260/9b0d5e949facfffa-7c/s540x810/9379464984d35fa76d11ad3620eb7ae5be75a9a4.gif'); }
+    --postImage: url('https://66.media.tumblr.com/6be1569258e0ba176130284872618260/9b0d5e949facfffa-7c/s540x810/9379464984d35fa76d11ad3620eb7ae5be75a9a4.gif'); }
   .lux-track.bryn, .lux-track.gb-135,
   .lux.bryn,
   .lux.gb-135,
@@ -261,7 +261,7 @@
   .dash-bb.gb-135 {
     --rgb: 148,65,111;
     --rgb-dark:135,43,95;
-    --img: url('https://64.media.tumblr.com/6c3ab433c1c0dd3feb217234582164a0/tumblr_inline_oc7onq88R01rifr4k_500.gif'); }
+    --postImage: url('https://64.media.tumblr.com/6c3ab433c1c0dd3feb217234582164a0/tumblr_inline_oc7onq88R01rifr4k_500.gif'); }
   .lux-track.calvin, .lux-track.gb-54,
   .lux.calvin,
   .lux.gb-54,
@@ -270,7 +270,7 @@
   .dash-bb.calvin,
   .dash-bb.gb-54 {
     --rgb: 112,128,144;
-    --img: url('https://66.media.tumblr.com/44d7071974bddf8fe9f8abf36f6c6e8f/tumblr_inline_pprhtse5Ze1rooebp_540.gif'); }
+    --postImage: url('https://66.media.tumblr.com/44d7071974bddf8fe9f8abf36f6c6e8f/tumblr_inline_pprhtse5Ze1rooebp_540.gif'); }
   .lux-track.case, .lux-track.gb-585,
   .lux.case,
   .lux.gb-585,
@@ -279,7 +279,7 @@
   .dash-bb.case,
   .dash-bb.gb-585 {
     --rgb: 114, 144, 105;
-    --img: url('https://www.malemodelscene.net/wp-content/uploads/2011/09/Jacey-Elthalion-for-Reserved-Fall-Winter-2011.12-MaleModelSceneNet-05a.jpg'); }
+    --postImage: url('https://www.malemodelscene.net/wp-content/uploads/2011/09/Jacey-Elthalion-for-Reserved-Fall-Winter-2011.12-MaleModelSceneNet-05a.jpg'); }
   .lux-track.denali, .lux-track.denny, .lux-track.gb-265,
   .lux.denali,
   .lux.denny,
@@ -302,7 +302,7 @@
   .dash-bb.dante,
   .dash-bb.gb-179 {
     --rgb: 36,178,173;
-    --img: url('https://64.media.tumblr.com/77d8c2f39f3e96302c0ae3c7b8826078/tumblr_ne6bk5ThME1rhsw4ho7_250.gif'); }
+    --postImage: url('https://64.media.tumblr.com/77d8c2f39f3e96302c0ae3c7b8826078/tumblr_ne6bk5ThME1rhsw4ho7_250.gif'); }
   .lux-track.eirian, .lux-track.gb-228,
   .lux.eirian,
   .lux.gb-228,
@@ -311,7 +311,7 @@
   .dash-bb.eirian,
   .dash-bb.gb-228 {
     --rgb: 29,116,222;
-    --img: url('https://64.media.tumblr.com/211e37b56ee03715dfa6c072404352f5/tumblr_p6bmuxb5jz1x4aftso2_640.png'); }
+    --postImage: url('https://64.media.tumblr.com/211e37b56ee03715dfa6c072404352f5/tumblr_p6bmuxb5jz1x4aftso2_640.png'); }
   .lux-track.eliane, .lux-track.gb-296,
   .lux.eliane,
   .lux.gb-296,
@@ -329,7 +329,7 @@
   .dash-bb.felix,
   .dash-bb.gb-93 {
     --rgb: 179,120,46;
-    --img: url('https://64.media.tumblr.com/75a8cd58ef0425a9503673f22ab60978/tumblr_p6rynkNWf71rjn473o1_500.gif'); }
+    --postImage: url('https://64.media.tumblr.com/75a8cd58ef0425a9503673f22ab60978/tumblr_p6rynkNWf71rjn473o1_500.gif'); }
   .lux-track.xiulan, .lux-track.feng, .lux-track.gb-480,
   .lux.xiulan,
   .lux.feng,
@@ -342,7 +342,7 @@
   .dash-bb.gb-480 {
     --rgb-dark: 162, 126, 121;
     --rgb: 249, 237, 189;
-    --img: url('https://64.media.tumblr.com/39279724ce3ef4758649b2b2ae31ade4/1e21b8412833f484-d7/s540x810/e53ee37e5ac1b68099378d6241ff9dea33cf7a9d.gif'); }
+    --postImage: url('https://64.media.tumblr.com/39279724ce3ef4758649b2b2ae31ade4/1e21b8412833f484-d7/s540x810/e53ee37e5ac1b68099378d6241ff9dea33cf7a9d.gif'); }
   .lux-track.finore, .lux-track.gb-735,
   .lux.finore,
   .lux.gb-735,
@@ -351,7 +351,7 @@
   .dash-bb.finore,
   .dash-bb.gb-735 {
     --rgb: 119,64,96;
-    --img: url('https://64.media.tumblr.com/5f6d8919b3a90e100cb97b406d4e2d07/594cf9662bb24eff-9d/s540x810/bc40e7eee9f4a6d3d44277cec7879f8423a806e8.gif'); }
+    --postImage: url('https://64.media.tumblr.com/5f6d8919b3a90e100cb97b406d4e2d07/594cf9662bb24eff-9d/s540x810/bc40e7eee9f4a6d3d44277cec7879f8423a806e8.gif'); }
   .lux-track.gabriel, .lux-track.gb-922,
   .lux.gabriel,
   .lux.gb-922,
@@ -360,7 +360,7 @@
   .dash-bb.gabriel,
   .dash-bb.gb-922 {
     --rgb: 165,107,59;
-    --img: url('https://64.media.tumblr.com/8f4b62e766f290a1c90658273cbaf52a/aabfd2f466814a70-68/s250x400/48db4ef773ba405c49a51183dd908e3be1142792.gif'); }
+    --postImage: url('https://64.media.tumblr.com/8f4b62e766f290a1c90658273cbaf52a/aabfd2f466814a70-68/s250x400/48db4ef773ba405c49a51183dd908e3be1142792.gif'); }
   .lux-track.georgina, .lux-track.gb-48,
   .lux.georgina,
   .lux.gb-48,
@@ -369,7 +369,7 @@
   .dash-bb.georgina,
   .dash-bb.gb-48 {
     --rgb: 241,129,128;
-    --img: url('https://64.media.tumblr.com/f58c349c6f47d88169554d83764f8fdb/tumblr_inline_p2mx9hggCb1td28xc_1280.gif'); }
+    --postImage: url('https://64.media.tumblr.com/f58c349c6f47d88169554d83764f8fdb/tumblr_inline_p2mx9hggCb1td28xc_1280.gif'); }
   .lux-track.genevieve, .lux-track.evie, .lux-track.gb-487,
   .lux.genevieve,
   .lux.evie,
@@ -381,7 +381,7 @@
   .dash-bb.evie,
   .dash-bb.gb-487 {
     --rgb: 210,134,180;
-    --img: url('https://pbs.twimg.com/media/DjORTCzU0AA4Xw1.jpg'); }
+    --postImage: url('https://pbs.twimg.com/media/DjORTCzU0AA4Xw1.jpg'); }
   .lux-track.halsten, .lux-track.hal, .lux-track.gb-456,
   .lux.halsten,
   .lux.hal,
@@ -394,7 +394,7 @@
   .dash-bb.gb-456 {
     --rgb: 166,76,86;
     --rgb-dark: 120,46,54;
-    --img: url('https://64.media.tumblr.com/148deecfee01187574f508c2d7b2dc99/tumblr_inline_opd7q0fOFK1rifr4k_540.gif'); }
+    --postImage: url('https://64.media.tumblr.com/148deecfee01187574f508c2d7b2dc99/tumblr_inline_opd7q0fOFK1rifr4k_540.gif'); }
   .lux-track.hugo, .lux-track.gb-308,
   .lux.hugo,
   .lux.gb-308,
@@ -403,7 +403,7 @@
   .dash-bb.hugo,
   .dash-bb.gb-308 {
     --rgb: 171,164,143;
-    --img: url('https://66.media.tumblr.com/695e89b161a930c9ae642895b1139725/f183e03d30c0c8bb-75/s540x810/533aff5ac815d8b26146cd49491f97cba05a0382.gif'); }
+    --postImage: url('https://66.media.tumblr.com/695e89b161a930c9ae642895b1139725/f183e03d30c0c8bb-75/s540x810/533aff5ac815d8b26146cd49491f97cba05a0382.gif'); }
   .lux-track.inoue, .lux-track.naoki, .lux-track.gb-75,
   .lux.inoue,
   .lux.naoki,
@@ -416,7 +416,7 @@
   .dash-bb.gb-75 {
     --rgb: 172,216,170;
     --rgb-dark:80,112,79;
-    --img: url('https://64.media.tumblr.com/a1038692266a1eb198dbccad0b6f4272/tumblr_odopvtGZrZ1to20fio3_250.gif'); }
+    --postImage: url('https://64.media.tumblr.com/a1038692266a1eb198dbccad0b6f4272/tumblr_odopvtGZrZ1to20fio3_250.gif'); }
   .lux-track.islay, .lux-track.gb-354,
   .lux.islay,
   .lux.gb-354,
@@ -425,7 +425,7 @@
   .dash-bb.islay,
   .dash-bb.gb-354 {
     --rgb: 121,86,99;
-    --img: url('https://64.media.tumblr.com/a4a94a0aa4ee18001596cab3575f7411/8aa2c12e0c140e5a-3d/s540x810/c447e224482f3c3e604c7aaa852c774965ccf88d.gif'); }
+    --postImage: url('https://64.media.tumblr.com/a4a94a0aa4ee18001596cab3575f7411/8aa2c12e0c140e5a-3d/s540x810/c447e224482f3c3e604c7aaa852c774965ccf88d.gif'); }
   .lux-track.jace, .lux-track.gb-356,
   .lux.jace,
   .lux.gb-356,
@@ -434,7 +434,7 @@
   .dash-bb.jace,
   .dash-bb.gb-356 {
     --rgb: 153,114,187;
-    --img: url('https://64.media.tumblr.com/df982966aef27a27c1395cbb09d17942/tumblr_mswu4zONan1qggu3yo7_250.gif'); }
+    --postImage: url('https://64.media.tumblr.com/df982966aef27a27c1395cbb09d17942/tumblr_mswu4zONan1qggu3yo7_250.gif'); }
   .lux-track.keilani, .lux-track.gb-77,
   .lux.keilani,
   .lux.gb-77,
@@ -443,7 +443,7 @@
   .dash-bb.keilani,
   .dash-bb.gb-77 {
     --rgb: 154,140,152;
-    --img: url('https://www.malemodelscene.net/wp-content/uploads/2016/03/Gabriel-Marques-Felix-FW16-08-620x691.jpg'); }
+    --postImage: url('https://www.malemodelscene.net/wp-content/uploads/2016/03/Gabriel-Marques-Felix-FW16-08-620x691.jpg'); }
   .lux-track.kharim, .lux-track.gb-29,
   .lux.kharim,
   .lux.gb-29,
@@ -453,7 +453,7 @@
   .dash-bb.gb-29 {
     --rgb: 247,181,56;
     --rgb-dark: 196,143,43;
-    --img: url('https://i.postimg.cc/yN1zyPbj/65655591-2263207680393504-5862899364331704844-n.jpg'); }
+    --postImage: url('https://i.postimg.cc/yN1zyPbj/65655591-2263207680393504-5862899364331704844-n.jpg'); }
   .lux-track.kit, .lux-track.gb-219,
   .lux.kit,
   .lux.gb-219,
@@ -463,7 +463,7 @@
   .dash-bb.gb-219 {
     --rgb: 253,177,113;
     --rgb-dark: 186,122,69;
-    --img: url('https://64.media.tumblr.com/9814e9f30ad976f5b4fb76dbcf230fbe/tumblr_inline_ok7ixcJv8j1qlt39u_400.gif'); }
+    --postImage: url('https://64.media.tumblr.com/9814e9f30ad976f5b4fb76dbcf230fbe/tumblr_inline_ok7ixcJv8j1qlt39u_400.gif'); }
   .lux-track.kylian, .lux-track.gb-446,
   .lux.kylian,
   .lux.gb-446,
@@ -472,7 +472,7 @@
   .dash-bb.kylian,
   .dash-bb.gb-446 {
     --rgb: 86,109,176;
-    --img: url('https://64.media.tumblr.com/59c2a89f58f27e53fcf5c8289fc1d175/30acca470ca69808-e4/s1280x1920/4b83fbeccaa6ed7a846489e7236c3e14769b1e8b.png'); }
+    --postImage: url('https://64.media.tumblr.com/59c2a89f58f27e53fcf5c8289fc1d175/30acca470ca69808-e4/s1280x1920/4b83fbeccaa6ed7a846489e7236c3e14769b1e8b.png'); }
   .lux-track.laurie, .lux-track.gb-278,
   .lux.laurie,
   .lux.gb-278,
@@ -482,7 +482,7 @@
   .dash-bb.gb-278 {
     --rgb: 173,181,211;
     --rgb-dark: 115,124,156;
-    --img: url('https://64.media.tumblr.com/a2b3185be06cbb70ccffbe5c6d04a7e7/tumblr_inline_o1orrdIykw1rifr4k_500.gif'); }
+    --postImage: url('https://64.media.tumblr.com/a2b3185be06cbb70ccffbe5c6d04a7e7/tumblr_inline_o1orrdIykw1rifr4k_500.gif'); }
   .lux-track.laylah, .lux-track.gb-499,
   .lux.laylah,
   .lux.gb-499,
@@ -491,7 +491,7 @@
   .dash-bb.laylah,
   .dash-bb.gb-499 {
     --rgb: 135,32,85;
-    --img: url('https://64.media.tumblr.com/bd0255c1323b0d6383d52d188d8ba085/3bd7d79f3cd0eafd-f9/s540x810/4a82f38870fd0e5a8be4b3a8a6e7766331db5472.gif'); }
+    --postImage: url('https://64.media.tumblr.com/bd0255c1323b0d6383d52d188d8ba085/3bd7d79f3cd0eafd-f9/s540x810/4a82f38870fd0e5a8be4b3a8a6e7766331db5472.gif'); }
   .lux-track.lazar, .lux-track.gb-696,
   .lux.lazar,
   .lux.gb-696,
@@ -501,7 +501,7 @@
   .dash-bb.gb-696 {
     --rgb-dark: 74,69,34;
     --rgb: 125,121,72;
-    --img: url('https://64.media.tumblr.com/add210e36394568d9eefa0ca459c1fe6/tumblr_inline_nreqbnELp61qlt39u_250.gifv'); }
+    --postImage: url('https://64.media.tumblr.com/add210e36394568d9eefa0ca459c1fe6/tumblr_inline_nreqbnELp61qlt39u_250.gifv'); }
   .lux-track.levi, .lux-track.leviathan, .lux-track.gb-410,
   .lux.levi,
   .lux.leviathan,
@@ -513,7 +513,7 @@
   .dash-bb.leviathan,
   .dash-bb.gb-410 {
     --rgb: 95,159,71;
-    --img: url('https://562674e67f97b3655108-108f4feb8d0a0d4e96eba3deb0defb13.ssl.cf3.rackcdn.com/507_29ff6813-4407-44f2-a91b-aa3dba320a1e.jpg'); }
+    --postImage: url('https://562674e67f97b3655108-108f4feb8d0a0d4e96eba3deb0defb13.ssl.cf3.rackcdn.com/507_29ff6813-4407-44f2-a91b-aa3dba320a1e.jpg'); }
   .lux-track.liam, .lux-track.gb-443,
   .lux.liam,
   .lux.gb-443,
@@ -522,7 +522,7 @@
   .dash-bb.liam,
   .dash-bb.gb-443 {
     --rgb: 166,146,175;
-    --img: url('https://64.media.tumblr.com/6ee382c1a38c1fdb24ac95a3e103478a/65060ad8597ab11e-5e/s540x810/f4625499932b7752dd2a7fe42f9d52f51c929407.gif'); }
+    --postImage: url('https://64.media.tumblr.com/6ee382c1a38c1fdb24ac95a3e103478a/65060ad8597ab11e-5e/s540x810/f4625499932b7752dd2a7fe42f9d52f51c929407.gif'); }
   .lux-track.lochlann, .lux-track.gb-51,
   .lux.lochlann,
   .lux.gb-51,
@@ -532,7 +532,7 @@
   .dash-bb.gb-51 {
     --rgb: 158,204,209;
     --rgb-dark: 104,155,161;
-    --img: url('https://pbs.twimg.com/media/DZ9TwRmX0AUWxlN.jpg'); }
+    --postImage: url('https://pbs.twimg.com/media/DZ9TwRmX0AUWxlN.jpg'); }
   .lux-track.luciano,
   .lux.luciano,
   .parent-9.luciano,
@@ -546,7 +546,7 @@
   .dash-bb.maeve,
   .dash-bb.gb-81 {
     --rgb: 201,158,230;
-    --img: url('https://64.media.tumblr.com/9584f61639396834d55cda524bd56097/fdee783650c277f9-e1/s400x600/5b0125578ddc00c04ee1bab18fb75d986ddacb6e.gif'); }
+    --postImage: url('https://64.media.tumblr.com/9584f61639396834d55cda524bd56097/fdee783650c277f9-e1/s400x600/5b0125578ddc00c04ee1bab18fb75d986ddacb6e.gif'); }
   .lux-track.magalie, .lux-track.gb-141,
   .lux.magalie,
   .lux.gb-141,
@@ -564,7 +564,7 @@
   .dash-bb.gb-919 {
     --rgb: 177, 209, 75;
     --rgb-dark: 166, 171, 62;
-    --img: url('https://64.media.tumblr.com/6a6c4b521528acb25a1e7deeb1a88b42/b503a38daf93c9b6-64/s540x810/1b87c09599b0c00c2fdeb4837d1afa3e69cf74de.gif'); }
+    --postImage: url('https://64.media.tumblr.com/6a6c4b521528acb25a1e7deeb1a88b42/b503a38daf93c9b6-64/s540x810/1b87c09599b0c00c2fdeb4837d1afa3e69cf74de.gif'); }
   .lux-track.max,
   .lux.max,
   .parent-9.max,
@@ -579,13 +579,16 @@
   .dash-bb.gb-698 {
     --rgb: 135,41,141;
     --rgb-dark: 111,30,91;
-    --img: url('https://i.pinimg.com/564x/d2/cc/e9/d2cce99e17692067d5ce54bdd610dcf8.jpg'); }
-  .lux-track.gb-158,
+    --postImage: url('https://i.pinimg.com/564x/d2/cc/e9/d2cce99e17692067d5ce54bdd610dcf8.jpg'); }
+  .lux-track.michalis, .lux-track.gb-158,
+  .lux.michalis,
   .lux.gb-158,
+  .parent-9.michalis,
   .parent-9.gb-158,
+  .dash-bb.michalis,
   .dash-bb.gb-158 {
     --rgb: 147,92,132;
-    --img: url('https://images.mubicdn.net/images/cast_member/835761/cache-619273-1607929424/image-w856.jpg'); }
+    --postImage: url('https://images.mubicdn.net/images/cast_member/835761/cache-619273-1607929424/image-w856.jpg'); }
   .lux-track.nicolas, .lux-track.col, .lux-track.gb-378,
   .lux.nicolas,
   .lux.col,
@@ -597,7 +600,7 @@
   .dash-bb.col,
   .dash-bb.gb-378 {
     --rgb: 15,143,105;
-    --img: url('https://64.media.tumblr.com/25d260a482851ed2a9b0e08eac87c2a4/tumblr_inline_pplh5yWwcO1vfa8vf_250.gif'); }
+    --postImage: url('https://64.media.tumblr.com/25d260a482851ed2a9b0e08eac87c2a4/tumblr_inline_pplh5yWwcO1vfa8vf_250.gif'); }
   .lux-track.rhee, .lux-track.gb-496,
   .lux.rhee,
   .lux.gb-496,
@@ -606,7 +609,7 @@
   .dash-bb.rhee,
   .dash-bb.gb-496 {
     --rgb: 177,83,10;
-    --img: url('https://64.media.tumblr.com/18aab154f2e129a721f32bfbf773193b/c3e191644dd03183-cd/s540x810/67e305613361893315863403e83dae6d163d9323.gif'); }
+    --postImage: url('https://64.media.tumblr.com/18aab154f2e129a721f32bfbf773193b/c3e191644dd03183-cd/s540x810/67e305613361893315863403e83dae6d163d9323.gif'); }
   .lux-track.rhys, .lux-track.gb-10,
   .lux.rhys,
   .lux.gb-10,
@@ -616,7 +619,7 @@
   .dash-bb.gb-10 {
     --rgb-dark: 163,44,36;
     --rgb: 163,49,42;
-    --img: url('https://64.media.tumblr.com/7817f40d8c225e5cf2759cc1ce29c83f/458ba54d4395c75e-0b/s540x810/b4a7118a51f363b56fde843cf32e3539cd2400dd.gif'); }
+    --postImage: url('https://64.media.tumblr.com/7817f40d8c225e5cf2759cc1ce29c83f/458ba54d4395c75e-0b/s540x810/b4a7118a51f363b56fde843cf32e3539cd2400dd.gif'); }
   .lux-track.royal, .lux-track.gb-83,
   .lux.royal,
   .lux.gb-83,
@@ -626,7 +629,7 @@
   .dash-bb.gb-83 {
     --rgb: 122,223,186;
     --rgb-dark: 83,176,142;
-    --img: url('https://hips.hearstapps.com/hmg-prod/images/hunter-schafer-ruben-chamorro-13-1564591780.jpg'); }
+    --postImage: url('https://hips.hearstapps.com/hmg-prod/images/hunter-schafer-ruben-chamorro-13-1564591780.jpg'); }
   .lux-track.ryvian, .lux-track.ryv,
   .lux.ryvian,
   .lux.ryv,
@@ -659,7 +662,7 @@
   .dash-bb.lia,
   .dash-bb.gb-609 {
     --rgb: 217,170,2;
-    --img: url('https://64.media.tumblr.com/56e5ea4fc52a6da9d5f8fa7fc7e93ee5/6d9fc7978cb18a80-9b/s400x600/b9815def082563d9fe7604cd9e1a57396dd9348d.gif'); }
+    --postImage: url('https://64.media.tumblr.com/56e5ea4fc52a6da9d5f8fa7fc7e93ee5/6d9fc7978cb18a80-9b/s400x600/b9815def082563d9fe7604cd9e1a57396dd9348d.gif'); }
   .lux-track.thealdrae,
   .lux.thealdrae,
   .parent-9.thealdrae,
@@ -678,4 +681,4 @@
   .dash-bb.zoya,
   .dash-bb.gb-497 {
     --rgb: 99,143,152;
-    --img: url('https://64.media.tumblr.com/b563290613a94c7f9259bcd5aeee190c/tumblr_mi42dsQ5kw1qbz8aro2_r1_250.gif'); }
+    --postImage: url('https://64.media.tumblr.com/b563290613a94c7f9259bcd5aeee190c/tumblr_mi42dsQ5kw1qbz8aro2_r1_250.gif'); }
