@@ -201,7 +201,13 @@ body:not(.light) .lux-track.gb tag-wrap, body:not(.light)
   --bg-accent: var(--accent);
   --bg-accent-transparent: var(--accent-30);
   --bg-accent-transparent-alt: var(--accent-50);
-  --text-accent: var(--accent);
+  --text-accent: var(--accent); }
+
+.lux-track ner-content,
+.lux ner-content,
+.parent-9 ner-content,
+.gb-9.parent-0 ner-content,
+.account-9.parent-0 ner-content {
   white-space: pre-wrap; }
 
 .lux-track.wthi .dash-bb,

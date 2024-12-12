@@ -81,7 +81,9 @@
         --bg-accent-transparent: var(--accent-30);
         --bg-accent-transparent-alt: var(--accent-50);
         --text-accent: var(--accent);
-        white-space: pre-wrap;
+    }
+    & ner-content {
+        white-space:pre-wrap;
     }
     &.wthi .dash-bb {
         //wthi only
