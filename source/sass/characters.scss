@@ -68,7 +68,7 @@
     & et-social,
     & ner-wrap,
     & ner-comm {
-        //gb:et only
+        //gb:et & ner only
         --border-accent: var(--accent);
         --bg-accent: var(--accent);
         --bg-accent-solid: var(--accent);
@@ -81,6 +81,7 @@
         --bg-accent-transparent: var(--accent-30);
         --bg-accent-transparent-alt: var(--accent-50);
         --text-accent: var(--accent);
+        white-space: pre-wrap;
     }
     &.wthi .dash-bb {
         //wthi only
@@ -282,6 +283,7 @@
     &.wthi-22 {
         --rgb: 119,64,96;
         --postImage: url('https://64.media.tumblr.com/5f6d8919b3a90e100cb97b406d4e2d07/594cf9662bb24eff-9d/s540x810/bc40e7eee9f4a6d3d44277cec7879f8423a806e8.gif');
+        --nerImage: url('https://64.media.tumblr.com/5f6d8919b3a90e100cb97b406d4e2d07/594cf9662bb24eff-9d/s540x810/bc40e7eee9f4a6d3d44277cec7879f8423a806e8.gif')
     }
     &.gabriel,
     &.gb-922 {
@@ -308,6 +310,7 @@
         --rgb: 166,76,86;
         --rgb-dark: 120,46,54;
         --postImage: url('https://64.media.tumblr.com/148deecfee01187574f508c2d7b2dc99/tumblr_inline_opd7q0fOFK1rifr4k_540.gif');
+        --nerImage: url('https://64.media.tumblr.com/148deecfee01187574f508c2d7b2dc99/tumblr_inline_opd7q0fOFK1rifr4k_540.gif');
     }
     
     &.hugo,
@@ -469,6 +472,7 @@
         --rgb: 122,223,186;
         --rgb-dark: 83,176,142;
         --postImage: url('https://hips.hearstapps.com/hmg-prod/images/hunter-schafer-ruben-chamorro-13-1564591780.jpg');
+        --nerImage: url('https://i.pinimg.com/736x/a3/d2/e6/a3d2e60dc7f3fc8f8335185c1db56898.jpg');
     }
     
     &.ryvian,
