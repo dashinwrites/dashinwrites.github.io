@@ -303,14 +303,14 @@ body:not(.light) .lux-track.gb tag-wrap, body:not(.light)
   border: 0;
   overflow: hidden;
   border-radius: 3px;
-  content: var(----postImage); }
+  content: var(--postImage); }
 
 .lux-track.gb et-image.dashpost img,
 .lux.gb et-image.dashpost img,
 .parent-9.gb et-image.dashpost img,
 .gb-9.parent-0.gb et-image.dashpost img,
 .account-9.parent-0.gb et-image.dashpost img {
-  content: var(----postImage); }
+  content: var(--postImage); }
 
 .lux-track.gb ner-image.dashpost img,
 .lux.gb ner-image.dashpost img,

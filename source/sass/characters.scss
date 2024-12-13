@@ -145,11 +145,11 @@
         border: 0;
   	    overflow: hidden;
   	    border-radius: 3px;
-	    content: var(----postImage);
+	    content: var(--postImage);
     }
 
     &.gb et-image.dashpost img {
-        content: var(----postImage);
+        content: var(--postImage);
     }
 
     &.gb ner-image.dashpost img {
