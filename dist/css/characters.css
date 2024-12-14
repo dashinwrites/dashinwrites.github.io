@@ -530,7 +530,8 @@ body:not(.light) .lux-track.gb tag-wrap, body:not(.light)
 .account-9.parent-0.gb-958 {
   --rgb: 254,216,166;
   --rgb-dark: 217,154,113;
-  --img: url('https://i.postimg.cc/X7nn2gjY/image.png'); }
+  --postImage: url('https://i.postimg.cc/d0jk1TLP/image-psd-2.png');
+  --nerImage: url('https://i.postimg.cc/d0jk1TLP/image-psd-2.png'); }
 
 .lux-track.felix, .lux-track.gb-93,
 .lux.felix,
@@ -557,11 +558,26 @@ body:not(.light) .lux-track.gb tag-wrap, body:not(.light)
 .account-9.parent-0.xiulan,
 .account-9.parent-0.feng,
 .account-9.parent-0.gb-480 {
-  --rgb-dark: 162, 126, 121;
   --rgb: 249, 237, 189;
-  --img: url('https://64.media.tumblr.com/39279724ce3ef4758649b2b2ae31ade4/1e21b8412833f484-d7/s540x810/e53ee37e5ac1b68099378d6241ff9dea33cf7a9d.gif');
-  --nerImage: url('https://64.media.tumblr.com/39279724ce3ef4758649b2b2ae31ade4/1e21b8412833f484-d7/s540x810/e53ee37e5ac1b68099378d6241ff9dea33cf7a9d.gif');
-  --dragon: url('https://i.pinimg.com/736x/27/ce/99/27ce998a82995fe3a6f8d443c2cc430d.jpg'); }
+  --rgb-dark: 162, 126, 121;
+  --postImage: url(https://64.media.tumblr.com/39279724ce3ef4758649b2b2ae31ade4/1e21b8412833f484-d7/s540x810/e53ee37e5ac1b68099378d6241ff9dea33cf7a9d.gif);
+  --nerImage: url(https://64.media.tumblr.com/39279724ce3ef4758649b2b2ae31ade4/1e21b8412833f484-d7/s540x810/e53ee37e5ac1b68099378d6241ff9dea33cf7a9d.gif);
+  --wideImage: ;
+  --nerWideImage: ; }
+  .lux-track.xiulan .dragon, .lux-track.feng .dragon, .lux-track.gb-480 .dragon,
+  .lux.xiulan .dragon,
+  .lux.feng .dragon,
+  .lux.gb-480 .dragon,
+  .parent-9.xiulan .dragon,
+  .parent-9.feng .dragon,
+  .parent-9.gb-480 .dragon,
+  .gb-9.parent-0.xiulan .dragon,
+  .gb-9.parent-0.feng .dragon,
+  .gb-9.parent-0.gb-480 .dragon,
+  .account-9.parent-0.xiulan .dragon,
+  .account-9.parent-0.feng .dragon,
+  .account-9.parent-0.gb-480 .dragon {
+    --nerImage: url(https://i.pinimg.com/736x/27/ce/99/27ce998a82995fe3a6f8d443c2cc430d.jpg); }
 
 .lux-track.finore, .lux-track.gb-735, .lux-track.wthi-22,
 .lux.finore,
@@ -884,13 +900,52 @@ body:not(.light) .lux-track.gb tag-wrap, body:not(.light)
   --rgb-dark: 111,30,91;
   --postImage: url('https://i.pinimg.com/564x/d2/cc/e9/d2cce99e17692067d5ce54bdd610dcf8.jpg'); }
 
-.lux-track.gb-158,
+.lux-track.michalis, .lux-track.mik, .lux-track.gb-158,
+.lux.michalis,
+.lux.mik,
 .lux.gb-158,
+.parent-9.michalis,
+.parent-9.mik,
 .parent-9.gb-158,
+.gb-9.parent-0.michalis,
+.gb-9.parent-0.mik,
 .gb-9.parent-0.gb-158,
+.account-9.parent-0.michalis,
+.account-9.parent-0.mik,
 .account-9.parent-0.gb-158 {
   --rgb: 147,92,132;
   --postImage: url('https://images.mubicdn.net/images/cast_member/835761/cache-619273-1607929424/image-w856.jpg'); }
+
+.lux-track.nathaniel, .lux-track.nate, .lux-track.wthi-42,
+.lux.nathaniel,
+.lux.nate,
+.lux.wthi-42,
+.parent-9.nathaniel,
+.parent-9.nate,
+.parent-9.wthi-42,
+.gb-9.parent-0.nathaniel,
+.gb-9.parent-0.nate,
+.gb-9.parent-0.wthi-42,
+.account-9.parent-0.nathaniel,
+.account-9.parent-0.nate,
+.account-9.parent-0.wthi-42 {
+  --rgb: 253,184,70; }
+
+.lux-track.nicodemo, .lux-track.nico, .lux-track.gb-936,
+.lux.nicodemo,
+.lux.nico,
+.lux.gb-936,
+.parent-9.nicodemo,
+.parent-9.nico,
+.parent-9.gb-936,
+.gb-9.parent-0.nicodemo,
+.gb-9.parent-0.nico,
+.gb-9.parent-0.gb-936,
+.account-9.parent-0.nicodemo,
+.account-9.parent-0.nico,
+.account-9.parent-0.gb-936 {
+  --rgb: 188, 168, 98;
+  --img: url('https://i.pinimg.com/564x/c0/a5/53/c0a55362ea58c26d90e05bf762506431.jpg'); }
 
 .lux-track.nicolas, .lux-track.col, .lux-track.gb-378,
 .lux.nicolas,

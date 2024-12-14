@@ -261,7 +261,8 @@
     &.gb-958 {
         --rgb: 254,216,166;
         --rgb-dark: 217,154,113;
-        --img: url('https://i.postimg.cc/X7nn2gjY/image.png');
+        --postImage: url('https://i.postimg.cc/d0jk1TLP/image-psd-2.png');
+        --nerImage: url('https://i.postimg.cc/d0jk1TLP/image-psd-2.png');
     }
     
     &.felix,
@@ -273,11 +274,16 @@
     &.xiulan,
     &.feng,
     &.gb-480 {
-        --rgb-dark: 162, 126, 121;
         --rgb: 249, 237, 189;
-        --img: url('https://64.media.tumblr.com/39279724ce3ef4758649b2b2ae31ade4/1e21b8412833f484-d7/s540x810/e53ee37e5ac1b68099378d6241ff9dea33cf7a9d.gif');
-        --nerImage: url('https://64.media.tumblr.com/39279724ce3ef4758649b2b2ae31ade4/1e21b8412833f484-d7/s540x810/e53ee37e5ac1b68099378d6241ff9dea33cf7a9d.gif');
-        --dragon: url('https://i.pinimg.com/736x/27/ce/99/27ce998a82995fe3a6f8d443c2cc430d.jpg');
+        --rgb-dark: 162, 126, 121;
+        --postImage: url(https://64.media.tumblr.com/39279724ce3ef4758649b2b2ae31ade4/1e21b8412833f484-d7/s540x810/e53ee37e5ac1b68099378d6241ff9dea33cf7a9d.gif);
+        --nerImage: url(https://64.media.tumblr.com/39279724ce3ef4758649b2b2ae31ade4/1e21b8412833f484-d7/s540x810/e53ee37e5ac1b68099378d6241ff9dea33cf7a9d.gif);
+        --wideImage: ;
+        --nerWideImage: ;
+
+        .dragon {
+            --nerImage: url(https://i.pinimg.com/736x/27/ce/99/27ce998a82995fe3a6f8d443c2cc430d.jpg);
+        }
     }
 
     &.finore,
@@ -441,9 +447,24 @@
     }
     
     // michalis
+    &.michalis,
+    &.mik,
     &.gb-158 {
         --rgb: 147,92,132;
         --postImage: url('https://images.mubicdn.net/images/cast_member/835761/cache-619273-1607929424/image-w856.jpg');
+    }
+
+    &.nathaniel,
+    &.nate,
+    &.wthi-42 {
+        --rgb: 253,184,70;
+    }
+
+    &.nicodemo,
+    &.nico,
+    &.gb-936 {
+        --rgb: 188, 168, 98;
+        --img: url('https://i.pinimg.com/564x/c0/a5/53/c0a55362ea58c26d90e05bf762506431.jpg');
     }
 
     &.nicolas,
