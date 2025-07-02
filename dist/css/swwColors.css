@@ -3,96 +3,120 @@
   --rgb: linear-gradient(to right, rgba(var(--grad-a),0.3), rgba(var(--grad-b),0.3));
   --character-text: rgb(var(--rgb-dark, var(--rgb, transparent)));
   --accent: rgb(var(--rgb));
-  --dkAccent: rgb(var(--rgb-dark, var(--rgb))); }
-  .lux-track[class~="a'srian"] {
-    --rgb: 236,176,111;
-    --grad-a: 166,108,83;
-    --grad-b: 113,57,39; }
-  .lux-track.aureannant {
-    --rgb: 99,180,192;
-    --grad-a: 99,180,192;
-    --grad-b: 166,124,0; }
-  .lux-track[class~="b'gor"] {
-    --rgb: 244,229,205;
-    --grad-a: 199,102,32;
-    --grad-b: 139,75,39; }
-  .lux-track[class~="b'ryn"] {
-    --rgb: 74,90,28;
-    --grad-a: 202,212,115;
-    --grad-b: 74,90,28; }
-  .lux-track.ellariel {
-    --rgb: 251, 193, 189;
-    --grad-a: 200,124,149;
-    --grad-b: 133,88,113; }
-  .lux-track.fearne {
-    --rgb: 62,112,61;
-    --grad-a: 62,112,61;
-    --grad-b: 162,195,76; }
-  .lux-track.feytach {
-    --rgb: 2,71,100;
-    --grad-a: 86,155,170;
-    --grad-b: 2,71,100; }
-  .lux-track[class~="g'yon"] {
-    --rgb: 77,24,18;
-    --grad-a: 77,24,18;
-    --grad-b: 184,135,58; }
-  .lux-track.kanestikiv, .lux-track.kane {
-    --rgb: 90,0,0;
-    --grad-a: 90,0,0;
-    --grad-b: 166,124,0; }
-  .lux-track[class~="k'eir"] {
-    --rgb: 19,11,15;
-    --grad-a: 19,11,15;
-    --grad-b: 197,175,101; }
-  .lux-track[class~="k'ran"] {
-    --rgb: 47,69,93;
-    --grad-a: 47,69,93;
-    --grad-b: 187,196,207; }
-  .lux-track[class~="k'ver"] {
-    --rgb: 175,65,83;
-    --grad-a: 44,19,32;
-    --grad-b: 175,65,83; }
-  .lux-track.marlevayne, .lux-track.marley {
-    --rgb: 41,46,40;
-    --grad-a: 230,231,213;
-    --grad-b: 151,168,132; }
-  .lux-track[class~="ne'lon"] {
-    --rgb: 48,66,39;
-    --grad-a: 48,66,39;
-    --grad-b: 108,172,77; }
-  .lux-track[class~="n'lyse"] {
-    --rgb: 119,127,142;
-    --grad-a: 41,45,51;
-    --grad-b: 119,127,142; }
-  .lux-track[class~="qu'lin"] {
-    --rgb: 195,91,103;
-    --grad-a: 195,91,103;
-    --grad-b: 208,169,160; }
-  .lux-track[class~="s'vix"] {
-    --rgb: 57,20,14;
-    --grad-a: 221,202,125;
-    --grad-b: 57,20,14; }
-  .lux-track.tallorine {
-    --rgb: 146,228,155;
-    --grad-a: 57 ,129,21;
-    --grad-b: 82,218,13; }
-  .lux-track.teimyn {
-    --rgb: 249,35,47;
-    --grad-a: 253,136,145;
-    --grad-b: 249,35,47; }
-  .lux-track.thealdrae {
-    --rgb: 62,165,118;
-    --grad-a: 17,27,30;
-    --grad-b: 47,76,88; }
-  .lux-track.valadrie, .lux-track.val {
-    --rgb: 38,36,47;
-    --grad-a: 38,36,47;
-    --grad-b: 68,77,86; }
-  .lux-track.vanelwynne, .lux-track.wynne {
-    --rgb: 153,101,21;
-    --grad-a: 153,101,21;
-    --grad-b: 203,161,53; }
-  .lux-track.xydrie {
-    --rgb: 83,105,80;
-    --grad-a: 83,105,80;
-    --grad-b: 166,189,159; }
+  --dkAccent: rgb(var(--rgb-dark, var(--rgb)));
+}
+.lux-track[class~="a'srian"] {
+  --rgb: 236,176,111;
+  --grad-a: 166,108,83;
+  --grad-b: 113,57,39;
+}
+.lux-track.aureannant {
+  --rgb: 99,180,192;
+  --grad-a: 99,180,192;
+  --grad-b: 166,124,0;
+}
+.lux-track[class~="b'gor"] {
+  --rgb: 244,229,205;
+  --grad-a: 199,102,32;
+  --grad-b: 139,75,39;
+}
+.lux-track[class~="b'ryn"] {
+  --rgb: 74,90,28;
+  --grad-a: 202,212,115;
+  --grad-b: 74,90,28;
+}
+.lux-track.ellariel {
+  --rgb: 251, 193, 189;
+  --grad-a: 200,124,149;
+  --grad-b: 133,88,113;
+}
+.lux-track.fearne {
+  --rgb: 62,112,61;
+  --grad-a: 62,112,61;
+  --grad-b: 162,195,76;
+}
+.lux-track.feytach {
+  --rgb: 2,71,100;
+  --grad-a: 86,155,170;
+  --grad-b: 2,71,100;
+}
+.lux-track[class~="g'yon"] {
+  --rgb: 77,24,18;
+  --grad-a: 77,24,18;
+  --grad-b: 184,135,58;
+}
+.lux-track.kanestikiv, .lux-track.kane {
+  --rgb: 90,0,0;
+  --grad-a: 90,0,0;
+  --grad-b: 166,124,0;
+}
+.lux-track[class~="k'eir"] {
+  --rgb: 19,11,15;
+  --grad-a: 19,11,15;
+  --grad-b: 197,175,101;
+}
+.lux-track[class~="k'ran"] {
+  --rgb: 47,69,93;
+  --grad-a: 47,69,93;
+  --grad-b: 187,196,207;
+}
+.lux-track[class~="k'ver"] {
+  --rgb: 175,65,83;
+  --grad-a: 44,19,32;
+  --grad-b: 175,65,83;
+}
+.lux-track.marlevayne, .lux-track.marley {
+  --rgb: 41,46,40;
+  --grad-a: 230,231,213;
+  --grad-b: 151,168,132;
+}
+.lux-track[class~="ne'lon"] {
+  --rgb: 48,66,39;
+  --grad-a: 48,66,39;
+  --grad-b: 108,172,77;
+}
+.lux-track[class~="n'lyse"] {
+  --rgb: 119,127,142;
+  --grad-a: 41,45,51;
+  --grad-b: 119,127,142;
+}
+.lux-track[class~="qu'lin"] {
+  --rgb: 195,91,103;
+  --grad-a: 195,91,103;
+  --grad-b: 208,169,160;
+}
+.lux-track[class~="s'vix"] {
+  --rgb: 57,20,14;
+  --grad-a: 221,202,125;
+  --grad-b: 57,20,14;
+}
+.lux-track.tallorine {
+  --rgb: 146,228,155;
+  --grad-a: 57 ,129,21;
+  --grad-b: 82,218,13;
+}
+.lux-track.teimyn {
+  --rgb: 249,35,47;
+  --grad-a: 253,136,145;
+  --grad-b: 249,35,47;
+}
+.lux-track.thealdrae {
+  --rgb: 62,165,118;
+  --grad-a: 17,27,30;
+  --grad-b: 47,76,88;
+}
+.lux-track.valadrie, .lux-track.val {
+  --rgb: 38,36,47;
+  --grad-a: 38,36,47;
+  --grad-b: 68,77,86;
+}
+.lux-track.vanelwynne, .lux-track.wynne {
+  --rgb: 153,101,21;
+  --grad-a: 153,101,21;
+  --grad-b: 203,161,53;
+}
+.lux-track.xydrie {
+  --rgb: 83,105,80;
+  --grad-a: 83,105,80;
+  --grad-b: 166,189,159;
+}

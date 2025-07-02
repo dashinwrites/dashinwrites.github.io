@@ -9,8 +9,8 @@
   --space--md: 15px;
   --space--lg: 30px;
   --space--xl: 60px;
-  --font--body: 'Nunito Sans', sans-serif;
-  --font--serif: 'Playfair', serif;
+  --font--body: "Nunito Sans", sans-serif;
+  --font--serif: "Playfair", serif;
   --accent: #63817c;
   --accent-rgb: 99, 129, 124;
   --accent--light: #6e8b86;
@@ -21,15 +21,20 @@
   --bg--quaternary: #363636;
   --bg--quintenary: #747474;
   --text--primary: #e7e7e7;
-  --text--on-accent: #e7e7e7; }
-  @media (min-width: 601px) {
-    :root {
-      --size--menu-width: 60px;
-      --size--submenu-width: 300px; } }
-  @media (min-width: 769px) {
-    :root {
-      --size--menu-width: 100px;
-      --size--submenu-width: 300px; } }
+  --text--on-accent: #e7e7e7;
+}
+@media (min-width: 601px) {
+  :root {
+    --size--menu-width: 60px;
+    --size--submenu-width: 300px;
+  }
+}
+@media (min-width: 769px) {
+  :root {
+    --size--menu-width: 100px;
+    --size--submenu-width: 300px;
+  }
+}
 
 body.theme--light {
   --bg--primary: #dedddd;
@@ -37,4 +42,5 @@ body.theme--light {
   --bg--tertiary: #f1f1f1;
   --bg--quaternary: #d1d1d1;
   --bg--quintenary: #e2e2e2;
-  --text--primary: #767676; }
+  --text--primary: #767676;
+}

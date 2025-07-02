@@ -11,7 +11,7 @@
     const gulp = require('gulp');
 
     // Include plugins
-    const gulpSass = require('gulp-sass'),
+    const gulpSass = require('gulp-sass')(require('sass')),
           postcss = require('gulp-postcss'),
           autoprefixer = require('autoprefixer'),
           concat = require('gulp-concat'),
