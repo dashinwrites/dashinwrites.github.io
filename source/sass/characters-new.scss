@@ -1,6 +1,6 @@
 body#ST {
     .post {
-        .dashpost {
+        .luxpost {
             //SAF only
             &.saf-custom {
                 --accent: rgb(var(--rgb));
@@ -48,19 +48,25 @@ body#ST {
         }
 
         //rhys
-        &.saf-23 .dashpost {
+        &.saf-23 .luxpost {
             --rgb: 163, 44, 36;
             --wideImage: url(https://images2.imgbox.com/d6/25/VIxcWmbe_o.png);
         }
 
         //callista
-        &.saf-21 .dashpost {
+        &.saf-21 .luxpost {
             --rgb: 178, 180, 146;
             --wideImage: url();
         }
 
+        //quinn
+        &.saf-29 .luxpost {
+            --rgb: 147, 35, 35;
+            --wideImage: url(https://i.pinimg.com/736x/ee/38/23/ee3823b3e4d27b585bbeeeab9a432296.jpg);
+        }
+
         //wren
-        &.saf-25 .dashpost {
+        &.saf-25 .luxpost {
             --rgb: ;
             --wideImage: url();
         }
