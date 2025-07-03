@@ -1061,3 +1061,25 @@ body:not(.light) .account-9.parent-0 ner-comm {
   --rgb: 99,143,152;
   --postImage: url("https://64.media.tumblr.com/b563290613a94c7f9259bcd5aeee190c/tumblr_mi42dsQ5kw1qbz8aro2_r1_250.gif");
 }
+.lux-track.quinn, .lux-track.saf-29,
+.lux.quinn,
+.lux.saf-29,
+.parent-9.quinn,
+.parent-9.saf-29,
+.gb-9.parent-0.quinn,
+.gb-9.parent-0.saf-29,
+.account-9.parent-0.quinn,
+.account-9.parent-0.saf-29 {
+  --rgb: 147, 35, 35;
+}
+.lux-track.callista, .lux-track.saf-21,
+.lux.callista,
+.lux.saf-21,
+.parent-9.callista,
+.parent-9.saf-21,
+.gb-9.parent-0.callista,
+.gb-9.parent-0.saf-21,
+.account-9.parent-0.callista,
+.account-9.parent-0.saf-21 {
+  --rgb: ;
+}
