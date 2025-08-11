@@ -1083,3 +1083,16 @@ body:not(.light) .account-9.parent-0 ner-comm {
 .account-9.parent-0.saf-21 {
   --rgb: 178, 180, 146;
 }
+.lux-track.teyah, .lux-track.saf-90,
+.lux.teyah,
+.lux.saf-90,
+.parent-9.teyah,
+.parent-9.saf-90,
+.gb-9.parent-0.teyah,
+.gb-9.parent-0.saf-90,
+.account-9.parent-0.teyah,
+.account-9.parent-0.saf-90 {
+  --rgb: 172, 32, 58;
+  --rgb-light: 209, 31, 79;
+  --wideImage: url();
+}
