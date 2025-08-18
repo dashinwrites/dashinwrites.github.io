@@ -71,6 +71,7 @@ body#ST {
         &.callista,
         &.saf-21 .dashpost {
             --rgb: 178, 180, 146;
+            --rgb-dark: 115, 117, 79;
             --wideImage: url(https://i.pinimg.com/736x/3b/c9/fc/3bc9fcd65f9e5263fe4cacca1bc36a89.jpg);
             --imagePosition: top;
         }
@@ -105,6 +106,10 @@ body#ST {
             --wideImage: url(https://i.postimg.cc/59VpVzWv/FTew-Uy-DUc-AAQe9q-1751239711.jpg);
             --imagePosition:  0 10%;
         }
-
     }
+}
+
+//light mode override
+body.light #ST .post .dashpost.saf-custom {
+  --rgb: var(--rgb-dark, var(--rgb));
 }
