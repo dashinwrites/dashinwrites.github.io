@@ -62,7 +62,6 @@ body#ST .post.quinn, body#ST .post.saf-29 .dashpost {
   --imagePosition: top;
 }
 body#ST .post.jiayi, body#ST .post.saf-70 .dashpost {
-  --rgb: ;
   --wideImage: url(https://i.postimg.cc/rwPFPG0V/jiayi.png);
   --imagePosition: 0 30%;
 }
@@ -77,6 +76,6 @@ body#ST .post.saf-25 .dashpost {
   --imagePosition: 0 10%;
 }
 
-body.light #ST .post .dashpost.saf-custom {
+body#ST.light .post .dashpost.saf-custom {
   --rgb: var(--rgb-dark, var(--rgb));
 }

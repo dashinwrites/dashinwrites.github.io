@@ -87,7 +87,7 @@ body#ST {
         //jiayi
         &.jiayi, 
         &.saf-70 .dashpost {
-            --rgb: ;
+            // --rgb: ;
             --wideImage: url(https://i.postimg.cc/rwPFPG0V/jiayi.png);
             --imagePosition: 0 30%;
         }
@@ -110,6 +110,6 @@ body#ST {
 }
 
 //light mode override
-body.light #ST .post .dashpost.saf-custom {
+body#ST.light .post .dashpost.saf-custom {
   --rgb: var(--rgb-dark, var(--rgb));
 }
