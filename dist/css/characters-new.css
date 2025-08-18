@@ -41,20 +41,37 @@ body#ST .post.saf-23 .dashpost {
   --rgb: 163, 44, 36;
   --wideImage: url(https://images2.imgbox.com/d6/25/VIxcWmbe_o.png);
 }
-body#ST .post.saf-21 .dashpost {
-  --rgb: 178, 180, 146;
-  --wideImage: url();
+body#ST .post.lachlan, body#ST .post.saf-98 .dashpost {
+  --rgb: 163, 44, 36;
+  --wideImage: url(https://i.postimg.cc/bwjsywCk/lachlan.png);
 }
-body#ST .post.saf-29 .dashpost {
+body#ST .post.saf-77 .dashpost {
+  --rgb: 173,181,211;
+  --rgb-dark: 115,124,156;
+  --wideImage: url(https://i.pinimg.com/736x/0e/a0/b1/0ea0b1f07909796ddc1c6d05078431c8.jpg);
+}
+body#ST .post.callista, body#ST .post.saf-21 .dashpost {
+  --rgb: 178, 180, 146;
+  --wideImage: url(https://i.pinimg.com/736x/3b/c9/fc/3bc9fcd65f9e5263fe4cacca1bc36a89.jpg);
+  --imagePosition: top;
+}
+body#ST .post.quinn, body#ST .post.saf-29 .dashpost {
   --rgb: 106, 83, 142;
   --wideImage: url(https://i.pinimg.com/736x/ee/38/23/ee3823b3e4d27b585bbeeeab9a432296.jpg);
+  --imagePosition: top;
 }
-body#ST .post.saf-90 .dashpost {
+body#ST .post.jiayi, body#ST .post.saf-70 .dashpost {
+  --rgb: ;
+  --wideImage: url(https://i.postimg.cc/rwPFPG0V/jiayi.png);
+  --imagePosition: 0 30%;
+}
+body#ST .post.teyah, body#ST .post.saf-90 .dashpost {
   --rgb: 172, 32, 58;
   --rgb-light: 209, 31, 79;
-  --wideImage: url();
+  --wideImage: url(https://i.postimg.cc/LXpQ9LdL/teyah-wide.png);
 }
 body#ST .post.saf-25 .dashpost {
   --rgb: 166,214,176;
-  --wideImage: url();
+  --wideImage: url(https://i.postimg.cc/59VpVzWv/FTew-Uy-DUc-AAQe9q-1751239711.jpg);
+  --imagePosition: 0 10%;
 }
