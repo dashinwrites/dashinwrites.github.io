@@ -1,36 +1,27 @@
 body#ST .post .dashpost.saf-custom {
-  --accent: rgb(var(--rgb));
-  --accent-90: rgba(var(--rgb), 0.9);
-  --accent-80: rgba(var(--rgb), 0.8);
-  --accent-70: rgba(var(--rgb), 0.7);
-  --accent-60: rgba(var(--rgb), 0.6);
-  --accent-50: rgba(var(--rgb), 0.5);
-  --accent-40: rgba(var(--rgb), 0.4);
-  --accent-30: rgba(var(--rgb), 0.3);
-  --accent-20: rgba(var(--rgb), 0.2);
-  --accent-10: rgba(var(--rgb), 0.1);
-  --accent-light: rgb(var(--rgb));
-  --accent-light-90: rgba(var(--rgb), 0.9);
-  --accent-light-80: rgba(var(--rgb), 0.8);
-  --accent-light-70: rgba(var(--rgb), 0.7);
-  --accent-light-60: rgba(var(--rgb), 0.6);
-  --accent-light-50: rgba(var(--rgb), 0.5);
-  --accent-light-40: rgba(var(--rgb), 0.4);
-  --accent-light-30: rgba(var(--rgb), 0.3);
-  --accent-light-20: rgba(var(--rgb), 0.2);
-  --accent-light-10: rgba(var(--rgb), 0.1);
-  --wideImage: url(https://picsum.photos/500/250);
-  --imagePosition: center;
+  --theme-rgb: var(--rgb);
+  --accent: rgb(var(--theme-rgb, 106,106,106));
+  --accent-90: rgba(var(--theme-rgb, 106,106,106), 0.9);
+  --accent-80: rgba(var(--theme-rgb, 106,106,106), 0.8);
+  --accent-70: rgba(var(--theme-rgb, 106,106,106), 0.7);
+  --accent-60: rgba(var(--theme-rgb, 106,106,106), 0.6);
+  --accent-50: rgba(var(--theme-rgb, 106,106,106), 0.5);
+  --accent-40: rgba(var(--theme-rgb, 106,106,106), 0.4);
+  --accent-30: rgba(var(--theme-rgb, 106,106,106), 0.3);
+  --accent-20: rgba(var(--theme-rgb, 106,106,106), 0.2);
+  --accent-10: rgba(var(--theme-rgb, 106,106,106), 0.1);
   --bg-accent-solid: var(--accent);
   --bg-accent: var(--accent-70);
   --bg-accent-high: var(--accent-80);
   --bg-accent-mid: var(--accent-60);
   --bg-accent-low: var(--accent-40);
-  --text-accent: var(--accent-light);
+  --text-accent: var(--accent);
   --border-accent-color: var(--accent);
   --border-accent: 1px solid var(--accent);
   --border-accent-mid: 1px solid var(--accent-60);
   --border-accent-low: 1px solid var(--accent-40);
+  --wideImage: url(https://picsum.photos/500/250);
+  --imagePosition: center;
 }
 body#ST .post .dashpost.saf-custom tag-image {
   background-image: var(--wideImage);
@@ -77,5 +68,5 @@ body#ST .post.saf-25 .dashpost {
 }
 
 body#ST.light .post .dashpost.saf-custom {
-  --rgb: var(--rgb-dark, var(--rgb));
+  --theme-rgb: var(--rgb-dark, var(--rgb));
 }
