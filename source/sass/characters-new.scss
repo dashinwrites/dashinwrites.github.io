@@ -78,7 +78,7 @@ body#ST {
       --imagePosition: top;
     }
 
-    // jiayi (inherits; safe due to fallback in mixin)
+    // jiayi
     &.jiayi,
     &.saf-70 .dashpost {
       // --rgb: ;
@@ -90,7 +90,7 @@ body#ST {
     &.teyah,
     &.saf-90 .dashpost {
       --rgb: 172, 32, 58;
-      --rgb-light: 209, 31, 79; // optional; not used by this palette
+      --rgb-dark: 209, 31, 79;
       --wideImage: url(https://i.postimg.cc/LXpQ9LdL/teyah-wide.png);
     }
 

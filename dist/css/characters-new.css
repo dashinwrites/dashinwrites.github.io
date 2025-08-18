@@ -58,7 +58,7 @@ body#ST .post.jiayi, body#ST .post.saf-70 .dashpost {
 }
 body#ST .post.teyah, body#ST .post.saf-90 .dashpost {
   --rgb: 172, 32, 58;
-  --rgb-light: 209, 31, 79;
+  --rgb-dark: 209, 31, 79;
   --wideImage: url(https://i.postimg.cc/LXpQ9LdL/teyah-wide.png);
 }
 body#ST .post.saf-25 .dashpost {
