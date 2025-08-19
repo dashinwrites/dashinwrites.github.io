@@ -33,7 +33,8 @@ body#ST .post.saf-23 .dashpost {
   --wideImage: url(https://images2.imgbox.com/d6/25/VIxcWmbe_o.png);
 }
 body#ST .post.lachlan, body#ST .post.saf-98 .dashpost {
-  --rgb: 163, 44, 36;
+  --rgb: 91, 127, 175;
+  --rgb-dark: 51, 102, 204;
   --wideImage: url(https://i.postimg.cc/bwjsywCk/lachlan.png);
 }
 body#ST .post.saf-77 .dashpost {
