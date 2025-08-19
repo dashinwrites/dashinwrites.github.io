@@ -497,6 +497,11 @@
         --postImage: url('https://hips.hearstapps.com/hmg-prod/images/hunter-schafer-ruben-chamorro-13-1564591780.jpg');
         --nerImage: url('https://i.pinimg.com/736x/a3/d2/e6/a3d2e60dc7f3fc8f8335185c1db56898.jpg');
     }
+
+    &.lachlan,
+    &.saf-98 {
+      --rgb: 163, 44, 36;
+    }
     
     &.ryvian,
     &.ryv {

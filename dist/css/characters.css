@@ -975,6 +975,17 @@ body:not(.light) .account-9.parent-0 ner-comm {
   --postImage: url("https://hips.hearstapps.com/hmg-prod/images/hunter-schafer-ruben-chamorro-13-1564591780.jpg");
   --nerImage: url("https://i.pinimg.com/736x/a3/d2/e6/a3d2e60dc7f3fc8f8335185c1db56898.jpg");
 }
+.lux-track.lachlan, .lux-track.saf-98,
+.lux.lachlan,
+.lux.saf-98,
+.parent-9.lachlan,
+.parent-9.saf-98,
+.gb-9.parent-0.lachlan,
+.gb-9.parent-0.saf-98,
+.account-9.parent-0.lachlan,
+.account-9.parent-0.saf-98 {
+  --rgb: 163, 44, 36;
+}
 .lux-track.ryvian, .lux-track.ryv,
 .lux.ryvian,
 .lux.ryv,
