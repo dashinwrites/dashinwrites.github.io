@@ -67,6 +67,10 @@ body#ST .post.saf-25 .dashpost {
   --wideImage: url(https://i.postimg.cc/59VpVzWv/FTew-Uy-DUc-AAQe9q-1751239711.jpg);
   --imagePosition: 0 10%;
 }
+body#ST .post.saf-106 .dashpost {
+  --rgb: 119,64,96;
+  --wideImage: url(https://i.pinimg.com/736x/12/d3/31/12d331135f619de4dd88b678a9afc56a.jpg) ;
+}
 
 body#ST.light .post .dashpost.saf-custom {
   --theme-rgb: var(--rgb-dark, var(--rgb));
