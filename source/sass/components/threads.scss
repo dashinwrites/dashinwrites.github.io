@@ -216,6 +216,12 @@
         background: rgba(var(--rgb), 0.25);
     }
 
+    &.status--hoarded,
+    &:has([data-status="hoarded"]) {
+        background: rgba(var(--rgb), 0.25);
+        border: 1px solid rgba(var(--rgb), 1);
+    }
+
     &.status--complete {
         opacity: 0.25;
         transition-duration: 0.3s;
