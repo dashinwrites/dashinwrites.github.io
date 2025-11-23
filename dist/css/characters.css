@@ -1123,13 +1123,13 @@ body:not(.light) .account-9.parent-0 ner-comm {
 .parent-9.nektarios,
 .gb-9.parent-0.nektarios,
 .account-9.parent-0.nektarios {
-  --rgb: 98,48,57;
-  --rgb-dark: 151, 118, 125;
+  --rgb-dark: 98,48,57;
+  --rgb: 151,118,125;
 }
 .lux-track.zagreus,
 .lux.zagreus,
 .parent-9.zagreus,
 .gb-9.parent-0.zagreus,
 .account-9.parent-0.zagreus {
-  --rgb:;
+  --rgb:243,142,47;
 }
