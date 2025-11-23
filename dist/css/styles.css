@@ -959,6 +959,10 @@ section.links a:hover {
 .thread.status--mine, .thread:has([data-status=mine]) {
   background: rgba(var(--rgb), 0.25);
 }
+.thread.status--hoarded, .thread:has([data-status=hoarded]) {
+  background: rgba(var(--rgb), 0.25);
+  border: 1px solid rgba(var(--rgb), 1);
+}
 .thread.status--complete {
   opacity: 0.25;
   -webkit-transition-duration: 0.3s;
