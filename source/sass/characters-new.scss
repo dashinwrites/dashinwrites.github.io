@@ -42,7 +42,8 @@ body#ST {
     }
 
     // rhys
-    &.saf-23 .dashpost {
+    &.saf-23 .dashpost,
+    &.helios {
       --rgb: 163, 44, 36;
       --wideImage: url(https://images2.imgbox.com/d6/25/VIxcWmbe_o.png);
     }
@@ -107,6 +108,18 @@ body#ST {
         --rgb: 119,64,96;
         --wideImage: url(https://i.pinimg.com/1200x/c9/da/4a/c9da4a2de8b1c6d88bda1bf3eb471e41.jpg);
         --imagePosition: 0 10%;
+    }
+
+    &.aurelian {
+      --rgb:24,125,126;
+    }
+
+    &.nektarios {
+      --rgb:;
+    }
+
+    &.zagreus {
+      --rgb:;
     }
   }
 }
