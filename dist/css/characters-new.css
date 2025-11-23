@@ -72,15 +72,6 @@ body#ST .post.saf-106 .dashpost {
   --wideImage: url(https://i.pinimg.com/1200x/c9/da/4a/c9da4a2de8b1c6d88bda1bf3eb471e41.jpg);
   --imagePosition: 0 10%;
 }
-body#ST .post.aurelian {
-  --rgb:24,125,126;
-}
-body#ST .post.nektarios {
-  --rgb:;
-}
-body#ST .post.zagreus {
-  --rgb:;
-}
 
 body#ST.light .post .dashpost.saf-custom {
   --theme-rgb: var(--rgb-dark, var(--rgb));

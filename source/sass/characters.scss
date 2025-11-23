@@ -482,6 +482,7 @@
     }
     
     &.rhys,
+    &.helios,
     &.gb-10 {
         --rgb-dark: 163,44,36;
         --rgb: 163,49,42;
@@ -558,5 +559,18 @@
         --rgb: 172, 32, 58;
         --rgb-light: 209, 31, 79;
         --wideImage: url();
+    }
+
+    &.aurelian {
+      --rgb:24,125,126;
+    }
+
+    &.nektarios {
+      --rgb: 98,48,57;
+      --rgb-dark: 151, 118, 125;
+    }
+
+    &.zagreus {
+      --rgb:;
     }
 }
