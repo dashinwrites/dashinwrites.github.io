@@ -946,18 +946,14 @@ body:not(.light) .account-9.parent-0 ner-comm {
   --rgb: 177,83,10;
   --postImage: url("https://64.media.tumblr.com/18aab154f2e129a721f32bfbf773193b/c3e191644dd03183-cd/s540x810/67e305613361893315863403e83dae6d163d9323.gif");
 }
-.lux-track.rhys, .lux-track.helios, .lux-track.gb-10,
+.lux-track.rhys, .lux-track.gb-10,
 .lux.rhys,
-.lux.helios,
 .lux.gb-10,
 .parent-9.rhys,
-.parent-9.helios,
 .parent-9.gb-10,
 .gb-9.parent-0.rhys,
-.gb-9.parent-0.helios,
 .gb-9.parent-0.gb-10,
 .account-9.parent-0.rhys,
-.account-9.parent-0.helios,
 .account-9.parent-0.gb-10 {
   --rgb-dark: 163,44,36;
   --rgb: 163,49,42;
@@ -1126,10 +1122,18 @@ body:not(.light) .account-9.parent-0 ner-comm {
   --rgb-dark: 98,48,57;
   --rgb: 151,118,125;
 }
+.lux-track.helios,
+.lux.helios,
+.parent-9.helios,
+.gb-9.parent-0.helios,
+.account-9.parent-0.helios {
+  --rgb:253,219,96;
+}
 .lux-track.zagreus,
 .lux.zagreus,
 .parent-9.zagreus,
 .gb-9.parent-0.zagreus,
 .account-9.parent-0.zagreus {
-  --rgb:253,219,96;
+  --rgb-dark: 163,44,36;
+  --rgb: 163,49,42;
 }
