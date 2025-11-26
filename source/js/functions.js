@@ -1721,9 +1721,20 @@ function populateThreads(array, siteObject) {
     featuring.sort();
 
     //Append filters
-    characters.forEach(character => {
-        document.querySelector('.filter--characters').insertAdjacentHTML('beforeend', `<label><span><input type="checkbox" value=".${character.split(' ')[0].toLowerCase()}"/></span><b>${character.split(' ')[0].toLowerCase()} ${character.split(' ')[1][0].toLowerCase()}.</b></label>`);
+    characters.forEach((character) => {
+      const [first = "", last = ""] = character.split(" ");
+
+      const firstFormatted = first.toLowerCase();
+      const lastInitial = last ? last[0].toLowerCase() + "." : "";
+
+      document
+        .querySelector(".filter--characters")
+        .insertAdjacentHTML(
+          "beforeend",
+          `<label><span><input type="checkbox" value=".${firstFormatted}"/></span><b>${firstFormatted} ${lastInitial}</b></label>`
+        );
     });
+
     partners.forEach(partner => {
         document.querySelector('.filter--partners').insertAdjacentHTML('beforeend', `<label><span><input type="checkbox" value=".partner--${partner.replaceAll(' ', '').toLowerCase().trim()}"/></span><b>${partner}</b></label>`);
     });
