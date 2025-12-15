@@ -1137,3 +1137,35 @@ body:not(.light) .account-9.parent-0 ner-comm {
   --rgb-dark: 163,44,36;
   --rgb: 163,49,42;
 }
+.lux-track.elias,
+.lux.elias,
+.parent-9.elias,
+.gb-9.parent-0.elias,
+.account-9.parent-0.elias {
+  --rgb-dark: 163,44,36;
+  --rgb: 163,49,42;
+}
+.lux-track.theo,
+.lux.theo,
+.parent-9.theo,
+.gb-9.parent-0.theo,
+.account-9.parent-0.theo {
+  --rgb-dark: 145,208,253;
+  --rgb: 45,90,162;
+}
+.lux-track.lucien,
+.lux.lucien,
+.parent-9.lucien,
+.gb-9.parent-0.lucien,
+.account-9.parent-0.lucien {
+  --rgb-dark: 163,44,36;
+  --rgb: 163,49,42;
+}
+.lux-track.inari,
+.lux.inari,
+.parent-9.inari,
+.gb-9.parent-0.inari,
+.account-9.parent-0.inari {
+  --rgb-dark: 163,44,36;
+  --rgb: 163,49,42;
+}
