@@ -1145,13 +1145,13 @@ body:not(.light) .account-9.parent-0 ner-comm {
   --rgb-dark: 163,44,36;
   --rgb: 163,49,42;
 }
-.lux-track.theo,
-.lux.theo,
-.parent-9.theo,
-.gb-9.parent-0.theo,
-.account-9.parent-0.theo {
-  --rgb-dark: 145,208,253;
-  --rgb: 45,90,162;
+.lux-track.letheon,
+.lux.letheon,
+.parent-9.letheon,
+.gb-9.parent-0.letheon,
+.account-9.parent-0.letheon {
+  --rgb: 145,208,253;
+  --rgb-dark: 45,90,162;
 }
 .lux-track.lucien,
 .lux.lucien,
