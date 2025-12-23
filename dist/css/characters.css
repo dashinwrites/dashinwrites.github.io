@@ -1166,6 +1166,12 @@ body:not(.light) .account-9.parent-0 ner-comm {
 .parent-9.inari,
 .gb-9.parent-0.inari,
 .account-9.parent-0.inari {
-  --rgb-dark: 163,44,36;
-  --rgb: 163,49,42;
+  --rgb: 237, 96, 195;
+}
+.lux-track.simargl,
+.lux.simargl,
+.parent-9.simargl,
+.gb-9.parent-0.simargl,
+.account-9.parent-0.simargl {
+  --rgb: 216, 173, 189;
 }
