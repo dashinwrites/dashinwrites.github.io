@@ -74,27 +74,13 @@ p:last-child {
 :root {
   --size--menu-width: 50px;
   --size--submenu-width: 200px;
-}
-@media (min-width: 601px) {
-  :root {
-    --size--menu-width: 60px;
-    --size--submenu-width: 300px;
-  }
-}
-@media (min-width: 769px) {
-  :root {
-    --size--menu-width: 100px;
-    --size--submenu-width: 300px;
-  }
-}
-:root {
   --space--xs: 5px;
   --space--sm: 10px;
   --space--md: 15px;
   --space--lg: 30px;
   --space--xl: 60px;
-  --font--body: 'Nunito Sans', sans-serif;
-  --font--serif: 'Playfair', serif;
+  --font--body: "Nunito Sans", sans-serif;
+  --font--serif: "Playfair", serif;
   --accent: rgb(167, 86, 86);
   --bg-accent: rgb(167, 86, 86);
   --text-accent: rgb(199, 107, 107);
@@ -110,6 +96,18 @@ p:last-child {
   --text--primary: #e7e7e7;
   --text--secondary: #f8f8f8;
   --text--on-accent: #e7e7e7;
+}
+@media (min-width: 601px) {
+  :root {
+    --size--menu-width: 60px;
+    --size--submenu-width: 300px;
+  }
+}
+@media (min-width: 769px) {
+  :root {
+    --size--menu-width: 100px;
+    --size--submenu-width: 300px;
+  }
 }
 
 body.theme--light {
