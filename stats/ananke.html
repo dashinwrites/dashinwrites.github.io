@@ -100,6 +100,19 @@
     <div class="charts--completed charts--number"></div>
     <div class="charts--characters charts--number"></div>
     
+        <div class="charts--character-genders charts--breakdown">
+            <h2>Genders</h2>
+            <canvas id="genders"></canvas>
+        </div>
+        <div class="charts--character-pronouns charts--breakdown">
+            <h2>Pronouns</h2>
+            <canvas id="pronouns"></canvas>
+        </div>
+        <div class="charts--character-ages charts--breakdown">
+            <h2>Ages</h2>
+            <canvas id="ages"></canvas>
+        </div>
+    
 </div>
 <div class="charts--double">
     <div class="charts--thread-type charts--breakdown">
@@ -139,7 +152,7 @@
 <script src="@@prefix/js/charts.js"></script>
 <script>
     //set overall variables
-    let siteName = 'all';
+    let siteName = 'ananke';
 
     fetch(`https://opensheet.elk.sh/${sheetID}/Characters`)
     .then((response) => response.json())
