@@ -21,10 +21,12 @@ body.theme--light .mode--light {
 
 main {
   margin-left: var(--size--menu-width);
+}
+main:not(:has(.threads)) {
   padding: var(--space--lg) var(--space--xs);
 }
 @media (min-width: 601px) {
-  main {
+  main:not(:has(.threads)) {
     padding: var(--space--lg);
   }
 }
@@ -55,7 +57,7 @@ main {
 
 [target=_blank]::after {
   content: "\f08e";
-  font-family: "Font Awesome 6 Pro";
+  font-family: "Font Awesome 7 Pro";
   margin-left: var(--space--xs);
   color: var(--accent);
 }

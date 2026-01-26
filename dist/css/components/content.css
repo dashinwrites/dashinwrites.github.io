@@ -40,7 +40,7 @@ section.links a:hover {
 }
 .accordion--trigger::after {
   content: "\f107";
-  font-family: "Font Awesome 6 Pro";
+  font-family: "Font Awesome 7 Pro";
   font-weight: 700;
   margin-left: var(--space--sm);
   top: -0.1em;
@@ -72,18 +72,26 @@ section.links a:hover {
 .filters--collapsible {
   display: none;
   position: absolute;
-  background: var(--bg--primary);
-  padding: var(--space--xs);
   top: 100%;
   left: 0;
+  height: 100%;
 }
 .filters--collapsible.is-open {
   display: block;
   z-index: 2;
 }
+@media (max-width: 600px) {
+  .filters--collapsible.is-open {
+    width: 100%;
+    height: calc(100vh - 61px);
+    background: var(--bg--quaternary);
+    padding: var(--space--md);
+  }
+}
 @media (min-width: 601px) {
   .filters--collapsible {
     display: block;
     position: relative;
+    top: auto;
   }
 }

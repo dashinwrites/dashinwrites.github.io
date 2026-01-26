@@ -14,7 +14,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair:ital,opsz,wght@0,5..1200,300..900;1,5..1200,300..900&display=swap" rel="stylesheet">
 
 <!--Icons-->
-<link href="https://dawneggleton.github.io/css/all.css" rel="stylesheet" />
+<link href="https://dawneggleton.github.io/css/all-fa7.min.css" rel="stylesheet" />
 
 <!--Script Libraries-->
 <script type='text/javascript' src='https://files.jcink.net/html/jquery-1.7.2.min.js'></script>
@@ -32,33 +32,33 @@
 <nav class="nav">
     <div class="nav--inner">
         <a href="../index.html">
-            <i class="fa-light fa-house"></i>
+            <i class="fa-solid fa-house"></i>
             <span>Home</span>
         </a>
         <button onClick="openSubmenu(this)" data-menu="sites">
-            <i class="fa-light fa-sitemap"></i>
+            <i class="fa-solid fa-sitemap"></i>
             <span>Sites</span>
         </button>
         <button onClick="openSubmenu(this)" data-menu="characters">
-            <i class="fa-light fa-users"></i>
+            <i class="fa-solid fa-users"></i>
             <span>Muses</span>
         </button>
         <button onClick="openSubmenu(this)" data-menu="threads">
-            <i class="fa-light fa-books"></i>
+            <i class="fa-solid fa-books"></i>
             <span>Threads</span>
         </button>
         <button onClick="openSubmenu(this)" data-menu="stats">
-            <i class="fa-light fa-chart-pie"></i>
+            <i class="fa-solid fa-chart-pie"></i>
             <span>Stats</span>
         </button>
         <button onClick="openSubmenu(this)" data-menu="admin">
-            <i class="fa-light fa-wrench"></i>
+            <i class="fa-solid fa-wrench"></i>
             <span>Admin</span>
         </button>
         <button class="toggle--theme" onClick="toggleTheme()">
-            <i class="fa-light fa-brightness mode--light"></i>
+            <i class="fa-solid fa-brightness mode--light"></i>
             <span class="mode--light">Light</span>
-            <i class="fa-light fa-brightness-low mode--dark"></i>
+            <i class="fa-solid fa-brightness-low mode--dark"></i>
             <span class="mode--dark">Dark</span>
         </button>
     </div>
@@ -116,16 +116,14 @@
 
             /*Thread Status*/
             new Chart(document.getElementById('gb'), {
-                type: 'pie',
+                ...chartOptions,
                 data: {
                     labels: threadStats[0].status.tags.map(item => item.toUpperCase()),
                     datasets: [{
                         data: threadStats[0].status.totals,
-                        backgroundColor: chartColors,
-                        borderWidth: 0
+                        ...datasetOptions
                     }]
                 },
-                options: chartOptions
             });
         });
     });
@@ -148,16 +146,14 @@
 
             /*Thread Status*/
             new Chart(document.getElementById('wthi'), {
-                type: 'pie',
+                ...chartOptions,
                 data: {
                     labels: threadStats[0].status.tags.map(item => item.toUpperCase()),
                     datasets: [{
                         data: threadStats[0].status.totals,
-                        backgroundColor: chartColors,
-                        borderWidth: 0
+                        ...datasetOptions
                     }]
                 },
-                options: chartOptions
             });
         });
     });
@@ -180,16 +176,14 @@
 
             /*Thread Status*/
             new Chart(document.getElementById('sww'), {
-                type: 'pie',
+                ...chartOptions,
                 data: {
                     labels: threadStats[0].status.tags.map(item => item.toUpperCase()),
                     datasets: [{
                         data: threadStats[0].status.totals,
-                        backgroundColor: chartColors,
-                        borderWidth: 0
+                        ...datasetOptions
                     }]
                 },
-                options: chartOptions
             });
         });
     });
@@ -212,16 +206,14 @@
 
             /*Thread Status*/
             new Chart(document.getElementById('saf'), {
-                type: 'pie',
+                ...chartOptions,
                 data: {
                     labels: threadStats[0].status.tags.map(item => item.toUpperCase()),
                     datasets: [{
                         data: threadStats[0].status.totals,
-                        backgroundColor: chartColors,
-                        borderWidth: 0
+                        ...datasetOptions
                     }]
                 },
-                options: chartOptions
             });
         });
     });
@@ -244,16 +236,14 @@
 
             /*Thread Status*/
             new Chart(document.getElementById('i&i'), {
-                type: 'pie',
+                ...chartOptions,
                 data: {
                     labels: threadStats[0].status.tags.map(item => item.toUpperCase()),
                     datasets: [{
                         data: threadStats[0].status.totals,
-                        backgroundColor: chartColors,
-                        borderWidth: 0
+                        ...datasetOptions
                     }]
                 },
-                options: chartOptions
             });
         });
     });
@@ -278,16 +268,14 @@
 
             /*Thread Status*/
             new Chart(document.getElementById('all'), {
-                type: 'pie',
+                ...chartOptions,
                 data: {
                     labels: threadStats[0].status.tags.map(item => item.toUpperCase()),
                     datasets: [{
                         data: threadStats[0].status.totals,
-                        backgroundColor: chartColors,
-                        borderWidth: 0
+                        ...datasetOptions
                     }]
                 },
-                options: chartOptions
             });
         });
     });
