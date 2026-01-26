@@ -132,7 +132,7 @@ function initSiteSelect(el) {
         });
     });
 }
-function initPartnerSelect(el, type = 'initial', siteField = '#site') {
+function initPartnerSelect(el, type = 'initial', siteField = '#site', hasNPC = false) {
     fetch(`https://opensheet.elk.sh/${sheetID}/Partners`)
     .then((response) => response.json())
     .then((data) => {
@@ -151,15 +151,35 @@ function initPartnerSelect(el, type = 'initial', siteField = '#site') {
         
         el.closest('form').querySelectorAll('select#partner').forEach(select => {
             if(el.closest('form').dataset.form !== 'edit-partner') {
-                select.addEventListener('change', e => {
-                    initShipSelect(e.currentTarget, siteField);
-                });
+                if(hasNPC) {
+                    select.addEventListener('change', e => {
+                        let target = e.currentTarget;
+                        if(target.options[target.selectedIndex].value === 'npc') {
+                            select.closest('.row').querySelector('.ifPlayed').classList.add('hidden');
+                            select.closest('.row').querySelector('.ifNPC').classList.remove('hidden');
+                        } else {
+                            initShipSelect(e.currentTarget, siteField);
+                            select.closest('.row').querySelector('.ifPlayed').classList.remove('hidden');
+                            select.closest('.row').querySelector('.ifNPC').classList.add('hidden');
+                        }
+                    });
+                } else {
+                    if(select.closest('.row').querySelector('.ifPlayed')) {
+                        select.closest('.row').querySelector('.ifPlayed').classList.remove('hidden');
+                    }
+                    select.addEventListener('change', e => {
+                        initShipSelect(e.currentTarget, siteField);
+                    });
+                }
             }
             if(select.options.length < 2 || type === 'refresh') {
                 if(el.closest('form').dataset.form !== 'edit-partner') {
-                    select.closest('.row').querySelector('#character').innerHTML = `<option value="">(select)</option>`;
+                    select.closest('.row').querySelector('#character').innerHTML = `<option value="">(select)</option>${hasNPC ? `<option value="npc">NPC</option>` : ``}`;
                 }
                 let html = `<option value="">(select)</option>`;
+                if(hasNPC) {
+                    html += `<option value="npc">NPC</option>`;
+                }
                 partners.forEach(partner => {
                     html += `<option value="${partner.WriterID}">${capitalize(partner.Writer)}</option>`;
                 });
@@ -338,6 +358,7 @@ function initChangeBasics(el) {
                 el.closest('form').querySelector('#ageValue').setAttribute('placeholder', basics[0].basics.age);
                 el.closest('form').querySelector('#face').setAttribute('placeholder', basics[0].basics.face);
                 el.closest('form').querySelector('#image').setAttribute('placeholder', basics[0].basics.image);
+                el.closest('form').querySelector('.imagePreview img').setAttribute('src', basics[0].basics.image);
             }
         }
     });
@@ -683,7 +704,7 @@ function addRow(e) {
         e.closest('.adjustable').querySelector('.rows').insertAdjacentHTML('beforeend', formatLinksRow());
     } else if(e.closest('.multi-buttons').dataset.rowType === 'ships') {
         e.closest('.adjustable').querySelector('.rows').insertAdjacentHTML('beforeend', formatShipsRow(e));
-        initPartnerSelect(e);
+        initPartnerSelect(e, 'initial', '#site', true);
     } else if(e.closest('.multi-buttons').dataset.rowType === 'tag-options') {
         e.closest('.adjustable').querySelector('.rows').insertAdjacentHTML('beforeend', formatTagOptions());
     } else if(e.closest('.multi-buttons').dataset.rowType === 'characters') {
@@ -693,12 +714,26 @@ function addRow(e) {
         initPartnerSelect(e);
     } else if(e.closest('.multi-buttons').dataset.rowType === 'add-ships') {
         e.closest('.adjustable').querySelector('.rows').insertAdjacentHTML('beforeend', formatShipsRow(e));
-        initPartnerSelect(e, 'initial', '#characterSite');
+        initPartnerSelect(e, 'initial', '#characterSite', true);
+    } else if(e.closest('.multi-buttons').dataset.rowType === 'add-info') {
+        e.closest('.adjustable').querySelector('.rows').insertAdjacentHTML('beforeend', formatInfoRow(e));
     }
 }
 function removeRow(e) {
     let rows = e.closest('.adjustable').querySelectorAll('.row');
     rows[rows.length - 1].remove();
+}
+function formatInfoRow() {
+    return `<div class="row extra-info">
+        <label>
+            <b>Variable Title</b>
+            <span><input type="text" class="title" placeholder="Title" required /></span>
+        </label>
+        <label>
+            <b>Variable Content</b>
+            <span><input type="text" class="content" placeholder="Content" required /></span>
+        </label>
+    </div>`;
 }
 function formatLinksRow() {
     return `<div class="row links">
@@ -722,21 +757,15 @@ function formatShipsRow(e) {
         </label>
         <label>
             <b>Character</b>
-            <span><select required id="character" required>
+            <span class="hidden ifPlayed"><select id="character">
                 <option value="">(select)</option>
             </select></span>
+            <span class="hidden ifNPC"><input type="text" class="npcname" placeholder="NPC Name" /></span>
         </label>
         <label class="fullWidth">
             <b>Type</b>
             <span><select required id="type" required>
-                <option value="">(select)</option>
-                <option value="antagonistic">Antagonistic</option>
-                <option value="familial">Familial</option>
-                <option value="found family">Found Family</option>
-                <option value="platonic">Platonic</option>
-                <option value="professional">Professional</option>
-                <option value="romantic">Romantic</option>
-                <option value="other">Other</option>
+                ${relationshipOptions}
             </select></span>
         </label>
     </div>`;
@@ -869,6 +898,15 @@ function submitCharacter(form) {
         image: form.querySelector('#image').value.trim(),
     };
 
+    //complex data - extras
+    let extras = Array.from(form.querySelectorAll('.row.extra-info'));
+    let formattedExtras = {};
+    extras.forEach(extra => {
+        let title = extra.querySelector('.title').value.toLowerCase().trim();
+        let content = extra.querySelector('.content').value.trim();
+        formattedExtras[title] = content;
+    });
+
     //complex data - links
     let links = form.querySelectorAll('#linkTitle');
     let linkList = [];
@@ -946,6 +984,7 @@ function submitCharacter(form) {
             let basics = {
                 site: site,
                 basics: basicsValues,
+                extras: formattedExtras,
             }
 
             let data = {
@@ -978,6 +1017,7 @@ function submitCharacter(form) {
             let basics = [...JSON.parse(existing[0].Basics), {
                 site: site,
                 basics: basicsValues,
+                extras: formattedExtras,
             }];
 
             let data = {
@@ -1140,27 +1180,34 @@ function updateCharacter(form) {
                         let age = form.querySelector('#ageValue').value.trim().toLowerCase();
                         let face = form.querySelector('#face').value.trim().toLowerCase();
                         let image = form.querySelector('#image').value.trim();
+                        let extras = Array.from(form.querySelectorAll('.row.extra-info'));
+                        let formattedExtras = {};
+                        extras.forEach(extra => {
+                            let title = extra.querySelector('.title').value.toLowerCase().trim();
+                            let content = extra.querySelector('.content').value.trim();
+                            formattedExtras[title] = content;
+                        });
     
                         existingBasics[instance].basics.gender = (gender && gender !== '') ? gender : existingBasics[instance].basics.gender;
                         existingBasics[instance].basics.pronouns = (pronouns && pronouns !== '') ? pronouns : existingBasics[instance].basics.pronouns;
                         existingBasics[instance].basics.age = (age && age !== '') ? age : existingBasics[instance].basics.age;
                         existingBasics[instance].basics.face = (face && face !== '') ? face : existingBasics[instance].basics.face;
                         existingBasics[instance].basics.image = (image && image !== '') ? image : existingBasics[instance].basics.image;
-                    } else {
-                        existingBasics.push({
-                            site: site,
-                            basics: {
-                                gender: form.querySelector('#gender').value.trim().toLowerCase(),
-                                pronouns: form.querySelector('#pronouns').value.trim().toLowerCase(),
-                                age: form.querySelector('#ageValue').value.trim().toLowerCase(),
-                                face: form.querySelector('#face').value.trim().toLowerCase(),
-                                image: form.querySelector('#image').value.trim(),
-                            }
-                        });
+                        if(Object.keys(formattedExtras).length > 0) {
+                            existingBasics[instance].extras = {...existingBasics[instance].extras, ...formattedExtras};
+                        }
                     }
                 }
                 existing.Basics = JSON.stringify(existingBasics);
             } else {
+                let extras = Array.from(form.querySelectorAll('.row.extra-info'));
+                let formattedExtras = {};
+                extras.forEach(extra => {
+                    let title = extra.querySelector('.title').value.toLowerCase().trim();
+                    let content = extra.querySelector('.content').value.trim();
+                    formattedExtras[title] = content;
+                });
+
                 existing.Basics = JSON.stringify([{
                     site: site,
                     basics: {
@@ -1169,7 +1216,8 @@ function updateCharacter(form) {
                         age: form.querySelector('#ageValue').value.trim().toLowerCase(),
                         face: form.querySelector('#face').value.trim().toLowerCase(),
                         image: form.querySelector('#image').value.trim(),
-                    }
+                    },
+                    extras: formattedExtras
                 }]);
             }
         }
@@ -1180,7 +1228,9 @@ function updateCharacter(form) {
             let shipList = [];
             relationships.forEach(ship => {
                 let writer = ship.options[ship.selectedIndex].innerText.trim().toLowerCase();
-                let character = ship.closest('.row').querySelector('#character').options[ship.closest('.row').querySelector('#character').selectedIndex].innerText.trim().toLowerCase();
+                let character = writer === 'npc'
+                                ? ship.closest('.row').querySelector('.npcname').value.trim().toLowerCase()
+                                : ship.closest('.row').querySelector('#character').options[ship.closest('.row').querySelector('#character').selectedIndex].innerText.trim().toLowerCase();
                 let type = ship.closest('.row').querySelector('#type').options[ship.closest('.row').querySelector('#type').selectedIndex].innerText.trim().toLowerCase();
                 shipList.push({
                     writer: writer,
@@ -1474,10 +1524,10 @@ function setCustomFilter() {
     const hideUnless = document.querySelector('.completed-label');
 
     //get search value
-    qsRegex = document.querySelector(typeSearch).value;
-    elements = document.querySelectorAll(gridItem);
+    qsRegex = document.querySelector(typeSearch).value.toLowerCase().trim();
     
     //add show class to all items to reset
+    elements = document.querySelectorAll(gridItem);
     elements.forEach(el => el.classList.add(visible));
     
     //filter by nothing
@@ -1494,6 +1544,7 @@ function setCustomFilter() {
 
     let filterGroups = document.querySelectorAll(filterGroup);
     let groups = [];
+    let checkFilters;
     filterGroups.forEach(group => {
         let filters = [];
         group.querySelectorAll('label.is-checked input').forEach(filter => {
@@ -1502,6 +1553,11 @@ function setCustomFilter() {
             }
         });
         groups.push({group: group.dataset.filterGroup, selected: filters});
+    });
+
+    groups.forEach(group => {
+        let tagString = group.selected.join('_');
+        appendSearchQuery(group.group, tagString);
     });
 
     let filterCount = 0;
@@ -1555,20 +1611,13 @@ function setCustomFilter() {
     }
 
     //join array into string
-    if(hideUnless && hideUnless.classList.contains('is-checked')) {
-        filter = filter.join(', ');
-    } else {
-        filter = filter.map(item => `${item}${defaultShow}`);
-        if(filter.length === 0) {
-            filter = [defaultShow];
-        }
-        filter = filter.join(', ');
-    }
-    
+    filter = filter.join(', ');
+        
     //render isotope
     $container.isotope({
-        filter: filter
+        filter: filter,
     });
+    $container.isotope('layout');
 }
 function initIsotope() {
     //use value of input select to filter
@@ -1611,6 +1660,7 @@ function initIsotope() {
 
     // use value of search field to filter
     document.querySelector(typeSearch).addEventListener('keyup', e => {
+        appendSearchQuery('typesearch', e.currentTarget.value);
         setCustomFilter();
     });
 
@@ -1747,6 +1797,11 @@ function populateThreads(array, siteObject) {
         });
     }
 }
+function appendSearchQuery(param, value) {
+	const url = new URL(window.location.href);
+	url.searchParams.set(param, value);
+	window.history.replaceState(null, null, url);
+}
 function getDelay(date) {
     let elapsed = (new Date() - Date.parse(date)) / (1000*60*60*24);
     let delayClass;
@@ -1806,26 +1861,51 @@ function sendThreadAjax(data, thread, form = null, complete = null) {
                 thread.classList.remove('status--theirs');
                 thread.classList.remove('status--expecting');
                 thread.classList.add('status--complete');
+                thread.closest('.thread').classList.remove('status--mine');
+                thread.closest('.thread').classList.remove('status--start');
+                thread.closest('.thread').classList.remove('status--theirs');
+                thread.closest('.thread').classList.remove('status--expecting');
+                thread.closest('.thread').classList.add('status--complete');
                 thread.querySelectorAll('button').forEach(button => {
                     button.classList.remove('is-updating');
                     button.removeAttribute('disabled');
                 });
+                setCustomFilter();
+                $('#threads--rows').isotope('layout');
             } else if(data.Status === 'theirs') {
                 thread.classList.remove('status--mine');
                 thread.classList.remove('status--start');
                 thread.classList.add('status--theirs');
+                thread.classList.remove('status--expecting');
+                thread.classList.remove('status--complete');
+                thread.closest('.thread').classList.remove('status--mine');
+                thread.closest('.thread').classList.remove('status--start');
+                thread.closest('.thread').classList.add('status--theirs');
+                thread.closest('.thread').classList.remove('status--expecting');
+                thread.closest('.thread').classList.remove('status--complete');
                 thread.querySelector('[data-status]').classList.remove('is-updating');
                 thread.querySelectorAll('button').forEach(button => {
                     button.removeAttribute('disabled');
                 });
+                setCustomFilter();
+                $('#threads--rows').isotope('layout');
             } else if(data.Status === 'mine') {
                 thread.classList.remove('status--theirs');
                 thread.classList.remove('status--expecting');
                 thread.classList.add('status--mine');
+                thread.classList.remove('status--expecting');
+                thread.classList.remove('status--complete');
+                thread.closest('.thread').classList.remove('status--theirs');
+                thread.closest('.thread').classList.remove('status--expecting');
+                thread.closest('.thread').classList.add('status--mine');
+                thread.closest('.thread').classList.remove('status--expecting');
+                thread.closest('.thread').classList.remove('status--complete');
                 thread.querySelector('[data-status]').classList.remove('is-updating');
                 thread.querySelectorAll('button').forEach(button => {
                     button.removeAttribute('disabled');
                 });
+                setCustomFilter();
+                $('#threads--rows').isotope('layout');
             }
         }
     });
@@ -1856,6 +1936,7 @@ function changeStatus(e) {
             Status: 'mine'
         }, thread);
     }
+    $('#threads--rows').isotope('layout');
 }
 function markComplete(e) {
     e.dataset.status = 'complete';
@@ -1869,6 +1950,19 @@ function markComplete(e) {
         Character: e.dataset.character.replaceAll(`'`, `&apos;`),
         Status: 'complete'
     }, thread, null, 'complete');
+}
+function reactivateThread(e) {
+    e.dataset.status = 'mine';
+    let thread = e.parentNode.parentNode.parentNode;
+    e.classList.add('is-updating');
+    e.setAttribute('disabled', true);
+    sendThreadAjax({
+        SubmissionType: 'thread-status',
+        ThreadID: e.dataset.id,
+        Site: e.dataset.site,
+        Character: e.dataset.character.replaceAll(`'`, `&apos;`),
+        Status: 'mine'
+    }, thread);
 }
 function markArchived(e) {
     e.dataset.status = 'archived';
@@ -1899,24 +1993,22 @@ function formatThread(thread) {
     });
     let extraTags = thread.tags !== '' ? JSON.parse(thread.tags).map(item => `tag--${item}`).join(' ') : '';
 
-    let buttons = ``;
-    if (thread.status !== 'complete' && thread.status !== 'archived') {
-        buttons = `<button onClick="changeStatus(this)" data-status="${thread.status}" data-id="${thread.id}" data-site="${thread.site.Site}" data-character='${JSON.stringify(thread.character)}'>
+    let buttons = `<button class="activeOnly" onClick="changeStatus(this)" data-status="${thread.status}" data-id="${thread.id}" data-site="${thread.site.Site}" data-character='${JSON.stringify(thread.character)}'>
             <span class="not-loading">Update Status</span>
             <span class="loading">Updating...</span>
         </button>
-        <button onClick="markComplete(this)" data-id="${thread.id}" data-site="${thread.site.Site}" data-character='${JSON.stringify(thread.character)}'>
+        <button class="activeOnly" onClick="markComplete(this)" data-id="${thread.id}" data-site="${thread.site.Site}" data-character='${JSON.stringify(thread.character)}'>
             <span class="not-loading">Mark Complete</span>
             <span class="loading">Updating...</span>
+        </button>
+        <button class="inactiveOnly" onClick="reactivateThread(this)" data-id="${thread.id}" data-site="${thread.site.Site}" data-character='${JSON.stringify(thread.character)}'>
+            <span class="not-loading">Reactivate</span>
+            <span class="loading">Updating...</span>
+        </button>
+        <button class="activeOnly" onClick="markArchived(this)" data-id="${thread.id}" data-site="${thread.site.Site}" data-character='${JSON.stringify(thread.character)}'>
+            <span class="not-loading">Archive</span>
+            <span class="loading">Updating...</span>
         </button>`;
-
-        if (thread.status !== 'archived') {
-            buttons += `<button onClick="markArchived(this)" data-id="${thread.id}" data-site="${thread.site.Site}" data-character='${JSON.stringify(thread.character)}'>
-                <span class="not-loading">Archive</span>
-                <span class="loading">Updating...</span>
-            </button>`;
-        }
-    }
 
     return `<div class="thread lux-track grid-item grid-item ${thread.character.name.split(' ')[0]} ${partnerClasses} ${featuringClasses} status--${thread.status} type--${thread.type} delay--${getDelay(thread.updated)} ${extraTags} site--${thread.site.ID}">
         <div class="thread--wrap">
@@ -1963,7 +2055,7 @@ function prepTags(data, site) {
         </div>`;
     });
     
-    document.querySelector('.characters--filters').insertAdjacentHTML('beforeend', html);
+    document.querySelector('.characters--filters-inner').insertAdjacentHTML('beforeend', html);
 }
 function prepCharacters(data, site) {
     data.forEach((item, i) => {
@@ -2027,6 +2119,7 @@ function populateCharacters(array, siteObject) {
             array[i].Basics.forEach(instance => {
                 if(instance.site === siteObject[0].Site) {
                     character.basics = instance.basics;
+                    character.extras = instance.extras;
                 }
             });
         } else {
@@ -2080,40 +2173,95 @@ function formatSingleInstance(character, sites) {
             return 0
         }
     });
+
+    let shipNames = [], combinedShips = {}, shipHTML = ``;
+    character.ships.forEach(ship => {
+        if(shipNames.includes(ship.character)) {
+            combinedShips[ship.character].relationship += `, ${ship.relationship}`;
+        } else {
+            shipNames.push(ship.character);
+            combinedShips[ship.character] = {
+                relationship: ship.relationship,
+                writer: ship.writer,
+            }
+        }
+    });
+    for(ship in combinedShips) {
+        shipHTML += `<li><b>${ship}</b><i>${combinedShips[ship].writer === 'npc' ? combinedShips[ship].writer : `played by ${combinedShips[ship].writer}`}</i><i>${combinedShips[ship].relationship}</i></li>`
+    }
+    let extrasHTML = ``;
+    for(item in character.extras) {
+        extrasHTML += `<li><b>${item}</b><span>${character.extras[item]}</span></li>`;
+    }
     
-    return `<div class="character lux-track grid-item ${tagsString} ${character.character.split(' ')[0]}">
+    return `<div class="character lux-track grid-item has-modal ${tagsString} ${character.character.split(' ')[0]}">
         <div class="character--wrap">
             <div class="character--image"><img src="${character.basics.image}" loading="lazy" /></div>
             <div class="character--main">
-                <a href="${character.sites.URL}/${character.sites.Directory}${character.id}" target="_blank" class="character--title">${capitalize(character.character)}</a>
-                <div class="character--basics">
+                <div class="character--info">
                     ${character.basics.gender ? `<span>${character.basics.gender}</span>` : ''}
                     ${character.basics.pronouns ? `<span>${character.basics.pronouns}</span>` : ''}
                     ${character.basics.age ? `<span><span class="character--age">${character.basics.age}</span> years old</span>` : ''}
                     ${character.basics.face ? `<span>${character.basics.face}</span>` : ''}
                 </div>
-                ${character.vibes ? `<span>${character.vibes}</span>` : ''}
+                <div class="character--title">
+                    <a href="${character.sites.URL}/${character.sites.Directory}${character.id}" target="_blank">${capitalize(character.character)}</a>
+                </div>
+                <div class="character--info">
+                    <button onclick="openModal(this)" data-type="info">info</button>
+                    ${character.ships.length > 0 ? `<button onclick="openModal(this)" data-type="ships">relationships</button>` : ``}
+                    ${character.links.map(item => `<a href="${item.url}" target="_blank">${item.title}</a>`).join('')}
+                </div>
+            </div>
+            ${character.vibes && character.vibes !== '' ? `<div class="character--right"><div class="thread--right-inner"><div class="scroll"><p>${character.vibes}</p></div></div></div>` : ''}
+        </div>
+        <div class="character--modal" data-type="info">
+            <div class="character--modal-inner">
+                <div class="character--modal-inner-scroll">
+                    <ul>
+                        <li><b>Gender</b><span>${character.basics.gender}</span></li>
+                        <li><b>Pronouns</b><span>${character.basics.pronouns}</span></li>
+                        <li><b>Age</b><span>${character.basics.age} years old</span></li>
+                        <li><b>Face</b><span>${character.basics.face}</span></li>
+                        ${extrasHTML}
+                    </ul>
+                </div>
             </div>
         </div>
-        <div class="character--info">
-            <div class="character--labels">
-                <div class="character--label">Links</div>
-                <div class="character--label">Relationships</div>
-            </div>
-            <div class="character--tabs">
-                <div class="character--tab">
-                    <div class="character--links">
-                        ${character.links.map(item => `<a href="${item.url}" target="_blank">${item.title}</a>`).join('')}
-                    </div>
-                </div>
-                <div class="character--tab">
-                    <div class="character--ships">
-                        ${character.ships.map(item => `<div class="character--ship"><b>${item.character}</b> &mdash; <span>Played By ${item.writer}</span> &mdash; <i>${item.relationship}</i></div>`).join('')}
-                    </div>
+        <div class="character--modal" data-type="ships">
+            <div class="character--modal-inner">
+                <div class="character--modal-inner-scroll">
+                    <ul>
+                        ${shipHTML}
+                    </ul>
                 </div>
             </div>
         </div>
     </div>`;
+}
+function openModal(e) {
+    let type = e.dataset.type;
+    let site = e.dataset.site;
+    let modal = site ? e.closest('.has-modal').querySelector(`.character--modal[data-type="${type}"][data-site="${site}"]`) : e.closest('.has-modal').querySelector(`.character--modal[data-type="${type}"]`);
+    modal.classList.toggle('is-open');
+    modal.addEventListener('click', e => {
+        e.target.classList.remove('is-open');
+    })
+}
+function switchSite(e) {
+    e.closest('.character--info').querySelectorAll('button').forEach(button => button.classList.remove('is-active'));
+    e.classList.add('is-active');
+    let site = e.dataset.site;
+    let wrap = e.closest('.character--wrap');
+    wrap.dataset.site = site;
+    let elements = wrap.querySelectorAll('.switchable[data-site]');
+    elements.forEach(el => {
+        if(el.dataset.site === site) {
+            el.classList.remove('hidden');
+        } else {
+            el.classList.add('hidden');
+        }
+    });
 }
 function formatMultipleInstance(character, sites) {
     let tagsString = ``;
@@ -2130,61 +2278,102 @@ function formatMultipleInstance(character, sites) {
         tagsString += ` site--${site.ID}`;
     });
     
-    let siteLabels = ``, siteTabs = ``;
+    let siteLabels = ``, siteModalButtons = ``, siteModals = ``, siteImages = ``, siteProfiles = ``;
+
+    character.sites.sort((a, b) => {
+        if(a.Site < b.Site) return -1;
+        else if(a.Site > b.Site) return 1;
+        else return 0;
+    });
     
-    character.sites.forEach(siteInstance => {
+    character.sites.forEach((siteInstance, i) => {
+        let charSite = character.sites.filter(item => item.site === siteInstance.site)[0];
         let basics = character.basics.filter(item => item.site === siteInstance.site)[0].basics;
+        let extras = character.basics.filter(item => item.site === siteInstance.site)[0].extras;
         let ships = character.ships.filter(item => item.site === siteInstance.site)[0].characters;
         let site = sites.filter(item => item.Site === siteInstance.site)[0];
-        
-        siteLabels += `<div class="character--label site--label" data-image="${basics.image}">${siteInstance.site}</div>`;
-        siteTabs += `<div class="character--tab">
-            <div class="character--basics">
-                ${basics.gender ? `<span>${basics.gender}</span>` : ''}
-                ${basics.pronouns ? `<span>${basics.pronouns}</span>` : ''}
-                ${basics.age ? `<span><span class="character--age">${basics.age}</span> years old</span>` : ''}
-                ${basics.face ? `<span>${basics.face}</span>` : ''}
-            </div>
-            <div class="character--info">
-                <div class="character--labels">
-                    <div class="character--label">Links</div>
-                    <div class="character--label">Relationships</div>
-                </div>
-                <div class="character--tabs">
-                    <div class="character--tab">
-                        <div class="character--links">
-                            <a href="${site.URL}/${site.Directory}${siteInstance.id}" target="_blank">View Application</a>
-                            ${character.links.map(item => `<a href="${item.url}" target="_blank">${item.title}</a>`).join('')}
-                        </div>
-                    </div>
-                    <div class="character--tab">
-                        <div class="character--ships">
-                            ${ships.map(item => `<div class="character--ship"><b>${item.character}</b> &mdash; <span>Played By ${item.writer}</span> &mdash; <i>${item.relationship}</i></div>`).join('')}
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>`;
-    });
 
-    return `<div class="character lux-track grid-item ${tagsString} ${character.character.split(' ')[0]}">
-        <div class="character--wrap">
+        siteImages += `<img src="${basics.image}" loading="lazy" data-site="${site.Site}" class="switchable ${i === 0 ? '' : 'hidden'}" />`;
+        siteLabels += `<button onclick="switchSite(this)" data-site="${site.Site}" class="${i === 0 ? 'is-active' : ''}">${site.Site}</button>`;
+        siteModalButtons += `<button onclick="openModal(this)" data-type="info" data-site="${site.Site}" class="switchable ${i === 0 ? '' : 'hidden'}">info</button>
+            <button onclick="openModal(this)" data-type="ships" data-site="${site.Site}" class="switchable ${i === 0 ? '' : 'hidden'}">relationships</button>
+            <button onclick="openModal(this)" data-type="links" data-site="${site.Site}" class="switchable ${i === 0 ? '' : 'hidden'}">links</button>`;
+        siteProfiles += `<a href="${site.URL}/${site.Directory}${charSite.id}" target="_blank" data-site="${site.Site}" class="switchable ${i === 0 ? '' : 'hidden'}">${capitalize(character.character)}</a>`;
+
+        let extrasHTML = ``;
+        for(item in extras) {
+            extrasHTML += `<li><b>${item}</b><span>${extras[item]}</span></li>`;
+        }
+
+        let shipNames = [], combinedShips = {}, shipHTML = ``;
+        ships.forEach(ship => {
+            if(shipNames.includes(ship.character)) {
+                combinedShips[ship.character].relationship += `, ${ship.relationship}`;
+            } else {
+                shipNames.push(ship.character);
+                combinedShips[ship.character] = {
+                    relationship: ship.relationship,
+                    writer: ship.writer,
+                }
+            }
+        });
+        for(ship in combinedShips) {
+            shipHTML += `<li><b>${ship}</b><i>${combinedShips[ship].writer === 'npc' ? combinedShips[ship].writer : `played by ${combinedShips[ship].writer}`}</i><i>${combinedShips[ship].relationship}</i></li>`
+        }
+
+        siteModals += `<div class="character--modal" data-type="info" data-site="${site.Site}">
+                <div class="character--modal-inner">
+                    <div class="character--modal-inner-scroll">
+                        <ul>
+                            <li><b>Gender</b><span>${basics.gender}</span></li>
+                            <li><b>Pronouns</b><span>${basics.pronouns}</span></li>
+                            <li><b>Age</b><span>${basics.age} years old</span></li>
+                            <li><b>Face</b><span>${basics.face}</span></li>
+                            ${extrasHTML}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="character--modal" data-type="ships" data-site="${site.Site}">
+                <div class="character--modal-inner">
+                    <div class="character--modal-inner-scroll">
+                        <ul>
+                            ${ships.length === 0 ? `<li class="fullWidth">No relationships registered with the tracker.</li>` : ``}
+                            ${shipHTML}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="character--modal" data-type="links" data-site="${site.Site}">
+                <div class="character--modal-inner">
+                    <div class="character--modal-inner-scroll">
+                        <ul>
+                            ${character.links.map(item => `<li><a href="${item.url}" target="_blank">${item.title}</a></li>`).join('')}
+                        </ul>
+                    </div>
+                </div>
+            </div>`;
+    });
+    
+    return `<div class="character lux-track grid-item ${tagsString} ${character.character.split(' ')[0]} has-modal">
+        <div class="character--wrap" data-site="${character.sites[0].site}">
             <div class="character--image">
-                <img src="${character.basics[0].basics.image}" loading="lazy" />
+                ${siteImages}
             </div>
             <div class="character--main">
-                <a class="character--title">${capitalize(character.character)}</a>
-                ${character.vibes ? `<span>${character.vibes}</span>` : ''}
+                <div class="character--info">
+                    ${siteLabels}
+                </div>
+                <div class="character--title">
+                    ${siteProfiles}
+                </div>
+                <div class="character--info">
+                    ${siteModalButtons}
+                </div>
             </div>
+            ${character.vibes && character.vibes !== '' ? `<div class="character--right"><div class="thread--right-inner"><div class="scroll"><p>${character.vibes}</p></div></div></div>` : ''}
         </div>
-        <div class="character--info">
-            <div class="character--labels">
-                ${siteLabels}
-            </div>
-            <div class="character--tabs site--tabs">
-                ${siteTabs}
-            </div>
-        </div>
+        ${siteModals}
     </div>`;
 }
 
@@ -2348,7 +2537,6 @@ function createThreadStats(data, site, siteID, sites) {
     });
 
     let icStatusThreads = [...icThreads];
-    console.log(icStatusThreads);
     icStatusThreads.sort((a, b) => {
         if(a.Status < b.Status) {
             return -1;

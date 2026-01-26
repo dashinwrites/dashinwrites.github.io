@@ -1,10 +1,84 @@
+const relationshipOptions = `<option value="">(select)</option>
+    <optgroup label="Family">
+        <option value="parent">Parent</option>
+        <option value="sibling">Sibling</option>
+        <option value="sibling">Half-Sibling</option>
+        <option value="child">Child</option>
+        <option value="step-parent">Step-parent</option>
+        <option value="step-sibling">Step-sibling</option>
+        <option value="step-child">Step-child</option>
+        <option value="adopted parent">Adopted Parent</option>
+        <option value="adopted sibling">Adopted Sibling</option>
+        <option value="adopted child">Adopted Child</option>
+        <option value="foster sibling">Foster Sibling</option>
+        <option value="foster child">Foster Child</option>
+    </optgroup>
+    <optgroup label="Extended Family">
+        <option value="ancestor">Ancestor</option>
+        <option value="grandparent">Grandparent</option>
+        <option value="cousin">Cousin</option>
+        <option value="uncle">Uncle</option>
+        <option value="aunt">Aunt</option>
+        <option value="nephew">Nephew</option>
+        <option value="niece">Niece</option>
+        <option value="extended family">Extended Family</option>
+    </optgroup>
+    <optgroup label="Romantic">
+        <option value="spouse">Spouse</option>
+        <option value="betrothed">Betrothed</option>
+        <option value="partner">Partner</option>
+        <option value="crush">Crush</option>
+        <option value="fling">Fling</option>
+    </optgroup>
+    <optgroup label="Platonic">
+        <option value="found family">Found Family</option>
+        <option value="best friend">Best Friend</option>
+        <option value="friend">Friend</option>
+        <option value="roommate">Roommate</option>
+    </optgroup>
+    <optgroup label="Professional">
+        <option value="business partner">Business Partner</option>
+        <option value="employer">Employer</option>
+        <option value="manager">Manager</option>
+        <option value="employee">Employee</option>
+        <option value="co-worker">Co-worker</option>
+        <option value="client">Client</option>
+        <option value="regular customer">Regular Customer</option>
+    </optgroup>
+    <optgroup label="Antagonistic">
+        <option value="ex-spouse">Ex-spouse</option>
+        <option value="ex-betrothed">Ex-betrothed</option>
+        <option value="ex-parter">Ex-partner</option>
+        <option value="ex-friend">Ex-friend</option>
+        <option value="rival">Rival</option>
+        <option value="annoyance">Annoyance</option>
+        <option value="dislikes">Dislikes</option>
+        <option value="estranged">Estranged</option>
+    </optgroup>
+    <optgroup label="Miscellaneous">
+        <option value="neighbour">Neighbour</option>
+        <option value="aquaintance">Aquaintance</option>
+        <option value="deceased">Deceased</option>
+        <option value="pet">Pet</option>
+        <option value="other">Other</option>
+    </optgroup>`;
+    
 const deployID = 'AKfycbyqMgf9ST73pRkrzfvwc5iBrJSedvHbn_0ESPKblzXVqagA680oyNrgKEpspKZHaclt';
 const sheetID = `1WtJG6Z0Ar1LtKDrgN1VbsIcMGkRDCiQ4oOHImPBla4Y`;
 const oldSheetID = `1XNHsAlHv62PHeXuyWfbegNueYi9QdeyvUPlJ0Qu64i0`;
 const successMessage = `<p class="fullWidth">Submission successful!</p>
 <button onclick="location.reload();" type="button" class="fullWidth submit">Back to form</button>`;
 const threadTags = ["vital", "priority", "rapidfire", "romantic", "family", "friends", "coworkers"];
-const chartColors = ['#73626E', '#F5D8BC', '#F0B49E', '#F7E4BE', '#413E4A', '#8C7077', '#D3A79F', '#A69C9E'];
+const chartColors = [
+    '#73626E', 
+    '#F5D8BC', 
+    '#F0B49E', 
+    '#F7E4BE', 
+    '#413E4A', 
+    '#8C7077', 
+    '#D3A79F', 
+    '#A69C9E'
+];
 
 const datasetOptions = {
     backgroundColor: chartColors,

@@ -1,29 +1,33 @@
 <div class="characters--header filters--wrap">
     <button onClick="toggleFilters(this)" class="mobileOnly">View Filters</button>
     <div class="filters--collapsible">
-        <div class="characters--sorting">
-            <input id="quicksearch" class="forminput memberlist-namesearch" type="text" size="25" name="name" value="" placeholder="Filter by name...">
-            <div class="characters--sort-buttons" data-type="flex">
-                <button type="button" class="threads--sort is-checked" data-sort="characterAsc">Character (A -> Z)</button>
-                <button type="button" class="threads--sort" data-sort="characterDesc">Character (Z -> A)</button>
-                @@if (sitename !== 'all') {
-                    <button type="button" class="threads--sort" data-sort="ageAsc">Age (Asc)</button>
-                    <button type="button" class="threads--sort" data-sort="ageDesc">Age (Desc)</button>
-                }
-            </div>
-        </div>
         <div class="characters--filters">
-            <!--Site-->
-            @@if (sitename === 'all') {
+            <div class="characters--filters-inner">
+                <input id="quicksearch" class="forminput memberlist-namesearch" type="text" size="25" name="name" value="" placeholder="Filter by name...">
+                <!--Sorting-->
                 <div class="characters--filter filter--parent">
-                    <button onClick="openFilters(this)">Site</button>
-                    <div class="characters--filter-dropdown">
-                        <div class="characters--filter-group filter--sites" data-filter-group="site">
-                            <label class="all is-checked"><span><input type="checkbox" class="all" value="" checked=""></span><b>any</b></label>
-                        </div>
+                    <button onClick="openFilters(this)">Sort</button>
+                    <div class="characters--filter-dropdown characters--sorting">
+                        <button type="button" class="characters--sort is-checked" data-sort="characterAsc">Character (A -> Z)</button>
+                        <button type="button" class="characters--sort" data-sort="characterDesc">Character (Z -> A)</button>
+                        @@if (sitename !== 'all') {
+                            <button type="button" class="characters--sort" data-sort="ageAsc">Age (Asc)</button>
+                            <button type="button" class="characters--sort" data-sort="ageDesc">Age (Desc)</button>
+                        }
                     </div>
                 </div>
-            }
+                <!--Site-->
+                @@if (sitename === 'all') {
+                    <div class="characters--filter filter--parent">
+                        <button onClick="openFilters(this)">Site</button>
+                        <div class="characters--filter-dropdown">
+                            <div class="characters--filter-group filter--sites" data-filter-group="site">
+                                <label class="all is-checked"><span><input type="checkbox" class="all" value="" checked=""></span><b>any</b></label>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
         </div>
     </div>
 </div>
@@ -59,7 +63,7 @@
                 let tags = prepTags(tagData, siteName);
                 let characters = prepCharacters(characterData, siteName);
                 populateCharacters(characters, siteObject);
-
+            }).then(() => {
                 //initialize isotope
                 // quick search regex
                 let qsRegex;
@@ -83,9 +87,34 @@
                         ageDesc: false,
                     }
                 });
-                setTimeout(function() {
-                    $container.isotope('layout');
-                }, 300);
+
+                //handle filter storage
+                let queryParamsArray = window.location.search.split('&').map(param => param.split('='));
+                let queryParams = {};
+                queryParamsArray.forEach(param => {
+                    queryParams[param[0]] = param[1];
+                });
+                for (const param in queryParams) {
+                    if(param !== '') {
+                        let key = param;
+                        let values = queryParams[param].split('_');
+
+                        if(document.querySelector(`[data-filter-group="${key}"]`) && values.length > 0) {
+                            document.querySelector(`[data-filter-group="${key}"] .all`).classList.remove('is-checked');
+                            values.filter(item => item !== '').forEach(value => {
+                                document.querySelector(`[data-filter-group="${key}"] [value="${value}"]`)
+                                .closest('label')
+                                .classList.add('is-checked');
+                            });
+                            setCustomFilter();
+                        }
+                    }
+                }
+
+                if(window.location.search.split('typesearch=')[1]) {
+                    document.querySelector(typeSearch).value = window.location.search.split('typesearch=')[1].split('&')[0].replaceAll('+', ' ');
+                    setCustomFilter();
+                }
                 initIsotope();
             }).then(() => {
                 document.querySelectorAll('.character--label').forEach(label => {
