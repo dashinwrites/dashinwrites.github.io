@@ -35,7 +35,7 @@ const relationshipOptions = `<option value="">(select)</option>
     <optgroup label="Romantic">
         <option value="spouse">Spouse</option>
         <option value="betrothed">Betrothed</option>
-        <option value="partner">Partner</option>
+        <option value="partner">Dating</option>
         <option value="crush">Crush</option>
         <option value="fling">Fling</option>
     </optgroup>
@@ -51,6 +51,8 @@ const relationshipOptions = `<option value="">(select)</option>
         <option value="manager">Manager</option>
         <option value="employee">Employee</option>
         <option value="co-worker">Co-worker</option>
+        <option value="mentor">Mentor</option>
+        <option value="apprentice">Apprentice</option>
         <option value="client">Client</option>
         <option value="regular customer">Regular Customer</option>
     </optgroup>
