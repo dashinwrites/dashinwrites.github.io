@@ -74,6 +74,7 @@ const relationshipOptions = `<option value="">(select)</option>
         <option value="other">Other</option>
     </optgroup>`;
     
+const activeStatusClasses = `.status--mine, .status--theirs, .status--start, .status--planned`;
 const deployID = 'AKfycbyqMgf9ST73pRkrzfvwc5iBrJSedvHbn_0ESPKblzXVqagA680oyNrgKEpspKZHaclt';
 const sheetID = `1WtJG6Z0Ar1LtKDrgN1VbsIcMGkRDCiQ4oOHImPBla4Y`;
 const oldSheetID = `1XNHsAlHv62PHeXuyWfbegNueYi9QdeyvUPlJ0Qu64i0`;

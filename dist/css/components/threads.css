@@ -225,6 +225,10 @@
 }
 .thread:has(.status--mine), .thread:has([data-status=mine]) {
   border-color: var(--bg-accent);
+  background-color: var(--dash-accent);
+}
+.thread:has(.status--mine) .thread--buttons button, .thread:has([data-status=mine]) .thread--buttons button {
+  border: 1px solid var(--);
 }
 .thread.status--mine .inactiveOnly, .thread.status--theirs .inactiveOnly {
   display: none;
@@ -324,7 +328,7 @@
     height: calc(100% - 2 * var(--space--md));
     width: calc(100% - var(--space--md));
     max-height: none;
-    border-left: var(--border--primary);
+    border-left: 1px solid var(--text--primary);
     border-top: none;
   }
 }

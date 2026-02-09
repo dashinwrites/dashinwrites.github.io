@@ -16,6 +16,8 @@
   --accent: rgb(167, 86, 86);
   --bg-accent: rgb(167, 86, 86);
   --text-accent: rgb(199, 107, 107);
+  --dash-accent: rgb(109, 60, 60);
+  --mine-accent: var(--text--primary);
   --accent-rgb: 167, 86, 86;
   --rgb: 167, 86, 86;
   --accent--light: rgb(139, 110, 110);
