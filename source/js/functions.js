@@ -1463,7 +1463,6 @@ function updateCharacter(form) {
         }
 
         existing.SubmissionType = 'edit-character';
-        console.log(existing);
     
         sendAjax(form, existing, successMessage);
     });
@@ -1609,7 +1608,7 @@ function debounce(fn, threshold) {
         setTimeout(delayed, threshold || 100);
     };
 }
-function setCustomFilter(removeFilters = null) {
+function setCustomFilter() {
     const hideUnless = document.querySelector('.completed-label');
 
     //get search value
@@ -1700,12 +1699,14 @@ function setCustomFilter(removeFilters = null) {
     }
 
     //join array into string
-    filter = filter.join(', ');
-    if(!filter.includes('status--')) {
-        if(!filter !== '') {
-            filter += ', ';
-        }
-        filter += activeStatusClasses;
+    //if complete is selected
+    if(filter.filter(item => item.includes('.status--complete')).length > 0) {
+        filter = filter.join(', ');
+    }
+    //if not
+    else {
+        filter = filter.join(':not(.status--complete), ');
+        filter += `:not(.status--complete)`;
     }
         
     //render isotope
