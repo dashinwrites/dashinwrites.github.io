@@ -1,0 +1,350 @@
+<div class="writing--header filters--wrap">
+  <button onClick="toggleFilters(this)" class="mobileOnly">View Filters</button>
+
+  <div class="filters--collapsible">
+    <div class="writing--filters">
+      <div class="writing--filters-inner">
+
+        <input id="quicksearch" class="forminput memberlist-namesearch" type="text" size="25"
+          name="name" value="" placeholder="Filter by character, partner, thread, notes...">
+
+        <!-- Sorting -->
+        <div class="writing--filter filter--parent">
+          <button onClick="openFilters(this)">Sort</button>
+          <div class="writing--filter-dropdown writing--sorting">
+            <button type="button" class="writing--sort is-checked" data-sort="date">Date (Desc)</button>
+            <button type="button" class="writing--sort" data-sort="words">Words (Desc)</button>
+            <button type="button" class="writing--sort" data-sort="character">Character (A → Z)</button>
+            <button type="button" class="writing--sort" data-sort="thread">Thread (A → Z)</button>
+          </div>
+        </div>
+
+        <!-- Category -->
+        <div class="writing--filter filter--parent">
+          <button onClick="openFilters(this)">Category</button>
+          <div class="writing--filter-dropdown">
+            <div class="writing--filter-group" data-filter-group="category">
+              <label class="all is-checked"><span><input type="checkbox" class="all" value="" checked=""></span><b>all</b></label>
+              <label><span><input type="checkbox" value=".cat--rp"></span><b>rp</b></label>
+              <label><span><input type="checkbox" value=".cat--dnd"></span><b>d&amp;d</b></label>
+              <label><span><input type="checkbox" value=".cat--hobby"></span><b>hobby</b></label>
+            </div>
+          </div>
+        </div>
+
+        <!-- Character -->
+        <div class="writing--filter filter--parent">
+          <button onClick="openFilters(this)">Character</button>
+          <div class="writing--filter-dropdown">
+            <div class="writing--filter-group filter--characters" data-filter-group="character">
+              <label class="all is-checked"><span><input type="checkbox" class="all" value="" checked=""></span><b>all</b></label>
+            </div>
+          </div>
+        </div>
+
+        <!-- Partner -->
+        <div class="writing--filter filter--parent">
+          <button onClick="openFilters(this)">Partner</button>
+          <div class="writing--filter-dropdown">
+            <div class="writing--filter-group filter--partners" data-filter-group="partner">
+              <label class="all is-checked"><span><input type="checkbox" class="all" value="" checked=""></span><b>all</b></label>
+            </div>
+          </div>
+        </div>
+
+        <!-- Site -->
+        <div class="writing--filter filter--parent">
+          <button onClick="openFilters(this)">Site</button>
+          <div class="writing--filter-dropdown">
+            <div class="writing--filter-group filter--sites" data-filter-group="site">
+              <label class="all is-checked"><span><input type="checkbox" class="all" value="" checked=""></span><b>all</b></label>
+            </div>
+          </div>
+        </div>
+
+        <!-- Date buckets -->
+        <div class="writing--filter filter--parent">
+          <button onClick="openFilters(this)">Date</button>
+          <div class="writing--filter-dropdown">
+            <div class="writing--filter-group" data-filter-group="datebucket">
+              <label class="all is-checked"><span><input type="checkbox" class="all" value="" checked=""></span><b>any time</b></label>
+              <label><span><input type="checkbox" value=".date--7"></span><b>last 7 days</b></label>
+              <label><span><input type="checkbox" value=".date--30"></span><b>last 30 days</b></label>
+              <label><span><input type="checkbox" value=".date--365"></span><b>last year</b></label>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Placeholder strip for future stats + heatmap -->
+<div class="writing--summary" id="writing--summary"></div>
+
+<div class="writing--content">
+  <div id="writing--rows"></div>
+</div>
+
+<script>
+  // ---- shared-ish vars (mirrors threads style) ----
+  const gridItem = `.grid-item`;
+  let $container = $('#writing--rows');
+
+  // ---- load everything we need ----
+  Promise.all([
+    fetch(`https://opensheet.elk.sh/${sheetID}/Writing`).then(r => r.json()),
+    fetch(`https://opensheet.elk.sh/${sheetID}/Threads`).then(r => r.json()),
+    fetch(`https://opensheet.elk.sh/${sheetID}/Sites`).then(r => r.json()),
+  ]).then(([writingData, threadsData, sitesData]) => {
+
+    const entries = prepWriting(writingData, threadsData, sitesData);
+
+    initWritingMenus(entries);
+    populateWriting(entries);
+
+    // init Isotope
+    $container.isotope({
+      itemSelector: gridItem,
+      percentPosition: true,
+      filter: '',
+
+      getSortData: {
+        date: function ($elem) {
+          return Date.parse($elem.querySelector('[data-iso-date]').getAttribute('data-iso-date'));
+        },
+        words: function ($elem) {
+          return Number($elem.querySelector('.writing--words span').innerText) || 0;
+        },
+        character: '.writing--character',
+        thread: '.writing--thread'
+      },
+
+      sortAscending: {
+        date: false,
+        words: false,
+        character: true,
+        thread: true
+      }
+    });
+
+    // If you already have an initIsotope() that wires quicksearch + checkbox groups, call it here:
+    // initIsotope();
+
+    // Otherwise, you can still use your existing filter handlers as-is.
+  });
+
+  // ---- helpers ----
+
+  function prepWriting(writingData, threadsData, sitesData = []) {
+  // Build lookup for Threads by ThreadID
+  const threadById = {};
+  (threadsData || []).forEach(t => {
+    const id = (t.ThreadID || '').toString().trim();
+    if (id) threadById[id] = t;
+  });
+
+  const now = new Date();
+  const msDay = 24 * 60 * 60 * 1000;
+
+  return (writingData || [])
+    .map(row => {
+      // Normalize + base fields from Writing sheet
+      const iso = toISODate(row.Date);
+      const words = Number(row.Words || 0);
+      const category = (row.Category || '').toString().trim();
+
+      // Try to enrich from Threads using ThreadID
+      const tid = (row.ThreadID || '').toString().trim();
+      const t = tid && threadById[tid] ? threadById[tid] : null;
+
+      // Fill blanks from Threads tab, but never overwrite what Writing already has.
+      // Partner in Writing can be pulled from Threads "Featuring".
+      const site =
+        (row.Site || '').toString().trim() ||
+        (t ? (t.Site || '').toString().trim() : '');
+
+      const character =
+        (row.Character || '').toString().trim() ||
+        (t ? (t.Character || '').toString().trim() : '');
+
+      const partner =
+        (row.Partner || '').toString().trim() ||
+        (t ? (t.Featuring || '').toString().trim() : '');
+
+      const thread =
+        (row.Thread || '').toString().trim() ||
+        (t ? (t.Title || '').toString().trim() : '');
+
+      // Ship is not in Threads tab, so Writing remains source-of-truth for that.
+      const ship = (row.Ship || '').toString().trim();
+
+      const notes = (row.Notes || '').toString().trim();
+
+      // Category class (rp/dnd/hobby etc.)
+      const catClass = `cat--${slug(category || 'rp')}`;
+
+      // Date bucket classes for filtering
+      let dateClasses = '';
+      if (iso) {
+        const d = new Date(iso + 'T00:00:00');
+        const diffDays = Math.floor((now - d) / msDay);
+        if (diffDays <= 7) dateClasses += ' date--7';
+        if (diffDays <= 30) dateClasses += ' date--30';
+        if (diffDays <= 365) dateClasses += ' date--365';
+      }
+
+      // Build filter classes (mirrors your style: partner--x, site--y, etc.)
+      const classes = [
+        'writing-entry',
+        catClass,
+        site ? `site--${slug(site)}` : '',
+        partner ? `partner--${slug(partner)}` : '',
+        character ? `char--${slug(character)}` : '',
+        dateClasses.trim()
+      ].filter(Boolean).join(' ');
+
+      return {
+        Date: row.Date || '',
+        ISODate: iso || '',
+        Category: category || '',
+        Words: Number.isFinite(words) ? words : 0,
+        Site: site || '',
+        Character: character || '',
+        Partner: partner || '',
+        Ship: ship || '',
+        Thread: thread || '',
+        ThreadID: tid || '',
+        Notes: notes || '',
+        classes
+      };
+    })
+    // newest first if ISODate exists
+    .sort((a, b) => (b.ISODate || '').localeCompare(a.ISODate || ''));
+}
+
+  function populateWriting(entries) {
+    const wrap = document.getElementById('writing--rows');
+
+    wrap.innerHTML = entries.map(e => {
+        const dateDisplay = e.Date || e.ISODate || '';
+        const wordsDisplay = (Number(e.Words) || 0).toLocaleString();
+
+        // If non-RP entry, show something sensible in the title line
+        const titleText = e.Thread || (e.Category ? `${e.Category} entry` : 'Writing entry');
+
+        // Optional: if you can build a thread URL from ThreadID + Site, you can link it later
+        // For now, keep it plain text so you don’t have to solve links yet.
+        const titleHtml = `<span>${escapeHtml(titleText)}</span>`;
+
+        // Partner line: prefer Partner, else blank
+        const partnerText = e.Partner || '';
+        const siteText = e.Site || '';
+
+        // Notes: keep the right column from collapsing
+        const notesHtml = e.Notes ? `<p>${escapeHtml(e.Notes)}</p>` : `<p class="muted">—</p>`;
+
+        return `
+            <div class="thread writing-entry grid-item ${e.classes || ''}">
+                <div class="thread--wrap">
+                <div class="thread--main">
+                    <div class="thread--dates">
+                    <div class="thread--type">${escapeHtml((e.Category || '').toLowerCase())}</div>
+                    <span class="thread--ic-date">Date <span data-iso-date="${escapeHtml(e.ISODate || '')}">${escapeHtml(dateDisplay)}</span></span>
+                    <span class="thread--last-post">Words <span class="writing--words">${wordsDisplay}</span></span>
+                    </div>
+
+                    <div class="thread--title">
+                    ${titleHtml}
+                    </div>
+
+                    <span class="bigger">Writing as <span class="thread--character">${escapeHtml(e.Character || '—')}</span></span>
+                    <span class="thread--feature">ft. <span>${escapeHtml(partnerText || '—')}</span></span>
+                    <span class="thread--partners italic">Site <span>${escapeHtml(siteText || '—')}</span></span>
+                </div>
+
+                <div class="thread--right">
+                    <div class="thread--right-inner">
+                    <div class="scroll">
+                        ${notesHtml}
+                    </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+            `;
+        }).join('');
+    }
+
+  function initWritingMenus(entries) {
+    // Characters
+    const chars = uniq(entries.map(e => e.Character).filter(Boolean)).sort(sortAlpha);
+    const charWrap = document.querySelector('.filter--characters');
+    chars.forEach(name => charWrap.insertAdjacentHTML('beforeend', `
+      <label><span><input type="checkbox" value=".char--${slug(name)}"></span><b>${escapeHtml(name)}</b></label>
+    `));
+
+    // Partners
+    const partners = uniq(entries.map(e => e.Partner).filter(Boolean)).sort(sortAlpha);
+    const partnerWrap = document.querySelector('.filter--partners');
+    partners.forEach(name => partnerWrap.insertAdjacentHTML('beforeend', `
+      <label><span><input type="checkbox" value=".partner--${slug(name)}"></span><b>${escapeHtml(name)}</b></label>
+    `));
+
+    // Sites
+    const sites = uniq(entries.map(e => e.Site).filter(Boolean)).sort(sortAlpha);
+    const siteWrap = document.querySelector('.filter--sites');
+    sites.forEach(name => siteWrap.insertAdjacentHTML('beforeend', `
+      <label><span><input type="checkbox" value=".site--${slug(name)}"></span><b>${escapeHtml(name)}</b></label>
+    `));
+  }
+
+  // ---- tiny utilities ----
+
+  function uniq(arr) { return [...new Set(arr.map(v => String(v).trim()))].filter(Boolean); }
+  function sortAlpha(a, b) { return a.localeCompare(b, undefined, { sensitivity: 'base' }); }
+
+  function slug(str) {
+    return String(str).toLowerCase()
+      .replace(/&/g, 'and')
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/(^-|-$)/g, '');
+  }
+
+  // Attempts to turn "February 7" or "2/7/2026" etc into YYYY-MM-DD.
+  // If it can't, returns "" (sorting still works if you already store ISO in the sheet).
+  function toISODate(input) {
+    if (!input) return '';
+    const s = String(input).trim();
+
+    // Already ISO?
+    if (/^\d{4}-\d{2}-\d{2}$/.test(s)) return s;
+
+    // US-style M/D/YYYY
+    if (/^\d{1,2}\/\d{1,2}\/\d{4}$/.test(s)) {
+      const [m, d, y] = s.split('/').map(n => parseInt(n, 10));
+      return `${y}-${String(m).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+    }
+
+    // Try Date parse (best effort)
+    const d = new Date(s);
+    if (!isNaN(d.getTime())) {
+      const y = d.getFullYear();
+      const m = String(d.getMonth() + 1).padStart(2, '0');
+      const day = String(d.getDate()).padStart(2, '0');
+      return `${y}-${m}-${day}`;
+    }
+
+    return '';
+  }
+
+  function escapeHtml(str) {
+    return String(str ?? '')
+      .replaceAll('&', '&amp;')
+      .replaceAll('<', '&lt;')
+      .replaceAll('>', '&gt;')
+      .replaceAll('"', '&quot;')
+      .replaceAll("'", '&#039;');
+  }
+</script>

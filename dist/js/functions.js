@@ -1520,6 +1520,24 @@ function updateThread(form) {
     });
 }
 
+function loadWriting() {
+    return fetch(`https://opensheet.elk.sh/${sheetID}/Writing`)
+        .then(res => res.json())
+        .then(data => {
+            return data.map(row => ({
+                date: row.Date,
+                words: Number(row.Words || 0),
+                category: row.Category,
+                site: row.Site,
+                character: row.Character,
+                partner: row.Partner,
+                ship: row.Ship,
+                thread: row.Thread,
+                notes: row.Notes
+            }));
+        });
+}
+
 /***** TRANSFER ONLY *****/
 function portThreads() {
     fetch(`https://opensheet.elk.sh/${oldSheetID}/Threads`)
