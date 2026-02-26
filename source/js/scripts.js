@@ -32,6 +32,12 @@ document.querySelectorAll('form').forEach(form => {
             case 'add-thread':
                 submitThread(e.currentTarget);
                 break;
+            case 'add-writing':
+                submitWriting(e.currentTarget);
+                break;
+            case 'edit-writing':
+                updateWriting(e.currentTarget);
+                break;
             case 'edit-tags':
                 updateTags(e.currentTarget);
                 break;

@@ -1146,6 +1146,67 @@ function submitThread(form) {
 
     sendAjax(form, data, successMessage);
 }
+
+function submitWriting(form) {
+    // expecting inputs like #date, #words, #category, #site, #character, #partner, #ship, #thread, #notes
+    // adjust selectors to match your actual form markup
+    const date = form.querySelector('#date')?.value || '';
+    const words = (form.querySelector('#words')?.value || '').trim();
+    const category = (form.querySelector('#category')?.value || '').trim().toLowerCase();
+
+    const site = (form.querySelector('#site')?.value || '').trim().toLowerCase();
+    const character = (form.querySelector('#character')?.value || '').trim().toLowerCase();
+    const partner = (form.querySelector('#partner')?.value || '').trim().toLowerCase();
+    const ship = (form.querySelector('#ship')?.value || '').trim().toLowerCase();
+    const thread = (form.querySelector('#thread')?.value || '').trim().toLowerCase();
+    const notes = (form.querySelector('#notes')?.value || '').trim();
+
+    const data = {
+        SubmissionType: 'add-writing',
+        Date: date,
+        Words: words,
+        Category: category,
+        Site: site,
+        Character: character,
+        Partner: partner,
+        Ship: ship,
+        Thread: thread,
+        Notes: notes
+    };
+
+    sendAjax(form, data, successMessage);
+}
+
+function updateWriting(form) {
+    const entryId = (form.querySelector('#entryId')?.value || '').trim();
+    const date = form.querySelector('#date')?.value || '';
+    const words = (form.querySelector('#words')?.value || '').trim();
+    const category = (form.querySelector('#category')?.value || '').trim().toLowerCase();
+
+    const site = (form.querySelector('#site')?.value || '').trim().toLowerCase();
+    const character = (form.querySelector('#character')?.value || '').trim().toLowerCase();
+    const partner = (form.querySelector('#partner')?.value || '').trim().toLowerCase();
+    const ship = (form.querySelector('#ship')?.value || '').trim().toLowerCase();
+    const thread = (form.querySelector('#thread')?.value || '').trim().toLowerCase();
+    const notes = (form.querySelector('#notes')?.value || '').trim();
+
+    const data = {
+        SubmissionType: 'edit-writing',
+        EntryID: entryId, // <-- your script needs to support this
+        Date: date,
+        Words: words,
+        Category: category,
+        Site: site,
+        Character: character,
+        Partner: partner,
+        Ship: ship,
+        Thread: thread,
+        Notes: notes
+    };
+
+    sendAjax(form, data, successMessage);
+}
+
 function updateTags(form) {
     let title = form.querySelector('#title').options[form.querySelector('#title').selectedIndex].value.trim().toLowerCase();
     let newSites = Array.from(form.querySelectorAll('.sites .multiselect input:checked')).map(item => item.value);

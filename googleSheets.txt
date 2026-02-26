@@ -21,25 +21,25 @@ function doPost(e){
 }
 
 function submitToSheet(e, sheetName) {
-    var doc = SpreadsheetApp.openById(SCRIPT_PROP.getProperty("key"));
-    var sheet = doc.getSheetByName(sheetName);
-    // we'll assume header is in row 1 but you can override with header_row in GET/POST data
-    var headRow = e.parameter.header_row || 1;
-    var headers = sheet.getRange(1, 1, 1, sheet.getLastColumn()).getValues()[0];
-    var nextRow = sheet.getLastRow()+1; // get next row
-    var row = [];
-    var output = "";
-    // loop through the header columns
-    for (i in headers){
-      if (headers[i] == "Timestamp"){ // special case if you include a 'Timestamp' column
-        row.push(new Date());
-      } else { // else use header name to get data
-        row.push(e.parameter[headers[i]]);
-      }
+  var doc = SpreadsheetApp.openById(SCRIPT_PROP.getProperty("key"));
+  var sheet = doc.getSheetByName(sheetName);
+
+  var headers = sheet.getRange(1, 1, 1, sheet.getLastColumn()).getValues()[0];
+  var nextRow = sheet.getLastRow() + 1;
+  var row = [];
+
+  for (var i = 0; i < headers.length; i++) {
+    if (headers[i] == "Timestamp") {
+      row.push(new Date());
+    } else {
+      row.push(e.parameter[headers[i]]);
     }
-    // more efficient to set values as [][] array than individually
-    sheet.getRange(nextRow, 1, 1, row.length).setValues([row]);
-    output = JSON.stringify({"result":"success", "row": nextRow});
+  }
+
+  sheet.getRange(nextRow, 1, 1, row.length).setValues([row]);
+
+  output = JSON.stringify({ result: "success", row: nextRow }); // <-- IMPORTANT: global
+  return output;
 }
 
 function editRows(e, sheetName, idCol, edittype, altIdCol = null) {

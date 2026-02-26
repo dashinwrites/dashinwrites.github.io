@@ -67,7 +67,16 @@
           <button onClick="openFilters(this)">Date</button>
           <div class="writing--filter-dropdown">
             <div class="writing--filter-group" data-filter-group="datebucket">
-              <label class="all is-checked"><span><input type="checkbox" class="all" value="" checked=""></span><b>any time</b></label>
+              <label class="all">
+                <span><input type="checkbox" class="all" value=""></span>
+                <b>any time</b>
+              </label>
+
+              <label class="is-checked">
+                <span><input type="checkbox" value=".date--month" checked></span>
+                <b>this month</b>
+              </label>
+
               <label><span><input type="checkbox" value=".date--7"></span><b>last 7 days</b></label>
               <label><span><input type="checkbox" value=".date--30"></span><b>last 30 days</b></label>
               <label><span><input type="checkbox" value=".date--365"></span><b>last year</b></label>
@@ -81,69 +90,79 @@
 </div>
 
 <div class="writing--content">
-  <div class="writing--tablewrap">
-    <table class="writing--table">
-      <thead>
-        <tr>
-          <th>Date</th>
-          <th>Site</th>
-          <th>Character</th>
-          <th>Partner</th>
-          <th>Ship</th>
-          <th>Thread</th>
-          <th class="is-num">## Words</th>
-          <th>Notes</th>
-        </tr>
-      </thead>
-      <tbody id="writing--rows"></tbody>
-    </table>
+
+  <div class="form writing-mini">
+    <details class="form-collapsible" open>
+      <summary class="form-collapsible__summary">
+        <span class="title">Add writing entry</span>
+        <span class="meta">click to toggle</span>
+      </summary>
+
+      <div class="form-collapsible__body">
+        <form data-form="add-writing">
+          <div class="row-compact">
+            <label><small>Date</small><input id="date" type="date" required></label>
+            <label><small>Words</small><input id="words" type="number" min="0" required></label>
+            <label><small>Category</small><input id="category" type="text"></label>
+            <label><small>Site</small><input id="site" type="text"></label>
+
+            <label><small>Character</small><input id="character" type="text"></label>
+            <label><small>Partner</small><input id="partner" type="text"></label>
+            <label><small>Ship</small><input id="ship" type="text"></label>
+            <label><small>Thread</small><input id="thread" type="text"></label>
+          </div>
+
+          <label class="full">
+            <small>Notes</small>
+            <textarea id="notes"></textarea>
+          </label>
+
+          <button type="submit">Submit</button>
+        </form>
+      </div>
+    </details>
   </div>
-</div>
+
+    <div class="writing--gridwrap">
+      <div class="writing--grid writing--grid-head">
+        <div class="cell col-date">Date</div>
+        <div class="cell col-site">Site</div>
+        <div class="cell col-character">Character</div>
+        <div class="cell col-partner">Partner</div>
+        <div class="cell col-ship">Ship</div>
+        <div class="cell col-thread">Thread</div>
+        <div class="cell col-words">Words</div>
+        <div class="cell col-notes">Notes</div>
+      </div>
+
+      <div id="writing--rows" class="writing--rows"></div>
+    </div>
+  </div>
 
 <script>
-  // container for isotope (tbody works)
+  // ---- Isotope container (jQuery object) ----
   let $container = $('#writing--rows');
 
   Promise.all([
     fetch(`https://opensheet.elk.sh/${sheetID}/Writing`).then(r => r.json()),
     fetch(`https://opensheet.elk.sh/${sheetID}/Threads`).then(r => r.json()),
-  ]).then(([writingData, threadsData]) => {
-    const entries = prepWriting(writingData, threadsData);
+  ])
+    .then(([writingData, threadsData]) => {
+      const entries = prepWriting(writingData, threadsData);
 
-    initWritingMenus(entries);
-    populateWritingTable(entries);
+      initWritingMenus(entries);
+      populateWritingGrid(entries);
 
-    // init Isotope on rows
-    $container.isotope({
-      itemSelector: 'tr.grid-item',
-      percentPosition: true,
-      filter: '',
-      getSortData: {
-        date: function($row) {
-          return Date.parse($row.getAttribute('data-iso-date') || '');
-        },
-        words: function($row) {
-          return Number($row.getAttribute('data-words') || 0);
-        },
-        character: function($row) {
-          return ($row.getAttribute('data-character') || '').toLowerCase();
-        },
-        thread: function($row) {
-          return ($row.getAttribute('data-thread') || '').toLowerCase();
-        },
-      },
-      sortAscending: {
-        date: false,
-        words: false,
-        character: true,
-        thread: true,
-      }
+      // ✅ IMPORTANT: call after rows exist
+      initWritingIsotope();
+    })
+    .catch(err => {
+      console.error('Writing page load failed:', err);
     });
 
-    // call your existing initIsotope wiring if you have it
-    // initIsotope();
-  });
-
+  // ---------------------------
+  // DATA PREP
+  // ---------------------------
   function prepWriting(writingData, threadsData) {
     const threadById = {};
     (threadsData || []).forEach(t => {
@@ -154,117 +173,303 @@
     const now = new Date();
     const msDay = 24 * 60 * 60 * 1000;
 
-    return (writingData || []).map(row => {
-      const tid = (row.ThreadID || '').toString().trim();
-      const t = tid && threadById[tid] ? threadById[tid] : null;
+    return (writingData || [])
+      .map(row => {
+        const tid = (row.ThreadID || '').toString().trim();
+        const t = tid && threadById[tid] ? threadById[tid] : null;
 
-      const iso = toISODate(row.Date);
-      const category = (row.Category || '').toString().trim();
-      const words = Number(row.Words || 0);
+        const iso = toISODate(row.Date);
+        const category = (row.Category || '').toString().trim();
+        const words = Number(row.Words || 0);
 
-      const site =
-        (row.Site || '').toString().trim() ||
-        (t ? (t.Site || '').toString().trim() : '');
+        const site =
+          (row.Site || '').toString().trim() ||
+          (t ? (t.Site || '').toString().trim() : '');
 
-      const character =
-        (row.Character || '').toString().trim() ||
-        (t ? (t.Character || '').toString().trim() : '');
+        const character =
+          (row.Character || '').toString().trim() ||
+          (t ? (t.Character || '').toString().trim() : '');
 
-      const partner =
-        (row.Partner || '').toString().trim() ||
-        (t ? (t.Featuring || '').toString().trim() : '');
+        const partner =
+          (row.Partner || '').toString().trim() ||
+          (t ? (t.Featuring || '').toString().trim() : '');
 
-      const thread =
-        (row.Thread || '').toString().trim() ||
-        (t ? (t.Title || '').toString().trim() : '');
+        const thread =
+          (row.Thread || '').toString().trim() ||
+          (t ? (t.Title || '').toString().trim() : '');
 
-      const ship = (row.Ship || '').toString().trim();
-      const notes = (row.Notes || '').toString().trim();
+        const ship = (row.Ship || '').toString().trim();
+        const notes = (row.Notes || '').toString().trim();
 
-      const catClass = `cat--${slug(category || 'rp')}`;
+        const catClass = `cat--${slug(category || 'rp')}`;
 
-      let dateClasses = '';
-      if (iso) {
-        const d = new Date(iso + 'T00:00:00');
-        const diffDays = Math.floor((now - d) / msDay);
-        if (diffDays <= 7) dateClasses += ' date--7';
-        if (diffDays <= 30) dateClasses += ' date--30';
-        if (diffDays <= 365) dateClasses += ' date--365';
-      }
+        let dateClasses = '';
+        if (iso) {
+          const d = new Date(iso + 'T00:00:00');
+          const diffDays = Math.floor((now - d) / msDay);
 
-      const classes = [
-        catClass,
-        site ? `site--${slug(site)}` : '',
-        character ? `char--${slug(character)}` : '',
-        partner ? `partner--${slug(partner)}` : '',
-        dateClasses.trim()
-      ].filter(Boolean).join(' ');
+          // rolling ranges
+          if (diffDays <= 7) dateClasses += ' date--7';
+          if (diffDays <= 30) dateClasses += ' date--30';
+          if (diffDays <= 365) dateClasses += ' date--365';
 
-      return {
-        Date: row.Date || '',
-        ISODate: iso || '',
-        Category: category || '',
-        Words: Number.isFinite(words) ? words : 0,
-        Site: site || '',
-        Character: character || '',
-        Partner: partner || '',
-        Ship: ship || '',
-        Thread: thread || '',
-        ThreadID: tid || '',
-        Notes: notes || '',
-        classes
-      };
-    }).sort((a, b) => (b.ISODate || '').localeCompare(a.ISODate || ''));
+          // calendar month (this month)
+          const sameMonth =
+            d.getFullYear() === now.getFullYear() &&
+            d.getMonth() === now.getMonth();
+
+          if (sameMonth) dateClasses += ' date--month';
+        }
+
+        const classes = [
+          catClass,
+          site ? `site--${slug(site)}` : '',
+          character ? `char--${slug(character)}` : '',
+          partner ? `partner--${slug(partner)}` : '',
+          dateClasses.trim()
+        ]
+          .filter(Boolean)
+          .join(' ');
+
+        return {
+          Date: row.Date || '',
+          ISODate: iso || '',
+          Category: category || '',
+          Words: Number.isFinite(words) ? words : 0,
+          Site: site || '',
+          Character: character || '',
+          Partner: partner || '',
+          Ship: ship || '',
+          Thread: thread || '',
+          ThreadID: tid || '',
+          Notes: notes || '',
+          classes
+        };
+      })
+      .sort((a, b) => (b.ISODate || '').localeCompare(a.ISODate || ''));
   }
 
-  function populateWritingTable(entries) {
-    const tbody = document.getElementById('writing--rows');
+  // ---------------------------
+  // RENDER GRID ROWS
+  // ---------------------------
+  function populateWritingGrid(entries) {
+    const wrap = document.getElementById('writing--rows');
 
-    tbody.innerHTML = entries.map(e => {
+    wrap.innerHTML = entries.map(e => {
       const wordsDisplay = (Number(e.Words) || 0).toLocaleString();
+
+      // used for type-to-search
+      const searchBlob = [
+        e.Date, e.ISODate, e.Category,
+        e.Site, e.Character, e.Partner, e.Ship, e.Thread, e.Notes
+      ].filter(Boolean).join(' ');
+
       return `
-        <tr class="grid-item ${e.classes}"
-            data-iso-date="${escapeHtml(e.ISODate || '')}"
-            data-words="${escapeHtml(String(e.Words || 0))}"
-            data-character="${escapeHtml(e.Character || '')}"
-            data-thread="${escapeHtml(e.Thread || '')}">
-          <td class="col-date">${escapeHtml(e.Date || e.ISODate || '')}</td>
-          <td class="col-site"><span class="pill pill--site">${escapeHtml(e.Site || '')}</span></td>
-          <td class="col-character"><span class="pill pill--character">${escapeHtml(e.Character || '')}</span></td>
-          <td class="col-partner">${escapeHtml(e.Partner || '')}</td>
-          <td class="col-ship">${escapeHtml(e.Ship || '')}</td>
-          <td class="col-thread">${escapeHtml(e.Thread || '')}</td>
-          <td class="col-words is-num">${wordsDisplay}</td>
-          <td class="col-notes">${escapeHtml(e.Notes || '')}</td>
-        </tr>
+        <div class="grid-item writing-row ${e.classes || ''}"
+             data-iso-date="${escapeHtml(e.ISODate || '')}"
+             data-words="${escapeHtml(String(e.Words || 0))}"
+             data-character="${escapeHtml(e.Character || '')}"
+             data-thread="${escapeHtml(e.Thread || '')}">
+
+          <span class="writing-search" hidden>${escapeHtml(searchBlob)}</span>
+
+          <div class="cell col-date">${escapeHtml(e.Date || e.ISODate || '')}</div>
+          <div class="cell col-site">${escapeHtml(e.Site || '')}</div>
+          <div class="cell col-character">${escapeHtml(e.Character || '')}</div>
+          <div class="cell col-partner">${escapeHtml(e.Partner || '')}</div>
+          <div class="cell col-ship">${escapeHtml(e.Ship || '')}</div>
+          <div class="cell col-thread">${escapeHtml(e.Thread || '')}</div>
+          <div class="cell col-words is-num">${wordsDisplay}</div>
+          <div class="cell col-notes">${escapeHtml(e.Notes || '')}</div>
+        </div>
       `;
     }).join('');
   }
 
+  // ---------------------------
+  // BUILD DYNAMIC FILTER LISTS
+  // ---------------------------
   function initWritingMenus(entries) {
     const chars = uniq(entries.map(e => e.Character).filter(Boolean)).sort(sortAlpha);
     const partners = uniq(entries.map(e => e.Partner).filter(Boolean)).sort(sortAlpha);
     const sites = uniq(entries.map(e => e.Site).filter(Boolean)).sort(sortAlpha);
 
     const charWrap = document.querySelector('.filter--characters');
-    chars.forEach(name => charWrap.insertAdjacentHTML('beforeend',
-      `<label><span><input type="checkbox" value=".char--${slug(name)}"></span><b>${escapeHtml(name)}</b></label>`
-    ));
+    if (charWrap) {
+      chars.forEach(name => charWrap.insertAdjacentHTML(
+        'beforeend',
+        `<label><span><input type="checkbox" value=".char--${slug(name)}"></span><b>${escapeHtml(name)}</b></label>`
+      ));
+    }
 
     const partnerWrap = document.querySelector('.filter--partners');
-    partners.forEach(name => partnerWrap.insertAdjacentHTML('beforeend',
-      `<label><span><input type="checkbox" value=".partner--${slug(name)}"></span><b>${escapeHtml(name)}</b></label>`
-    ));
+    if (partnerWrap) {
+      partners.forEach(name => partnerWrap.insertAdjacentHTML(
+        'beforeend',
+        `<label><span><input type="checkbox" value=".partner--${slug(name)}"></span><b>${escapeHtml(name)}</b></label>`
+      ));
+    }
 
     const siteWrap = document.querySelector('.filter--sites');
-    sites.forEach(name => siteWrap.insertAdjacentHTML('beforeend',
-      `<label><span><input type="checkbox" value=".site--${slug(name)}"></span><b>${escapeHtml(name)}</b></label>`
-    ));
+    if (siteWrap) {
+      sites.forEach(name => siteWrap.insertAdjacentHTML(
+        'beforeend',
+        `<label><span><input type="checkbox" value=".site--${slug(name)}"></span><b>${escapeHtml(name)}</b></label>`
+      ));
+    }
   }
 
-  // utils
-  function uniq(arr) { return [...new Set(arr.map(v => String(v).trim()))].filter(Boolean); }
-  function sortAlpha(a, b) { return a.localeCompare(b, undefined, { sensitivity: 'base' }); }
+  // -----------------------------------
+  // ✅ ISOTOPE + FILTERS + SEARCH + SORT
+  // -----------------------------------
+  function initWritingIsotope() {
+    $container = $('#writing--rows');
+
+    const gridItemSel = '.grid-item.writing-row';
+    const searchSel = '.writing-search';
+    const searchInput = document.querySelector('#quicksearch');
+
+    // ---- Isotope init ----
+    $container.isotope({
+      itemSelector: gridItemSel,
+      percentPosition: true,
+      getSortData: {
+        date: el => Date.parse(el.getAttribute('data-iso-date') || ''),
+        words: el => Number(el.getAttribute('data-words') || 0),
+        character: el => (el.getAttribute('data-character') || '').toLowerCase(),
+        thread: el => (el.getAttribute('data-thread') || '').toLowerCase(),
+      },
+      sortAscending: { date: false, words: false, character: true, thread: true },
+      sortBy: 'date',
+      filter: () => true
+    });
+
+    // ---- State ----
+    const filtersByGroup = {}; // { category: ['.cat--rp'], partner: ['.partner--x', ...], ... }
+    let qs = '';
+
+    // ---- Helpers ----
+    function getCheckedValues(groupEl) {
+      const checked = [...groupEl.querySelectorAll('input[type="checkbox"]:checked')];
+      return checked.map(i => i.value).filter(v => v && v.trim());
+    }
+
+    function syncAllState(groupEl) {
+      const allBox = groupEl.querySelector('input.all');
+      if (!allBox) return;
+
+      const otherChecked = [...groupEl.querySelectorAll('input[type="checkbox"]:checked')]
+        .filter(i => !i.classList.contains('all'));
+
+      // "all" checked if nothing else checked
+      allBox.checked = otherChecked.length === 0;
+
+      // label styling
+      groupEl.querySelectorAll('label').forEach(l => l.classList.remove('is-checked'));
+      [...groupEl.querySelectorAll('input[type="checkbox"]:checked')].forEach(i => {
+        const label = i.closest('label');
+        if (label) label.classList.add('is-checked');
+      });
+    }
+
+    function readFiltersFromDOM() {
+      document.querySelectorAll('.writing--filter-group[data-filter-group]').forEach(groupEl => {
+        const groupName = groupEl.getAttribute('data-filter-group');
+        syncAllState(groupEl);
+
+        const vals = getCheckedValues(groupEl); // excludes "all" because value=""
+        if (vals.length) filtersByGroup[groupName] = vals;
+        else delete filtersByGroup[groupName];
+      });
+    }
+
+    function elementMatchesFilters(el) {
+      // AND between groups, OR within group
+      for (const groupName in filtersByGroup) {
+        const groupVals = filtersByGroup[groupName];
+        const ok = groupVals.some(sel => el.matches(sel));
+        if (!ok) return false;
+      }
+      return true;
+    }
+
+    function elementMatchesSearch(el) {
+      if (!qs) return true;
+      const blob = el.querySelector(searchSel);
+      const text = (blob ? blob.textContent : '').toLowerCase();
+      return text.includes(qs);
+    }
+
+    function applyFilter() {
+      $container.isotope({
+        filter: function() {
+          return elementMatchesFilters(this) && elementMatchesSearch(this);
+        }
+      });
+    }
+
+    // ---- Checkbox behavior (including "all") ----
+    document.querySelectorAll('.writing--filter-group[data-filter-group]').forEach(groupEl => {
+      groupEl.addEventListener('change', (e) => {
+        const input = e.target.closest('input[type="checkbox"]');
+        if (!input) return;
+
+        if (input.classList.contains('all')) {
+          // if "all" checked, clear others
+          if (input.checked) {
+            groupEl.querySelectorAll('input[type="checkbox"]:not(.all)').forEach(i => (i.checked = false));
+          } else {
+            // keep "all" checked if it's the only choice
+            input.checked = true;
+          }
+        } else {
+          // if any non-all checked, uncheck all
+          const allBox = groupEl.querySelector('input.all');
+          if (allBox) allBox.checked = false;
+        }
+
+        readFiltersFromDOM();
+        applyFilter();
+      });
+    });
+
+    // ---- Quicksearch ----
+    if (searchInput) {
+      searchInput.addEventListener('input', () => {
+        qs = (searchInput.value || '').toLowerCase().trim();
+        applyFilter();
+      });
+    }
+
+    // ---- Sorting buttons ----
+    document.querySelectorAll('.writing--sort').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const sortKey = btn.getAttribute('data-sort') || 'date';
+
+        // is-checked styling
+        document.querySelectorAll('.writing--sort').forEach(b => b.classList.remove('is-checked'));
+        btn.classList.add('is-checked');
+
+        $container.isotope({ sortBy: sortKey });
+      });
+    });
+
+    // ---- Initial state ----
+    readFiltersFromDOM();
+    applyFilter();
+    $container.isotope({ sortBy: 'date' });
+  }
+
+  // ---------------------------
+  // HELPERS
+  // ---------------------------
+  function uniq(arr) {
+    return [...new Set(arr.map(v => String(v).trim()))].filter(Boolean);
+  }
+
+  function sortAlpha(a, b) {
+    return a.localeCompare(b, undefined, { sensitivity: 'base' });
+  }
 
   function slug(str) {
     return String(str).toLowerCase()
@@ -276,11 +481,14 @@
   function toISODate(input) {
     if (!input) return '';
     const s = String(input).trim();
+
     if (/^\d{4}-\d{2}-\d{2}$/.test(s)) return s;
+
     if (/^\d{1,2}\/\d{1,2}\/\d{4}$/.test(s)) {
       const [m, d, y] = s.split('/').map(n => parseInt(n, 10));
-      return `${y}-${String(m).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+      return `${y}-${String(m).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
     }
+
     const d = new Date(s);
     if (!isNaN(d.getTime())) {
       const y = d.getFullYear();

@@ -30,7 +30,7 @@ body {
 main {
     margin-left: var(--size--menu-width);
 
-    &:not(:has(.threads)) {
+    &:not(:has(.threads)):not(:has(.characters)):not(:has(.writing)) {
         padding: var(--space--lg) var(--space--xs);
     
         @include mq-up(xs) {
