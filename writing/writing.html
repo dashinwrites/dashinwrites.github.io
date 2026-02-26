@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Dashin | Writing Tracker</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!--Styles-->
+<link rel="stylesheet" href="../dist/css/styles.css" />
+
+<!--Fonts-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair:ital,opsz,wght@0,5..1200,300..900;1,5..1200,300..900&display=swap" rel="stylesheet">
+
+<!--Icons-->
+<link href="https://dawneggleton.github.io/css/all-fa7.min.css" rel="stylesheet" />
+
+<!--Script Libraries-->
+<script type='text/javascript' src='https://files.jcink.net/html/jquery-1.7.2.min.js'></script>
+<script type='text/javascript' src='https://files.jcink.net/html/jquery.cookie-1.3.1.js'></script> 
+<script type='text/javascript' src="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/2.2.2/isotope.pkgd.min.js"></script>
+
+<!--Settings-->
+<script type='text/javascript' src='../dist/js/settings.js'></script>
+  </head>
+  <body>
+    <div class="backdrop horizontal"></div>
+<div class="backdrop vertical"></div>
+<nav class="nav">
+    <div class="nav--inner">
+        <a href="../index.html">
+            <i class="fa-solid fa-house"></i>
+            <span>Home</span>
+        </a>
+        <button onClick="openSubmenu(this)" data-menu="sites">
+            <i class="fa-solid fa-sitemap"></i>
+            <span>Sites</span>
+        </button>
+        <button onClick="openSubmenu(this)" data-menu="characters">
+            <i class="fa-solid fa-users"></i>
+            <span>Muses</span>
+        </button>
+        <button onClick="openSubmenu(this)" data-menu="threads">
+            <i class="fa-solid fa-books"></i>
+            <span>Threads</span>
+        </button>
+        <button onClick="openSubmenu(this)" data-menu="stats">
+            <i class="fa-solid fa-chart-pie"></i>
+            <span>Stats</span>
+        </button>
+        <button onClick="openSubmenu(this)" data-menu="writing">
+            <i class="fa-solid fa-feather-pointed"></i>
+            <span>Writing</span>
+        </button>
+        <button onClick="openSubmenu(this)" data-menu="admin">
+            <i class="fa-solid fa-wrench"></i>
+            <span>Admin</span>
+        </button>
+        <button class="toggle--theme" onClick="toggleTheme()">
+            <i class="fa-solid fa-brightness mode--light"></i>
+            <span class="mode--light">Light</span>
+            <i class="fa-solid fa-brightness-low mode--dark"></i>
+            <span class="mode--dark">Dark</span>
+        </button>
+    </div>
+</nav>
+<nav class="subnav" data-menu="sites">
+    <div class="subnav--inner"></div>
+</nav>
+<nav class="subnav" data-menu="characters">
+    <div class="subnav--inner">
+        <a href="../characters/index.html">View All</a>
+    </div>
+</nav>
+<nav class="subnav" data-menu="threads">
+    <div class="subnav--inner">
+        <a href="../threads/index.html">View All</a>
+    </div>
+</nav>
+<nav class="subnav" data-menu="stats">
+    <div class="subnav--inner">
+        <a href="../stats/index.html">View Combined</a>
+        <a href="../stats/statuses.html">Status Comparison</a>
+    </div>
+</nav>
+<nav class="subnav" data-menu="admin">
+    <div class="subnav--inner">
+        <a href="../admin/new-site.html">Add Site</a>
+        <a href="../admin/new-tag.html">Add Tags</a>
+        <a href="../admin/new-partner.html">Add Partner</a>
+        <a href="../admin/new-character.html">Add Character</a>
+        <a href="../admin/new-thread.html">Add Thread</a>
+        <a href="../admin/update-tag.html">Edit Tags</a>
+        <a href="../admin/update-partner.html">Edit Partner</a>
+        <a href="../admin/update-character.html">Edit Character</a>
+        <a href="../admin/update-thread.html">Edit Thread</a>
+    </div>
+</nav>
+    <main>
+      <section class="writing">
+        <div class="writing--header filters--wrap">
+  <button onClick="toggleFilters(this)" class="mobileOnly">View Filters</button>
+
+  <div class="filters--collapsible">
+    <div class="writing--filters">
+      <div class="writing--filters-inner">
+
+        <input id="quicksearch" class="forminput memberlist-namesearch" type="text" size="25"
+          name="name" value="" placeholder="Filter by character, partner, thread, notes...">
+
+        <!-- Sorting -->
+        <div class="writing--filter filter--parent">
+          <button onClick="openFilters(this)">Sort</button>
+          <div class="writing--filter-dropdown writing--sorting">
+            <button type="button" class="writing--sort is-checked" data-sort="date">Date (Desc)</button>
+            <button type="button" class="writing--sort" data-sort="words">Words (Desc)</button>
+            <button type="button" class="writing--sort" data-sort="character">Character (A → Z)</button>
+            <button type="button" class="writing--sort" data-sort="thread">Thread (A → Z)</button>
+          </div>
+        </div>
+
+        <!-- Category -->
+        <div class="writing--filter filter--parent">
+          <button onClick="openFilters(this)">Category</button>
+          <div class="writing--filter-dropdown">
+            <div class="writing--filter-group" data-filter-group="category">
+              <label class="all is-checked"><span><input type="checkbox" class="all" value="" checked=""></span><b>all</b></label>
+              <label><span><input type="checkbox" value=".cat--rp"></span><b>rp</b></label>
+              <label><span><input type="checkbox" value=".cat--dnd"></span><b>d&amp;d</b></label>
+              <label><span><input type="checkbox" value=".cat--hobby"></span><b>hobby</b></label>
+            </div>
+          </div>
+        </div>
+
+        <!-- Character -->
+        <div class="writing--filter filter--parent">
+          <button onClick="openFilters(this)">Character</button>
+          <div class="writing--filter-dropdown">
+            <div class="writing--filter-group filter--characters" data-filter-group="character">
+              <label class="all is-checked"><span><input type="checkbox" class="all" value="" checked=""></span><b>all</b></label>
+            </div>
+          </div>
+        </div>
+
+        <!-- Partner -->
+        <div class="writing--filter filter--parent">
+          <button onClick="openFilters(this)">Partner</button>
+          <div class="writing--filter-dropdown">
+            <div class="writing--filter-group filter--partners" data-filter-group="partner">
+              <label class="all is-checked"><span><input type="checkbox" class="all" value="" checked=""></span><b>all</b></label>
+            </div>
+          </div>
+        </div>
+
+        <!-- Site -->
+        <div class="writing--filter filter--parent">
+          <button onClick="openFilters(this)">Site</button>
+          <div class="writing--filter-dropdown">
+            <div class="writing--filter-group filter--sites" data-filter-group="site">
+              <label class="all is-checked"><span><input type="checkbox" class="all" value="" checked=""></span><b>all</b></label>
+            </div>
+          </div>
+        </div>
+
+        <!-- Date buckets -->
+        <div class="writing--filter filter--parent">
+          <button onClick="openFilters(this)">Date</button>
+          <div class="writing--filter-dropdown">
+            <div class="writing--filter-group" data-filter-group="datebucket">
+              <label class="all is-checked"><span><input type="checkbox" class="all" value="" checked=""></span><b>any time</b></label>
+              <label><span><input type="checkbox" value=".date--7"></span><b>last 7 days</b></label>
+              <label><span><input type="checkbox" value=".date--30"></span><b>last 30 days</b></label>
+              <label><span><input type="checkbox" value=".date--365"></span><b>last year</b></label>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="writing--content">
+  <div class="writing--tablewrap">
+    <table class="writing--table">
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Site</th>
+          <th>Character</th>
+          <th>Partner</th>
+          <th>Ship</th>
+          <th>Thread</th>
+          <th class="is-num">## Words</th>
+          <th>Notes</th>
+        </tr>
+      </thead>
+      <tbody id="writing--rows"></tbody>
+    </table>
+  </div>
+</div>
+
+<script>
+  // container for isotope (tbody works)
+  let $container = $('#writing--rows');
+
+  Promise.all([
+    fetch(`https://opensheet.elk.sh/${sheetID}/Writing`).then(r => r.json()),
+    fetch(`https://opensheet.elk.sh/${sheetID}/Threads`).then(r => r.json()),
+  ]).then(([writingData, threadsData]) => {
+    const entries = prepWriting(writingData, threadsData);
+
+    initWritingMenus(entries);
+    populateWritingTable(entries);
+
+    // init Isotope on rows
+    $container.isotope({
+      itemSelector: 'tr.grid-item',
+      percentPosition: true,
+      filter: '',
+      getSortData: {
+        date: function($row) {
+          return Date.parse($row.getAttribute('data-iso-date') || '');
+        },
+        words: function($row) {
+          return Number($row.getAttribute('data-words') || 0);
+        },
+        character: function($row) {
+          return ($row.getAttribute('data-character') || '').toLowerCase();
+        },
+        thread: function($row) {
+          return ($row.getAttribute('data-thread') || '').toLowerCase();
+        },
+      },
+      sortAscending: {
+        date: false,
+        words: false,
+        character: true,
+        thread: true,
+      }
+    });
+
+    // call your existing initIsotope wiring if you have it
+    // initIsotope();
+  });
+
+  function prepWriting(writingData, threadsData) {
+    const threadById = {};
+    (threadsData || []).forEach(t => {
+      const id = (t.ThreadID || '').toString().trim();
+      if (id) threadById[id] = t;
+    });
+
+    const now = new Date();
+    const msDay = 24 * 60 * 60 * 1000;
+
+    return (writingData || []).map(row => {
+      const tid = (row.ThreadID || '').toString().trim();
+      const t = tid && threadById[tid] ? threadById[tid] : null;
+
+      const iso = toISODate(row.Date);
+      const category = (row.Category || '').toString().trim();
+      const words = Number(row.Words || 0);
+
+      const site =
+        (row.Site || '').toString().trim() ||
+        (t ? (t.Site || '').toString().trim() : '');
+
+      const character =
+        (row.Character || '').toString().trim() ||
+        (t ? (t.Character || '').toString().trim() : '');
+
+      const partner =
+        (row.Partner || '').toString().trim() ||
+        (t ? (t.Featuring || '').toString().trim() : '');
+
+      const thread =
+        (row.Thread || '').toString().trim() ||
+        (t ? (t.Title || '').toString().trim() : '');
+
+      const ship = (row.Ship || '').toString().trim();
+      const notes = (row.Notes || '').toString().trim();
+
+      const catClass = `cat--${slug(category || 'rp')}`;
+
+      let dateClasses = '';
+      if (iso) {
+        const d = new Date(iso + 'T00:00:00');
+        const diffDays = Math.floor((now - d) / msDay);
+        if (diffDays <= 7) dateClasses += ' date--7';
+        if (diffDays <= 30) dateClasses += ' date--30';
+        if (diffDays <= 365) dateClasses += ' date--365';
+      }
+
+      const classes = [
+        catClass,
+        site ? `site--${slug(site)}` : '',
+        character ? `char--${slug(character)}` : '',
+        partner ? `partner--${slug(partner)}` : '',
+        dateClasses.trim()
+      ].filter(Boolean).join(' ');
+
+      return {
+        Date: row.Date || '',
+        ISODate: iso || '',
+        Category: category || '',
+        Words: Number.isFinite(words) ? words : 0,
+        Site: site || '',
+        Character: character || '',
+        Partner: partner || '',
+        Ship: ship || '',
+        Thread: thread || '',
+        ThreadID: tid || '',
+        Notes: notes || '',
+        classes
+      };
+    }).sort((a, b) => (b.ISODate || '').localeCompare(a.ISODate || ''));
+  }
+
+  function populateWritingTable(entries) {
+    const tbody = document.getElementById('writing--rows');
+
+    tbody.innerHTML = entries.map(e => {
+      const wordsDisplay = (Number(e.Words) || 0).toLocaleString();
+      return `
+        <tr class="grid-item ${e.classes}"
+            data-iso-date="${escapeHtml(e.ISODate || '')}"
+            data-words="${escapeHtml(String(e.Words || 0))}"
+            data-character="${escapeHtml(e.Character || '')}"
+            data-thread="${escapeHtml(e.Thread || '')}">
+          <td class="col-date">${escapeHtml(e.Date || e.ISODate || '')}</td>
+          <td class="col-site"><span class="pill pill--site">${escapeHtml(e.Site || '')}</span></td>
+          <td class="col-character"><span class="pill pill--character">${escapeHtml(e.Character || '')}</span></td>
+          <td class="col-partner">${escapeHtml(e.Partner || '')}</td>
+          <td class="col-ship">${escapeHtml(e.Ship || '')}</td>
+          <td class="col-thread">${escapeHtml(e.Thread || '')}</td>
+          <td class="col-words is-num">${wordsDisplay}</td>
+          <td class="col-notes">${escapeHtml(e.Notes || '')}</td>
+        </tr>
+      `;
+    }).join('');
+  }
+
+  function initWritingMenus(entries) {
+    const chars = uniq(entries.map(e => e.Character).filter(Boolean)).sort(sortAlpha);
+    const partners = uniq(entries.map(e => e.Partner).filter(Boolean)).sort(sortAlpha);
+    const sites = uniq(entries.map(e => e.Site).filter(Boolean)).sort(sortAlpha);
+
+    const charWrap = document.querySelector('.filter--characters');
+    chars.forEach(name => charWrap.insertAdjacentHTML('beforeend',
+      `<label><span><input type="checkbox" value=".char--${slug(name)}"></span><b>${escapeHtml(name)}</b></label>`
+    ));
+
+    const partnerWrap = document.querySelector('.filter--partners');
+    partners.forEach(name => partnerWrap.insertAdjacentHTML('beforeend',
+      `<label><span><input type="checkbox" value=".partner--${slug(name)}"></span><b>${escapeHtml(name)}</b></label>`
+    ));
+
+    const siteWrap = document.querySelector('.filter--sites');
+    sites.forEach(name => siteWrap.insertAdjacentHTML('beforeend',
+      `<label><span><input type="checkbox" value=".site--${slug(name)}"></span><b>${escapeHtml(name)}</b></label>`
+    ));
+  }
+
+  // utils
+  function uniq(arr) { return [...new Set(arr.map(v => String(v).trim()))].filter(Boolean); }
+  function sortAlpha(a, b) { return a.localeCompare(b, undefined, { sensitivity: 'base' }); }
+
+  function slug(str) {
+    return String(str).toLowerCase()
+      .replace(/&/g, 'and')
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/(^-|-$)/g, '');
+  }
+
+  function toISODate(input) {
+    if (!input) return '';
+    const s = String(input).trim();
+    if (/^\d{4}-\d{2}-\d{2}$/.test(s)) return s;
+    if (/^\d{1,2}\/\d{1,2}\/\d{4}$/.test(s)) {
+      const [m, d, y] = s.split('/').map(n => parseInt(n, 10));
+      return `${y}-${String(m).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+    }
+    const d = new Date(s);
+    if (!isNaN(d.getTime())) {
+      const y = d.getFullYear();
+      const m = String(d.getMonth() + 1).padStart(2, '0');
+      const day = String(d.getDate()).padStart(2, '0');
+      return `${y}-${m}-${day}`;
+    }
+    return '';
+  }
+
+  function escapeHtml(str) {
+    return String(str ?? '')
+      .replaceAll('&', '&amp;')
+      .replaceAll('<', '&lt;')
+      .replaceAll('>', '&gt;')
+      .replaceAll('"', '&quot;')
+      .replaceAll("'", '&#039;');
+  }
+</script>
+      </section>
+    </main>
+    <!--Scripts-->
+<script type='text/javascript' src='../dist/js/functions.js'></script>
+<script type='text/javascript' src='../dist/js/scripts.js'></script>
+  </body>
+</html>
