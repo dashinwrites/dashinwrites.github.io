@@ -1,3 +1,4 @@
+@charset "UTF-8";
 /*******************************
     Reset
 ********************************/
@@ -2167,6 +2168,7 @@ section.links a:hover {
   font-size: 12px;
   overflow: hidden;
   text-overflow: ellipsis;
+  text-align: center;
   white-space: nowrap;
   min-width: 0;
 }
@@ -2262,13 +2264,13 @@ section.links a:hover {
 
 /* the panel wrapper: shrink-wrap to the grid */
 .writing-mini {
-  display: inline-block;
+  display: block;
   width: -webkit-fit-content;
   width: -moz-fit-content;
   width: fit-content;
   max-width: 100%;
   min-width: 0;
-  margin-bottom: var(--space--lg);
+  margin: 0 auto var(--space--lg);
   /* keep details from doing anything weird */
 }
 .writing-mini details {
@@ -2367,5 +2369,389 @@ section.links a:hover {
   .writing-mini .row-compact {
     -ms-grid-columns: minmax(180px, 1fr);
     grid-template-columns: minmax(180px, 1fr);
+  }
+}
+
+/* =========================================================
+   WRITING MINI: SELECTS (match inputs)
+========================================================= */
+.writing-mini select {
+  display: block;
+  width: 100%;
+  min-width: 0;
+  border: 0;
+  border-left: var(--border--secondary);
+  background: var(--bg--primary);
+  padding: var(--space--xs) var(--space--sm);
+  font-size: 0.8rem;
+  color: var(--text--primary);
+  outline: none;
+  height: 34px;
+  line-height: 1;
+  /* remove native styling so it matches your inputs */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  /* make room for a custom caret */
+  padding-right: calc(var(--space--sm) + 18px);
+}
+.writing-mini select:focus {
+  border-left-color: var(--accent);
+}
+
+/* caret wrapper (works because your select sits inside a span in the label) */
+.writing-mini label > span {
+  position: relative;
+}
+
+/* draw a small chevron like your details caret */
+.writing-mini label > span::after {
+  content: "";
+  position: absolute;
+  right: var(--space--sm);
+  top: 50%;
+  width: 8px;
+  height: 8px;
+  border-right: 2px solid var(--text--primary);
+  border-bottom: 2px solid var(--text--primary);
+  -webkit-transform: translateY(-60%) rotate(45deg);
+      -ms-transform: translateY(-60%) rotate(45deg);
+          transform: translateY(-60%) rotate(45deg);
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+/* optional: subtle hover parity with your other controls */
+.writing-mini select:hover {
+  border-left-color: var(--accent);
+}
+
+/* optional: make “(select)” look muted (works if option is disabled) */
+.writing-mini select:invalid {
+  color: rgba(255, 255, 255, 0.55);
+}
+
+.writing-heatmap {
+  display: -ms-grid;
+  display: grid;
+  gap: var(--space--lg);
+  max-width: 100%;
+}
+
+.writing-heatmap__top {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: baseline;
+  -webkit-align-items: baseline;
+      -ms-flex-align: baseline;
+          align-items: baseline;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  gap: var(--space--md);
+}
+
+.writing-heatmap__title {
+  margin: 0;
+  font-family: var(--font--serif);
+  font-weight: 900;
+  font-size: 1.25rem;
+}
+
+.writing-heatmap__meta {
+  margin: 0;
+  font-size: 0.55rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  opacity: 0.6;
+}
+
+.writing-heatmap__card {
+  border: var(--border--primary);
+  background: var(--bg--tertiary);
+  padding: var(--space--lg);
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+  max-width: 100%;
+}
+
+.writing-heatmap__gridwrap {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: 36px auto;
+  grid-template-columns: 36px auto;
+  gap: var(--space--md);
+  -webkit-box-align: start;
+  -webkit-align-items: start;
+      -ms-flex-align: start;
+          align-items: start;
+}
+
+.writing-heatmap__days {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-rows: (12px)[7];
+  grid-template-rows: repeat(7, 12px);
+  gap: 4px;
+}
+.writing-heatmap__days span {
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  line-height: 12px;
+  opacity: 0.5;
+}
+
+.writing-heatmap__months {
+  display: -ms-grid;
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 12px;
+  gap: 4px;
+  margin-left: 36px;
+  margin-bottom: var(--space--sm);
+}
+.writing-heatmap__months span {
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  opacity: 0.6;
+  line-height: 1;
+}
+
+.writing-heatmap__grid {
+  --cell: 12px;
+  --gap: 4px;
+  display: -ms-grid;
+  display: grid;
+  grid-auto-flow: column;
+  -ms-grid-rows: (var(--cell))[7];
+  grid-template-rows: repeat(7, var(--cell));
+  grid-auto-columns: var(--cell);
+  gap: var(--gap);
+  overflow-x: auto;
+  padding-bottom: var(--space--sm);
+  max-width: 100%;
+}
+
+.hm-cell {
+  width: var(--cell);
+  height: var(--cell);
+  border-radius: 2px;
+  background: rgba(255, 255, 255, 0.06);
+  padding: 0;
+  cursor: pointer;
+  -webkit-transition: 0.2s ease-in-out;
+  transition: 0.2s ease-in-out;
+}
+.hm-cell:hover {
+  border-color: rgba(255, 255, 255, 0.2);
+}
+.hm-cell.is-empty {
+  opacity: 0;
+  border: 0;
+  cursor: default;
+}
+.hm-cell[data-level="0"] {
+  background: rgba(255, 255, 255, 0.06);
+}
+.hm-cell[data-level="1"] {
+  background: rgba(255, 255, 255, 0.12);
+}
+.hm-cell[data-level="2"] {
+  background: rgba(255, 255, 255, 0.2);
+}
+.hm-cell[data-level="3"] {
+  background: rgba(255, 255, 255, 0.3);
+}
+.hm-cell[data-level="4"] {
+  background: var(--accent);
+  border-color: rgba(255, 255, 255, 0.18);
+}
+
+.writing-heatmap__legend {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+  gap: 6px;
+  -webkit-box-pack: end;
+  -webkit-justify-content: flex-end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+  margin-top: var(--space--md);
+}
+.writing-heatmap__legend .label {
+  font-size: 0.55rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  opacity: 0.6;
+}
+.writing-heatmap__legend .swatch {
+  width: 12px;
+  height: 12px;
+  border-radius: 2px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.06);
+}
+.writing-heatmap__legend .swatch[data-l="1"] {
+  background: rgba(255, 255, 255, 0.12);
+}
+.writing-heatmap__legend .swatch[data-l="2"] {
+  background: rgba(255, 255, 255, 0.2);
+}
+.writing-heatmap__legend .swatch[data-l="3"] {
+  background: rgba(255, 255, 255, 0.3);
+}
+.writing-heatmap__legend .swatch[data-l="4"] {
+  background: var(--accent);
+}
+
+.heatmap--months {
+  display: -ms-grid;
+  display: grid;
+  gap: var(--space--lg);
+  -ms-grid-columns: (minmax(220px, 1fr))[4];
+  grid-template-columns: repeat(4, minmax(220px, 1fr));
+  -webkit-box-align: start;
+  -webkit-align-items: start;
+      -ms-flex-align: start;
+          align-items: start;
+}
+@media (max-width: 1100px) {
+  .heatmap--months {
+    -ms-grid-columns: (minmax(220px, 1fr))[3];
+    grid-template-columns: repeat(3, minmax(220px, 1fr));
+  }
+}
+@media (max-width: 850px) {
+  .heatmap--months {
+    -ms-grid-columns: (minmax(220px, 1fr))[2];
+    grid-template-columns: repeat(2, minmax(220px, 1fr));
+  }
+}
+@media (max-width: 520px) {
+  .heatmap--months {
+    -ms-grid-columns: 1fr;
+    grid-template-columns: 1fr;
+  }
+}
+
+.hm-month {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  gap: var(--space--sm);
+  min-width: 0;
+}
+
+.hm-month__title {
+  text-align: center;
+  font-family: var(--font--serif);
+  font-weight: 700;
+  font-size: 0.9rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  opacity: 0.8;
+  padding-bottom: 4px;
+}
+
+.hm-month__grid {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: (minmax(0, 1fr))[7];
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 3px;
+}
+
+.hm-day {
+  aspect-ratio: 1/1;
+  border-radius: 2px;
+  background: rgba(255, 255, 255, 0.05);
+  -webkit-transition: 0.2s ease-in-out;
+  transition: 0.2s ease-in-out;
+}
+
+.hm-day:hover {
+  -webkit-transform: translateY(-1px);
+      -ms-transform: translateY(-1px);
+          transform: translateY(-1px);
+}
+
+.hm-day.is-pad {
+  opacity: 0.25;
+}
+
+.hm-month__footer {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  font-size: 0.5rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  opacity: 0.5;
+}
+
+.hm-weekdays {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: (minmax(0, 1fr))[7];
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 3px;
+  max-width: 220px; /* matches your month min width */
+  opacity: 0.45;
+  margin-bottom: var(--space--md);
+}
+.hm-weekdays span {
+  font-size: 0.5rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  text-align: center;
+  opacity: 0.6;
+  line-height: 1;
+}
+
+.hm-month__weekdays {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: (minmax(0, 1fr))[7];
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 2px;
+  padding: 0 var(--space--sm) var(--space--xs);
+  opacity: 0.45;
+}
+.hm-month__weekdays span {
+  font-size: 0.5rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  text-align: center;
+  line-height: 1;
+  opacity: 0.6;
+  white-space: nowrap;
+}
+
+/* If your months get wider than 220px, keep the weekday labels aligned visually */
+@media (min-width: 1100px) {
+  .hm-weekdays {
+    max-width: 280px;
   }
 }

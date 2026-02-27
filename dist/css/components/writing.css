@@ -1,3 +1,4 @@
+@charset "UTF-8";
 /* =========================================================
    WRITING PAGE
 ========================================================= */
@@ -219,6 +220,7 @@
   font-size: 12px;
   overflow: hidden;
   text-overflow: ellipsis;
+  text-align: center;
   white-space: nowrap;
   min-width: 0;
 }
@@ -296,11 +298,11 @@
 
 /* the panel wrapper: shrink-wrap to the grid */
 .writing-mini {
-  display: inline-block;
+  display: block;
   width: fit-content;
   max-width: 100%;
   min-width: 0;
-  margin-bottom: var(--space--lg);
+  margin: 0 auto var(--space--lg);
   /* keep details from doing anything weird */
 }
 .writing-mini details {
@@ -383,4 +385,61 @@
   .writing-mini .row-compact {
     grid-template-columns: minmax(180px, 1fr);
   }
+}
+
+/* =========================================================
+   WRITING MINI: SELECTS (match inputs)
+========================================================= */
+.writing-mini select {
+  display: block;
+  width: 100%;
+  min-width: 0;
+  border: 0;
+  border-left: var(--border--secondary);
+  background: var(--bg--primary);
+  padding: var(--space--xs) var(--space--sm);
+  font-size: 0.8rem;
+  color: var(--text--primary);
+  outline: none;
+  height: 34px;
+  line-height: 1;
+  /* remove native styling so it matches your inputs */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  /* make room for a custom caret */
+  padding-right: calc(var(--space--sm) + 18px);
+}
+.writing-mini select:focus {
+  border-left-color: var(--accent);
+}
+
+/* caret wrapper (works because your select sits inside a span in the label) */
+.writing-mini label > span {
+  position: relative;
+}
+
+/* draw a small chevron like your details caret */
+.writing-mini label > span::after {
+  content: "";
+  position: absolute;
+  right: var(--space--sm);
+  top: 50%;
+  width: 8px;
+  height: 8px;
+  border-right: 2px solid var(--text--primary);
+  border-bottom: 2px solid var(--text--primary);
+  transform: translateY(-60%) rotate(45deg);
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+/* optional: subtle hover parity with your other controls */
+.writing-mini select:hover {
+  border-left-color: var(--accent);
+}
+
+/* optional: make “(select)” look muted (works if option is disabled) */
+.writing-mini select:invalid {
+  color: rgba(255, 255, 255, 0.55);
 }

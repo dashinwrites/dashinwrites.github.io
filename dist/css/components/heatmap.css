@@ -1,0 +1,262 @@
+.writing-heatmap {
+  display: grid;
+  gap: var(--space--lg);
+  max-width: 100%;
+}
+
+.writing-heatmap__top {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space--md);
+}
+
+.writing-heatmap__title {
+  margin: 0;
+  font-family: var(--font--serif);
+  font-weight: 900;
+  font-size: 1.25rem;
+}
+
+.writing-heatmap__meta {
+  margin: 0;
+  font-size: 0.55rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  opacity: 0.6;
+}
+
+.writing-heatmap__card {
+  border: var(--border--primary);
+  background: var(--bg--tertiary);
+  padding: var(--space--lg);
+  width: max-content;
+  max-width: 100%;
+}
+
+.writing-heatmap__gridwrap {
+  display: grid;
+  grid-template-columns: 36px auto;
+  gap: var(--space--md);
+  align-items: start;
+}
+
+.writing-heatmap__days {
+  display: grid;
+  grid-template-rows: repeat(7, 12px);
+  gap: 4px;
+}
+.writing-heatmap__days span {
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  line-height: 12px;
+  opacity: 0.5;
+}
+
+.writing-heatmap__months {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 12px;
+  gap: 4px;
+  margin-left: 36px;
+  margin-bottom: var(--space--sm);
+}
+.writing-heatmap__months span {
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  opacity: 0.6;
+  line-height: 1;
+}
+
+.writing-heatmap__grid {
+  --cell: 12px;
+  --gap: 4px;
+  display: grid;
+  grid-auto-flow: column;
+  grid-template-rows: repeat(7, var(--cell));
+  grid-auto-columns: var(--cell);
+  gap: var(--gap);
+  overflow-x: auto;
+  padding-bottom: var(--space--sm);
+  max-width: 100%;
+}
+
+.hm-cell {
+  width: var(--cell);
+  height: var(--cell);
+  border-radius: 2px;
+  background: rgba(255, 255, 255, 0.06);
+  padding: 0;
+  cursor: pointer;
+  transition: 0.2s ease-in-out;
+}
+.hm-cell:hover {
+  border-color: rgba(255, 255, 255, 0.2);
+}
+.hm-cell.is-empty {
+  opacity: 0;
+  border: 0;
+  cursor: default;
+}
+.hm-cell[data-level="0"] {
+  background: rgba(255, 255, 255, 0.06);
+}
+.hm-cell[data-level="1"] {
+  background: rgba(255, 255, 255, 0.12);
+}
+.hm-cell[data-level="2"] {
+  background: rgba(255, 255, 255, 0.2);
+}
+.hm-cell[data-level="3"] {
+  background: rgba(255, 255, 255, 0.3);
+}
+.hm-cell[data-level="4"] {
+  background: var(--accent);
+  border-color: rgba(255, 255, 255, 0.18);
+}
+
+.writing-heatmap__legend {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  justify-content: flex-end;
+  margin-top: var(--space--md);
+}
+.writing-heatmap__legend .label {
+  font-size: 0.55rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  opacity: 0.6;
+}
+.writing-heatmap__legend .swatch {
+  width: 12px;
+  height: 12px;
+  border-radius: 2px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.06);
+}
+.writing-heatmap__legend .swatch[data-l="1"] {
+  background: rgba(255, 255, 255, 0.12);
+}
+.writing-heatmap__legend .swatch[data-l="2"] {
+  background: rgba(255, 255, 255, 0.2);
+}
+.writing-heatmap__legend .swatch[data-l="3"] {
+  background: rgba(255, 255, 255, 0.3);
+}
+.writing-heatmap__legend .swatch[data-l="4"] {
+  background: var(--accent);
+}
+
+.heatmap--months {
+  display: grid;
+  gap: var(--space--lg);
+  grid-template-columns: repeat(4, minmax(220px, 1fr));
+  align-items: start;
+}
+@media (max-width: 1100px) {
+  .heatmap--months {
+    grid-template-columns: repeat(3, minmax(220px, 1fr));
+  }
+}
+@media (max-width: 850px) {
+  .heatmap--months {
+    grid-template-columns: repeat(2, minmax(220px, 1fr));
+  }
+}
+@media (max-width: 520px) {
+  .heatmap--months {
+    grid-template-columns: 1fr;
+  }
+}
+
+.hm-month {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space--sm);
+  min-width: 0;
+}
+
+.hm-month__title {
+  text-align: center;
+  font-family: var(--font--serif);
+  font-weight: 700;
+  font-size: 0.9rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  opacity: 0.8;
+  padding-bottom: 4px;
+}
+
+.hm-month__grid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 3px;
+}
+
+.hm-day {
+  aspect-ratio: 1/1;
+  border-radius: 2px;
+  background: rgba(255, 255, 255, 0.05);
+  transition: 0.2s ease-in-out;
+}
+
+.hm-day:hover {
+  transform: translateY(-1px);
+}
+
+.hm-day.is-pad {
+  opacity: 0.25;
+}
+
+.hm-month__footer {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.5rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  opacity: 0.5;
+}
+
+.hm-weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 3px;
+  max-width: 220px; /* matches your month min width */
+  opacity: 0.45;
+  margin-bottom: var(--space--md);
+}
+.hm-weekdays span {
+  font-size: 0.5rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  text-align: center;
+  opacity: 0.6;
+  line-height: 1;
+}
+
+.hm-month__weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 2px;
+  padding: 0 var(--space--sm) var(--space--xs);
+  opacity: 0.45;
+}
+.hm-month__weekdays span {
+  font-size: 0.5rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  text-align: center;
+  line-height: 1;
+  opacity: 0.6;
+  white-space: nowrap;
+}
+
+/* If your months get wider than 220px, keep the weekday labels aligned visually */
+@media (min-width: 1100px) {
+  .hm-weekdays {
+    max-width: 280px;
+  }
+}

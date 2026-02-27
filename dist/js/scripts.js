@@ -1,5 +1,6 @@
 setTheme();
 initMenus();
+initWritingDropdowns();
 
 document.querySelectorAll('.backdrop').forEach(overlay => {
     overlay.addEventListener('click', () => {
@@ -56,20 +57,29 @@ document.querySelectorAll('form').forEach(form => {
     });
 });
 
-document.querySelectorAll('select#site, .ships select#partner').forEach(el => {
-    initSiteSelect(el);
-});
+// only init the "admin-style" site selects, not the writing mini form
 document.querySelectorAll('select#site').forEach(el => {
-    el.addEventListener('change', e => {
-        initPartnerSelect(e.currentTarget, 'refresh');
-        document.querySelectorAll('.accordion.tags').forEach(el => {
-            initTags(el, e.currentTarget.options[e.currentTarget.selectedIndex].innerText.trim().toLowerCase());
-        });
-        if(document.querySelector('select#character')) {
-            initCharacterSelect(e.currentTarget);
-        }
-    });
+  if (el.closest('form')?.dataset.form === 'add-writing') return;
+  if (el.closest('form')?.dataset.form === 'edit-writing') return;
+
+  initSiteSelect(el);
 });
+
+document.querySelectorAll('select#site').forEach(el => {
+  if (el.closest('form')?.dataset.form === 'add-writing') return;
+  if (el.closest('form')?.dataset.form === 'edit-writing') return;
+
+  el.addEventListener('change', e => {
+    initPartnerSelect(e.currentTarget, 'refresh');
+    document.querySelectorAll('.accordion.tags').forEach(el2 => {
+      initTags(el2, e.currentTarget.options[e.currentTarget.selectedIndex].innerText.trim().toLowerCase());
+    });
+    if (document.querySelector('select#character')) {
+      initCharacterSelect(e.currentTarget);
+    }
+  });
+});
+
 document.querySelectorAll('.accordion.sites').forEach(el => {
     initTagSites(el);
     initAccordion();

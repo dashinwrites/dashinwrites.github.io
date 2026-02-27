@@ -87,6 +87,7 @@
 <nav class="subnav" data-menu="writing">
     <div class="subnav--inner">
         <a href="../writing/writing.html">Daily Diary</a>
+        <a href="../writing/heatmap.html">Heatmap</a>
     </div>
 </nav>
 <nav class="subnav" data-menu="admin">
@@ -198,7 +199,7 @@
 <div class="writing--content">
 
   <div class="form writing-mini">
-    <details class="form-collapsible" open>
+    <details class="form-collapsible">
       <summary class="form-collapsible__summary">
         <span class="title">Add writing entry</span>
         <span class="meta">click to toggle</span>
@@ -210,12 +211,30 @@
             <label><small>Date</small><input id="date" type="date" required></label>
             <label><small>Words</small><input id="words" type="number" min="0" required></label>
             <label><small>Category</small><input id="category" type="text"></label>
-            <label><small>Site</small><input id="site" type="text"></label>
+            <label><small>Site</small>
+              <select id="site">
+                <option value="" disable selected>(select)</option>
+              </select>
+            </label>
 
-            <label><small>Character</small><input id="character" type="text"></label>
-            <label><small>Partner</small><input id="partner" type="text"></label>
+            <label><small>Character</small>
+              <select id="character" disabled>
+                <option value="">(select site first)</option>
+              </select>
+            </label>
+
+            <label><small>Partner</small>
+              <select id="partner" disabled>
+                <option value="">(select site first)</option>
+              </select>
+            </label>
+
+            <label><small>Thread</small>
+              <select id="thread" disabled>
+                <option value="">(select site first)</option>
+              </select>
+            </label>
             <label><small>Ship</small><input id="ship" type="text"></label>
-            <label><small>Thread</small><input id="thread" type="text"></label>
           </div>
 
           <label class="full">
@@ -619,5 +638,6 @@
     <!--Scripts-->
 <script type='text/javascript' src='../dist/js/functions.js'></script>
 <script type='text/javascript' src='../dist/js/scripts.js'></script>
+<script type='text/javascript' src='../dist/js/heatmap.js'></script>
   </body>
 </html>
