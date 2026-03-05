@@ -562,8 +562,37 @@ function initWritingDropdowns() {
   // 1) populate sites
   initWritingSiteSelect(siteSelect);
 
+  let typedSite = '';
+
+    document.addEventListener('keypress', (e) => {
+
+        if (document.activeElement !== siteSelect) return;
+
+        if (e.key.length === 1 && !e.ctrlKey && !e.metaKey && !e.altKey) {
+
+            typedSite += e.key;
+
+            activateCustomSite(siteSelect, typedSite);
+
+            e.preventDefault();
+        }
+
+    });
+
   // 2) cascade: site -> character/partner/thread
   siteSelect.addEventListener('change', async () => {
+    typedSite = '';
+    if (siteSelect.value === '__custom__') {
+
+        activateCustomSite(siteSelect);
+
+        resetSelect(charSelect, '(not applicable)', true);
+        resetSelect(partnerSelect, '(not applicable)', true);
+        resetSelect(threadSelect, '(not applicable)', true);
+
+        return;
+    }
+
     const site = siteSelect.options[siteSelect.selectedIndex].innerText.trim().toLowerCase();
 
     resetSelect(charSelect, site ? '(select)' : '(select site first)', !site);
@@ -596,6 +625,50 @@ function initWritingDropdowns() {
   });
 }
 
+function activateCustomSite(siteSelect, initialValue = '') {
+
+  const wrapper = siteSelect.parentElement;
+
+  let customWrap = wrapper.querySelector('.custom-site-wrap');
+
+  if (!customWrap) {
+    customWrap = document.createElement('div');
+    customWrap.className = 'custom-site-wrap';
+
+    customWrap.innerHTML = `
+      <input type="text" class="custom-site-input" placeholder="Enter custom site">
+      <a href="#" class="site-back-link">← back to list</a>
+    `;
+
+    wrapper.appendChild(customWrap);
+
+    const back = customWrap.querySelector('.site-back-link');
+
+    back.addEventListener('click', (e) => {
+      e.preventDefault();
+
+      customWrap.style.display = 'none';
+      siteSelect.style.display = '';
+
+      siteSelect.value = '';
+    });
+  }
+
+  const input = customWrap.querySelector('input');
+
+  siteSelect.style.display = 'none';
+  customWrap.style.display = 'flex';
+
+  input.value = initialValue;
+  input.focus();
+}
+
+const writingOnlySites = [
+  'Dungeons & Dragons',
+  '1x1',
+  'Fiction'
+];
+
 function resetSelect(selectEl, placeholderText, disabled) {
   if (!selectEl) return;
   selectEl.innerHTML = `<option value="">${placeholderText}</option>`;
@@ -606,15 +679,34 @@ function initWritingSiteSelect(siteSelect) {
   fetch(`https://opensheet.elk.sh/${sheetID}/Sites`)
     .then(r => r.json())
     .then(data => {
-      data
-        .sort((a, b) => (a.Site < b.Site ? -1 : a.Site > b.Site ? 1 : 0))
-        .forEach(site => {
-          // store display-name as value (lowercase), per your preference
-          siteSelect.insertAdjacentHTML(
-            'beforeend',
-            `<option value="${site.Site.trim().toLowerCase()}">${capitalize(site.Site, [' ', '-'])}</option>`
-          );
-        });
+
+      data.sort((a, b) => a.Site.localeCompare(b.Site));
+
+      let html = `<option value="" disabled selected>(select)</option>`;
+
+      // --- Tracked sites ---
+      data.forEach(site => {
+        const name = site.Site.trim().toLowerCase();
+        html += `<option value="${name}">
+          ${capitalize(site.Site, [' ', '-'])}
+        </option>`;
+      });
+
+      // --- Divider ---
+      html += `<option disabled>──────────</option>`;
+
+      // --- Writing-only sites (optional) ---
+      writingOnlySites.forEach(site => {
+        const name = site.trim().toLowerCase();
+        html += `<option value="${name}">
+          ${capitalize(site)}
+        </option>`;
+      });
+
+      // --- Custom option ---
+      html += `<option value="__custom__">Other (type manually)…</option>`;
+
+      siteSelect.innerHTML = html;
     });
 }
 

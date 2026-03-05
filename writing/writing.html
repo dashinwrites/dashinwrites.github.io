@@ -4,6 +4,10 @@
     <title>Dashin | Writing Tracker</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<!-- Favicon -->
+<link rel="icon" type="image/png" href="https://i.postimg.cc/qR4zHx8B/horse.png">
+<!-- https://i.postimg.cc/FfC9jcWM/dragon.png -->
+
 <!--Styles-->
 <link rel="stylesheet" href="../dist/css/styles.css" />
 
@@ -398,14 +402,14 @@
 
           <span class="writing-search" hidden>${escapeHtml(searchBlob)}</span>
 
-          <div class="cell col-date">${escapeHtml(e.Date || e.ISODate || '')}</div>
-          <div class="cell col-site">${escapeHtml(e.Site || '')}</div>
-          <div class="cell col-character">${escapeHtml(e.Character || '')}</div>
-          <div class="cell col-partner">${escapeHtml(e.Partner || '')}</div>
-          <div class="cell col-ship">${escapeHtml(e.Ship || '')}</div>
-          <div class="cell col-thread">${escapeHtml(e.Thread || '')}</div>
-          <div class="cell col-words is-num">${wordsDisplay}</div>
-          <div class="cell col-notes">${escapeHtml(e.Notes || '')}</div>
+          <div class="cell col-date" data-label="Date">${escapeHtml(e.Date || e.ISODate || '')}</div>
+          <div class="cell col-site" data-label="Site">${escapeHtml(e.Site || '')}</div>
+          <div class="cell col-character" data-label="Character">${escapeHtml(e.Character || '')}</div>
+          <div class="cell col-partner" data-label="Partner">${escapeHtml(e.Partner || '')}</div>
+          <div class="cell col-ship" data-label="Ship">${escapeHtml(e.Ship || '')}</div>
+          <div class="cell col-thread" data-label="Thread">${escapeHtml(e.Thread || '')}</div>
+          <div class="cell col-words is-num" data-label="Words">${wordsDisplay}</div>
+          <div class="cell col-notes" data-label="Notes">${escapeHtml(e.Notes || '')}</div>
         </div>
       `;
     }).join('');

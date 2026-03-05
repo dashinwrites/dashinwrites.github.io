@@ -482,3 +482,51 @@
 .writing-mini select:invalid {
   color: rgba(255, 255, 255, 0.55); // or swap to a var if you have one
 }
+
+.custom-site-wrap {
+  display: none;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.custom-site-wrap input {
+  width: 100%;
+}
+
+.site-back-link {
+  font-size: 10px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  opacity: .6;
+}
+
+@media (max-width: 900px) {
+
+  .writing-row {
+    grid-template-columns: 1fr;
+    gap: 2px;
+    padding: var(--space--sm) 0;
+  }
+
+  .writing-row .cell {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--space--sm);
+    white-space: normal;
+    padding: 6px 12px;
+  }
+
+  .writing-row .cell::before {
+    content: attr(data-label);
+    font-size: 0.55rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    opacity: 0.55;
+    flex-shrink: 0;
+  }
+
+  .writing--grid-head {
+    display: none;
+  }
+
+}

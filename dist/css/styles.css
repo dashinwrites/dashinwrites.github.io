@@ -2431,6 +2431,61 @@ section.links a:hover {
   color: rgba(255, 255, 255, 0.55);
 }
 
+.custom-site-wrap {
+  display: none;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  gap: 6px;
+}
+
+.custom-site-wrap input {
+  width: 100%;
+}
+
+.site-back-link {
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  opacity: 0.6;
+}
+
+@media (max-width: 900px) {
+  .writing-row {
+    -ms-grid-columns: 1fr;
+    grid-template-columns: 1fr;
+    gap: 2px;
+    padding: var(--space--sm) 0;
+  }
+  .writing-row .cell {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: justify;
+    -webkit-justify-content: space-between;
+        -ms-flex-pack: justify;
+            justify-content: space-between;
+    gap: var(--space--sm);
+    white-space: normal;
+    padding: 6px 12px;
+  }
+  .writing-row .cell::before {
+    content: attr(data-label);
+    font-size: 0.55rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    opacity: 0.55;
+    -webkit-flex-shrink: 0;
+        -ms-flex-negative: 0;
+            flex-shrink: 0;
+  }
+  .writing--grid-head {
+    display: none;
+  }
+}
 .writing-heatmap {
   display: -ms-grid;
   display: grid;
