@@ -252,21 +252,8 @@
     </details>
   </div>
 
-    <div class="writing--gridwrap">
-      <div class="writing--grid writing--grid-head">
-        <div class="cell col-date">Date</div>
-        <div class="cell col-site">Site</div>
-        <div class="cell col-character">Character</div>
-        <div class="cell col-partner">Partner</div>
-        <div class="cell col-ship">Ship</div>
-        <div class="cell col-thread">Thread</div>
-        <div class="cell col-words">Words</div>
-        <div class="cell col-notes">Notes</div>
-      </div>
-
-      <div id="writing--rows" class="writing--rows"></div>
+    <div id="writing--rows" class="writing--rows"></div>
     </div>
-  </div>
 
 <script>
   // ---- Isotope container (jQuery object) ----
@@ -382,38 +369,52 @@
   // RENDER GRID ROWS
   // ---------------------------
   function populateWritingGrid(entries) {
-    const wrap = document.getElementById('writing--rows');
+  const wrap = document.getElementById('writing--rows');
 
-    wrap.innerHTML = entries.map(e => {
-      const wordsDisplay = (Number(e.Words) || 0).toLocaleString();
+  wrap.innerHTML = entries.map(e => {
+    const wordsDisplay = (Number(e.Words) || 0).toLocaleString();
 
-      // used for type-to-search
-      const searchBlob = [
-        e.Date, e.ISODate, e.Category,
-        e.Site, e.Character, e.Partner, e.Ship, e.Thread, e.Notes
-      ].filter(Boolean).join(' ');
+    const notesBlock = e.Notes
+      ? `<div class="writing-entry__notes">${e.Notes}</div>`
+      : "";
 
-      return `
-        <div class="grid-item writing-row ${e.classes || ''}"
-             data-iso-date="${escapeHtml(e.ISODate || '')}"
-             data-words="${escapeHtml(String(e.Words || 0))}"
-             data-character="${escapeHtml(e.Character || '')}"
-             data-thread="${escapeHtml(e.Thread || '')}">
+    return `
+      <article class="writing-entry">
 
-          <span class="writing-search" hidden>${escapeHtml(searchBlob)}</span>
+        <div class="writing-entry__left">
 
-          <div class="cell col-date" data-label="Date">${escapeHtml(e.Date || e.ISODate || '')}</div>
-          <div class="cell col-site" data-label="Site">${escapeHtml(e.Site || '')}</div>
-          <div class="cell col-character" data-label="Character">${escapeHtml(e.Character || '')}</div>
-          <div class="cell col-partner" data-label="Partner">${escapeHtml(e.Partner || '')}</div>
-          <div class="cell col-ship" data-label="Ship">${escapeHtml(e.Ship || '')}</div>
-          <div class="cell col-thread" data-label="Thread">${escapeHtml(e.Thread || '')}</div>
-          <div class="cell col-words is-num" data-label="Words">${wordsDisplay}</div>
-          <div class="cell col-notes" data-label="Notes">${escapeHtml(e.Notes || '')}</div>
+          <div class="writing-entry__meta">
+            <div class="writing-entry__meta">
+              <div><span>Site</span> ${e.Site}</div>
+              <div><span>Date</span> ${e.Date}</div>
+            </div>
+          </div>
+
+          <h2 class="writing-entry__title">${e.Thread}</h2>
+
+          <div class="writing-entry__details">
+            <div><span>Character</span> ${e.Character}</div>
+            <div><span>Partner</span> ${e.Partner}</div>
+            <div><span>Ship</span> ${e.Ship}</div>
+          </div>
+
         </div>
-      `;
-    }).join('');
-  }
+
+        <div class="writing-entry__right">
+
+          <div class="writing-entry__words">
+            ${wordsDisplay}
+            <span>words</span>
+          </div>
+
+          ${notesBlock}
+
+        </div>
+
+      </article>
+    `;
+  }).join('');
+}
 
   // ---------------------------
   // BUILD DYNAMIC FILTER LISTS
