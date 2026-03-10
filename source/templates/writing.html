@@ -156,10 +156,7 @@
       const entries = prepWriting(writingData, threadsData);
 
       initWritingMenus(entries);
-      populateWritingGrid(entries);
-
-      // ✅ IMPORTANT: call after rows exist
-      initWritingIsotope();
+      initWritingGrid(entries);
     })
     .catch(err => {
       console.error('Writing page load failed:', err);
@@ -258,51 +255,66 @@
   // RENDER GRID ROWS
   // ---------------------------
   function populateWritingGrid(entries) {
-  const wrap = document.getElementById('writing--rows');
+    const wrap = document.getElementById('writing--rows');
 
-  wrap.innerHTML = entries.map(e => {
-    const wordsDisplay = (Number(e.Words) || 0).toLocaleString();
+    wrap.innerHTML = entries.map(e => {
+      const wordsDisplay = (Number(e.Words) || 0).toLocaleString();
 
-    const notesBlock = e.Notes
-      ? `<div class="writing-entry__notes">${e.Notes}</div>`
-      : "";
+      const searchBlob = [
+        e.Date, e.ISODate, e.Category, e.Site, e.Character, e.Partner, e.Ship, e.Thread
+      ].filter(Boolean).join(' ');
 
-    return `
-      <article class="writing-entry">
+      const notesBlock = e.Notes
+        ? `<div class="writing-entry__notes">${e.Notes}</div>`
+        : "";
 
-        <div class="writing-entry__left">
+      return `
+        <article class="writing-entry ${e.classes || ''}"
+             data-iso-date="${escapeHtml(e.ISODate || '')}"
+             data-words="${escapeHtml(String(e.Words || 0))}"
+             data-character="${escapeHtml(e.Character || '')}"
+             data-thread="${escapeHtml(e.Thread || '')}">
 
-          <div class="writing-entry__meta">
+        <span class="writing-search" hidden>${escapeHtml(searchBlob)}</span>
+
+          <div class="writing-entry__left">
+
             <div class="writing-entry__meta">
               <div><span>Site</span> ${e.Site}</div>
               <div><span>Date</span> ${e.Date}</div>
             </div>
+
+            <h2 class="writing-entry__title" title="${escapeHtml(e.Thread || '')}">
+              ${escapeHtml(e.Thread || '')}
+            </h2>
+
+            <div class="writing-entry__mobile-meta">
+              <span>${e.Date}</span>
+              <span>${e.Site}</span>
+            </div>
+
+            <div class="writing-entry__details">
+              <div><span>Character</span> ${e.Character}</div>
+              <div><span>Partner</span> ${e.Partner}</div>
+              <div><span>Ship</span> ${e.Ship}</div>
+            </div>
+
           </div>
 
-          <h2 class="writing-entry__title">${e.Thread}</h2>
+          <div class="writing-entry__right">
 
-          <div class="writing-entry__details">
-            <div><span>Character</span> ${e.Character}</div>
-            <div><span>Partner</span> ${e.Partner}</div>
-            <div><span>Ship</span> ${e.Ship}</div>
+            <div class="writing-entry__words">
+              ${wordsDisplay}
+              <span>words</span>
+            </div>
+
+            ${notesBlock}
+
           </div>
 
-        </div>
-
-        <div class="writing-entry__right">
-
-          <div class="writing-entry__words">
-            ${wordsDisplay}
-            <span>words</span>
-          </div>
-
-          ${notesBlock}
-
-        </div>
-
-      </article>
-    `;
-  }).join('');
+        </article>
+      `;
+    }).join('');
 }
 
   // ---------------------------
@@ -339,146 +351,166 @@
   }
 
   // -----------------------------------
-  // ✅ ISOTOPE + FILTERS + SEARCH + SORT
+  // FILTERS + SEARCH + SORT
   // -----------------------------------
-  function initWritingIsotope() {
-    $container = $('#writing--rows');
+  function initWritingGrid(allEntries) {
+  const searchInput = document.querySelector('#quicksearch');
+  const filtersByGroup = {};
+  let qs = '';
+  let currentSort = 'date';
 
-    const gridItemSel = '.grid-item.writing-row';
-    const searchSel = '.writing-search';
-    const searchInput = document.querySelector('#quicksearch');
-
-    // ---- Isotope init ----
-    $container.isotope({
-      itemSelector: gridItemSel,
-      percentPosition: true,
-      getSortData: {
-        date: el => Date.parse(el.getAttribute('data-iso-date') || ''),
-        words: el => Number(el.getAttribute('data-words') || 0),
-        character: el => (el.getAttribute('data-character') || '').toLowerCase(),
-        thread: el => (el.getAttribute('data-thread') || '').toLowerCase(),
-      },
-      sortAscending: { date: false, words: false, character: true, thread: true },
-      sortBy: 'date',
-      filter: () => true
-    });
-
-    // ---- State ----
-    const filtersByGroup = {}; // { category: ['.cat--rp'], partner: ['.partner--x', ...], ... }
-    let qs = '';
-
-    // ---- Helpers ----
-    function getCheckedValues(groupEl) {
-      const checked = [...groupEl.querySelectorAll('input[type="checkbox"]:checked')];
-      return checked.map(i => i.value).filter(v => v && v.trim());
-    }
-
-    function syncAllState(groupEl) {
-      const allBox = groupEl.querySelector('input.all');
-      if (!allBox) return;
-
-      const otherChecked = [...groupEl.querySelectorAll('input[type="checkbox"]:checked')]
-        .filter(i => !i.classList.contains('all'));
-
-      // "all" checked if nothing else checked
-      allBox.checked = otherChecked.length === 0;
-
-      // label styling
-      groupEl.querySelectorAll('label').forEach(l => l.classList.remove('is-checked'));
-      [...groupEl.querySelectorAll('input[type="checkbox"]:checked')].forEach(i => {
-        const label = i.closest('label');
-        if (label) label.classList.add('is-checked');
-      });
-    }
-
-    function readFiltersFromDOM() {
-      document.querySelectorAll('.writing--filter-group[data-filter-group]').forEach(groupEl => {
-        const groupName = groupEl.getAttribute('data-filter-group');
-        syncAllState(groupEl);
-
-        const vals = getCheckedValues(groupEl); // excludes "all" because value=""
-        if (vals.length) filtersByGroup[groupName] = vals;
-        else delete filtersByGroup[groupName];
-      });
-    }
-
-    function elementMatchesFilters(el) {
-      // AND between groups, OR within group
-      for (const groupName in filtersByGroup) {
-        const groupVals = filtersByGroup[groupName];
-        const ok = groupVals.some(sel => el.matches(sel));
-        if (!ok) return false;
-      }
-      return true;
-    }
-
-    function elementMatchesSearch(el) {
-      if (!qs) return true;
-      const blob = el.querySelector(searchSel);
-      const text = (blob ? blob.textContent : '').toLowerCase();
-      return text.includes(qs);
-    }
-
-    function applyFilter() {
-      $container.isotope({
-        filter: function() {
-          return elementMatchesFilters(this) && elementMatchesSearch(this);
-        }
-      });
-    }
-
-    // ---- Checkbox behavior (including "all") ----
-    document.querySelectorAll('.writing--filter-group[data-filter-group]').forEach(groupEl => {
-      groupEl.addEventListener('change', (e) => {
-        const input = e.target.closest('input[type="checkbox"]');
-        if (!input) return;
-
-        if (input.classList.contains('all')) {
-          // if "all" checked, clear others
-          if (input.checked) {
-            groupEl.querySelectorAll('input[type="checkbox"]:not(.all)').forEach(i => (i.checked = false));
-          } else {
-            // keep "all" checked if it's the only choice
-            input.checked = true;
-          }
-        } else {
-          // if any non-all checked, uncheck all
-          const allBox = groupEl.querySelector('input.all');
-          if (allBox) allBox.checked = false;
-        }
-
-        readFiltersFromDOM();
-        applyFilter();
-      });
-    });
-
-    // ---- Quicksearch ----
-    if (searchInput) {
-      searchInput.addEventListener('input', () => {
-        qs = (searchInput.value || '').toLowerCase().trim();
-        applyFilter();
-      });
-    }
-
-    // ---- Sorting buttons ----
-    document.querySelectorAll('.writing--sort').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const sortKey = btn.getAttribute('data-sort') || 'date';
-
-        // is-checked styling
-        document.querySelectorAll('.writing--sort').forEach(b => b.classList.remove('is-checked'));
-        btn.classList.add('is-checked');
-
-        $container.isotope({ sortBy: sortKey });
-      });
-    });
-
-    // ---- Initial state ----
-    readFiltersFromDOM();
-    applyFilter();
-    $container.isotope({ sortBy: 'date' });
+  function getCheckedValues(groupEl) {
+    const checked = [...groupEl.querySelectorAll('input[type="checkbox"]:checked')];
+    return checked.map(i => i.value).filter(v => v && v.trim());
   }
 
+  function syncAllState(groupEl) {
+    const allBox = groupEl.querySelector('input.all');
+    if (!allBox) return;
+
+    const otherChecked = [...groupEl.querySelectorAll('input[type="checkbox"]:checked')]
+      .filter(i => !i.classList.contains('all'));
+
+    allBox.checked = otherChecked.length === 0;
+
+    groupEl.querySelectorAll('label').forEach(l => l.classList.remove('is-checked'));
+    [...groupEl.querySelectorAll('input[type="checkbox"]:checked')].forEach(i => {
+      const label = i.closest('label');
+      if (label) label.classList.add('is-checked');
+    });
+  }
+
+  function readFiltersFromDOM() {
+    document.querySelectorAll('.writing--filter-group[data-filter-group]').forEach(groupEl => {
+      const groupName = groupEl.getAttribute('data-filter-group');
+      syncAllState(groupEl);
+
+      const vals = getCheckedValues(groupEl);
+      if (vals.length) filtersByGroup[groupName] = vals;
+      else delete filtersByGroup[groupName];
+    });
+  }
+
+  function entryMatchesFilters(entry) {
+    if (!Object.keys(filtersByGroup).length) return true;
+
+    const probe = document.createElement('div');
+    probe.className = entry.classes || '';
+
+    for (const groupName in filtersByGroup) {
+      const groupVals = filtersByGroup[groupName];
+      const ok = groupVals.some(sel => probe.matches(sel));
+      if (!ok) return false;
+    }
+
+    return true;
+  }
+
+  function entryMatchesSearch(entry) {
+    if (!qs) return true;
+
+    const blob = [
+      entry.Date,
+      entry.ISODate,
+      entry.Category,
+      entry.Site,
+      entry.Character,
+      entry.Partner,
+      entry.Ship,
+      entry.Thread,
+      entry.Notes
+    ]
+      .filter(Boolean)
+      .join(' ')
+      .toLowerCase();
+
+    return blob.includes(qs);
+  }
+
+  function sortEntries(entries) {
+    const sorted = [...entries];
+
+    sorted.sort((a, b) => {
+      switch (currentSort) {
+        case 'words':
+          return Number(b.Words || 0) - Number(a.Words || 0);
+
+        case 'character':
+          return String(a.Character || '').localeCompare(
+            String(b.Character || ''),
+            undefined,
+            { sensitivity: 'base' }
+          );
+
+        case 'thread':
+          return String(a.Thread || '').localeCompare(
+            String(b.Thread || ''),
+            undefined,
+            { sensitivity: 'base' }
+          );
+
+        case 'date':
+        default:
+          return String(b.ISODate || '').localeCompare(String(a.ISODate || ''));
+      }
+    });
+
+    return sorted;
+  }
+
+  function render() {
+    readFiltersFromDOM();
+
+    const visible = allEntries.filter(entry =>
+      entryMatchesFilters(entry) && entryMatchesSearch(entry)
+    );
+
+    const sorted = sortEntries(visible);
+    populateWritingGrid(sorted);
+  }
+
+  document.querySelectorAll('.writing--filter-group[data-filter-group]').forEach(groupEl => {
+    groupEl.addEventListener('change', e => {
+      const input = e.target.closest('input[type="checkbox"]');
+      if (!input) return;
+
+      if (input.classList.contains('all')) {
+        if (input.checked) {
+          groupEl.querySelectorAll('input[type="checkbox"]:not(.all)').forEach(i => {
+            i.checked = false;
+          });
+        } else {
+          input.checked = true;
+        }
+      } else {
+        const allBox = groupEl.querySelector('input.all');
+        if (allBox) allBox.checked = false;
+      }
+
+      render();
+    });
+  });
+
+  if (searchInput) {
+    searchInput.addEventListener('input', () => {
+      qs = (searchInput.value || '').toLowerCase().trim();
+      render();
+    });
+  }
+
+  document.querySelectorAll('.writing--sort').forEach(btn => {
+    btn.addEventListener('click', () => {
+      currentSort = btn.getAttribute('data-sort') || 'date';
+
+      document.querySelectorAll('.writing--sort').forEach(b => b.classList.remove('is-checked'));
+      btn.classList.add('is-checked');
+
+      render();
+    });
+  });
+
+  render();
+}
   // ---------------------------
   // HELPERS
   // ---------------------------
