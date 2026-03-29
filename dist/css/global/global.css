@@ -22,11 +22,11 @@ body.theme--light .mode--light {
 main {
   margin-left: var(--size--menu-width);
 }
-main:not(:has(.threads)) {
+main:not(:has(.threads)):not(:has(.characters)):not(:has(.records)) {
   padding: var(--space--lg) var(--space--xs);
 }
 @media (min-width: 601px) {
-  main:not(:has(.threads)) {
+  main:not(:has(.threads)):not(:has(.characters)):not(:has(.records)) {
     padding: var(--space--lg);
   }
 }
@@ -35,14 +35,14 @@ main:not(:has(.threads)) {
   position: fixed;
   top: 0;
   left: 0;
-  background: rgba(0, 0, 0, 0.6);
   z-index: 2;
-  backdrop-filter: blur(5px);
   transition-duration: 0.3s;
 }
 .backdrop.horizontal {
   width: 0;
   height: 100vh;
+  background: rgba(24, 24, 24, 0.9);
+  backdrop-filter: blur(5px);
 }
 .backdrop.horizontal.is-active {
   width: 100%;
@@ -51,13 +51,82 @@ main:not(:has(.threads)) {
   height: 0;
   width: 100%;
 }
-.backdrop.vertical.is-active {
-  height: 100vh;
-}
-
 [target=_blank]::after {
   content: "\f08e";
   font-family: "Font Awesome 7 Pro";
   margin-left: var(--space--xs);
   color: var(--accent);
+}
+
+#loading {
+  font-size: 100px;
+  position: fixed;
+  top: 0;
+  left: var(--size--menu-width);
+  background: var(--bg--primary);
+  width: calc(100% - var(--size--menu-width));
+  height: 100vh;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+body.index h2 {
+  font-size: 48px;
+  text-align: center;
+}
+body.index .grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space--md);
+}
+
+.site {
+  background: var(--bg--tertiary);
+  border-left: var(--border--thick);
+  display: grid;
+  grid-template-columns: 100%;
+  gap: 0 var(--space--md);
+  padding: var(--space--md);
+}
+@media (min-width: 601px) {
+  .site {
+    padding: var(--space--md) var(--space--lg);
+  }
+}
+.site a {
+  color: var(--text-secondary);
+}
+.site--title {
+  display: flex;
+  flex-direction: column;
+  margin: 15px 0 13px;
+}
+.site--title > a {
+  font-family: var(--font--serif);
+  font-weight: 900;
+  font-size: 24px;
+}
+.site--title > p {
+  font-size: 0.75rem;
+  line-height: 180%;
+  margin: 0;
+}
+.site--stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space--xs) var(--space--lg);
+  color: var(--text--primary);
+  font-size: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  line-height: 200%;
+}
+.site--stats b {
+  color: var(--text--secondary);
+}
+.site--stats a {
+  border-bottom: var(--border--primary);
+  border-color: var(--accent);
 }
