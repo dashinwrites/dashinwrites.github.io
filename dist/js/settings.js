@@ -92,13 +92,9 @@ const chartColors = [
   '#3b2a1f'  // dark umber (neutral anchor)
 ];
 
-const heatmapLow = '163, 58, 31';
-const heatmapMid = '197, 90, 42';
-const heatmapHigh = '230, 200, 120';
-
-// #3b0a0c → #7a2a17 → #b8923f
-// #7a1216 → #c2451f → #f0c35a
-// rgb(163, 58, 31) → rgb(197, 90, 42) → rgb(230, 200, 120) → current
+const heatmapLow = '31, 17, 17';
+const heatmapMid = '122, 18, 22';
+const heatmapHigh = '212, 168, 74';
 
 const datasetOptions = {
     backgroundColor: chartColors,
