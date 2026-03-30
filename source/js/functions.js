@@ -59,11 +59,6 @@ function initMenus() {
         writing: document.querySelector('.subnav[data-menu="writing"] .subnav--inner'),
         };
 
-        // optional: clear existing content to prevent duplicates
-        Object.values(menus).forEach(menu => {
-        if (menu) menu.innerHTML = '';
-        });
-
         data.forEach((site, i) => {
         const showHeader = i === 0 || site.Status !== data[i - 1].Status;
 
