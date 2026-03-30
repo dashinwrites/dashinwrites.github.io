@@ -3138,20 +3138,30 @@ function initRecords(sites, records, init = false) {
         else return 0;
     });
 
-    console.log(document.querySelector('.records'));
-    console.log(document.querySelector('.records .filter--year .is-active'));
+    const root = document.querySelector('.records');
+    if (!root) return;
 
-    //get active filters
+    const getData = (selector, key, fallback = null) => {
+    const el = root.querySelector(selector);
+    return el?.dataset?.[key] ?? fallback;
+    };
+
     let selectedFilters = {
-        year: document.querySelector('.records .filter--year .is-active').dataset.year === 'all' ? document.querySelector('.records .filter--year .is-active').dataset.year : parseInt(document.querySelector('.records .filter--year .is-active').dataset.year),
-        month: document.querySelector('.records .filter--month .is-active').dataset.month,
-        character: document.querySelector('.records .filter--characters .is-active').dataset.character,
-        ship: document.querySelector('.records .filter--ships .is-active').dataset.ship,
-        site: document.querySelector('.records .filter--sites') ? document.querySelector('.records .filter--sites .is-active').dataset.site : sites[0].Site,
-        type: document.querySelector('.records .filter--type .is-active').dataset.type,
-        partner: document.querySelector('.records .filter--partners .is-active').dataset.partner,
-        metric: document.querySelector('.records .filter--metric .is-active').dataset.metric,
-    }
+    year: (() => {
+        const year = getData('.filter--year .is-active', 'year', 'all');
+        return year === 'all' ? 'all' : parseInt(year);
+    })(),
+
+    month: getData('.filter--month .is-active', 'month'),
+    character: getData('.filter--characters .is-active', 'character'),
+    ship: getData('.filter--ships .is-active', 'ship'),
+
+    site: getData('.filter--sites .is-active', 'site', sites?.[0]?.Site),
+
+    type: getData('.filter--type .is-active', 'type'),
+    partner: getData('.filter--partners .is-active', 'partner'),
+    metric: getData('.filter--metric .is-active', 'metric'),
+    };
 
     //filter records and threads by the relevant data
     let filteredRecords = records.filter(item => 
