@@ -82,14 +82,14 @@ const successMessage = `<p class="fullWidth">Submission successful!</p>
 <button onclick="location.reload();" type="button" class="fullWidth submit">Back to form</button>`;
 const threadTags = ["vital", "priority", "rapidfire", "romantic", "family", "friends", "coworkers"];
 const chartColors = [
-    '#73626E', 
-    '#F5D8BC', 
-    '#F0B49E', 
-    '#F7E4BE', 
-    '#413E4A', 
-    '#8C7077', 
-    '#D3A79F', 
-    '#A69C9E'
+  '#5a0f12', // deep blood red
+  '#7a1c1f', // dark crimson
+  '#a33a1f', // ember red
+  '#c55a2a', // burnt orange
+  '#d4a84a', // antique gold
+  '#e6c878', // pale gold
+  '#8f6b2e', // tarnished brass
+  '#3b2a1f'  // dark umber (neutral anchor)
 ];
 
 const heatmapLow = '90, 15, 18';
