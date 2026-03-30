@@ -3138,6 +3138,9 @@ function initRecords(sites, records, init = false) {
         else return 0;
     });
 
+    console.log(document.querySelector('.records'));
+    console.log(document.querySelector('.records .filter--year .is-active'));
+
     //get active filters
     let selectedFilters = {
         year: document.querySelector('.records .filter--year .is-active').dataset.year === 'all' ? document.querySelector('.records .filter--year .is-active').dataset.year : parseInt(document.querySelector('.records .filter--year .is-active').dataset.year),
