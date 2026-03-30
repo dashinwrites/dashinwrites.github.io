@@ -1,7 +1,6 @@
 let storedSites = [], storedPartners = [], storedCharacters = [], storedThreads = [], storedTags = [], storedRecords = [], storedFreeforms = [];
 setTheme();
 initMenus();
-initWritingDropdowns();
 
 document.querySelectorAll('.backdrop').forEach(overlay => {
     overlay.addEventListener('click', () => {
@@ -27,17 +26,14 @@ document.querySelectorAll('form').forEach(form => {
             case 'add-character':
                 submitCharacter(form);
                 break;
+            case 'add-app':
+                submitApp(form);
+                break;
             case 'add-partner':
                 submitPartner(form);
                 break;
             case 'add-thread':
                 submitThread(form);
-                break;
-            case 'add-writing':
-                submitWriting(e.currentTarget);
-                break;
-            case 'edit-writing':
-                updateWriting(e.currentTarget);
                 break;
             case 'edit-tags':
                 updateTags(form, storedTags);
@@ -59,24 +55,23 @@ document.querySelectorAll('form').forEach(form => {
         }
     });
 });
-
-document.querySelectorAll('select#site, .ships select#partner').forEach(el => {
-    initSiteSelect(el);
-});
-document.querySelectorAll('select#site').forEach(el => {
+document.querySelectorAll('form:not([data-form="edit-partner"]) select#site').forEach(el => {
     el.addEventListener('change', e => {
-        initPartnerSelect(e.currentTarget, 'refresh');
+        initPartnerSelect(e.currentTarget, storedPartners, 'refresh', '#site', true);
         document.querySelectorAll('.accordion.tags').forEach(el => {
-            initTags(el, e.currentTarget.options[e.currentTarget.selectedIndex].innerText.trim().toLowerCase());
+            initTags(el, e.currentTarget.options[e.currentTarget.selectedIndex].innerText.trim().toLowerCase(), storedTags);
         });
         if(document.querySelector('select#character')) {
-            initCharacterSelect(e.currentTarget);
+            initCharacterSelect(e.currentTarget, storedCharacters);
         }
     });
 });
-document.querySelectorAll('.accordion.sites').forEach(el => {
-    initTagSites(el);
-    initAccordion();
+document.querySelectorAll('select#character').forEach(el => {
+    if(document.querySelector('select#thread-auto')) {
+        el.addEventListener('change', e => {
+            initThreadSelect(e.currentTarget, storedThreads);
+        });
+    }
 });
 document.querySelectorAll('[data-form="edit-tags"] select#title').forEach(el => {
     el.addEventListener('change', e => {
