@@ -3150,17 +3150,17 @@ function initRecords(sites, records, init = false) {
     year: (() => {
         const year = getData('.filter--year .is-active', 'year', 'all');
         return year === 'all' ? 'all' : parseInt(year);
-    })(),
+        })(),
 
-    month: getData('.filter--month .is-active', 'month'),
-    character: getData('.filter--characters .is-active', 'character'),
-    ship: getData('.filter--ships .is-active', 'ship'),
+        month: getData('.filter--month .is-active', 'month'),
+        character: getData('.filter--characters .is-active', 'character'),
+        ship: getData('.filter--ships .is-active', 'ship'),
 
-    site: getData('.filter--sites .is-active', 'site', sites?.[0]?.Site),
+        site: getData('.filter--sites .is-active', 'site', sites?.[0]?.Site),
 
-    type: getData('.filter--type .is-active', 'type'),
-    partner: getData('.filter--partners .is-active', 'partner'),
-    metric: getData('.filter--metric .is-active', 'metric'),
+        type: getData('.filter--type .is-active', 'type'),
+        partner: getData('.filter--partners .is-active', 'partner'),
+        metric: getData('.filter--metric .is-active', 'metric'),
     };
 
     //filter records and threads by the relevant data
