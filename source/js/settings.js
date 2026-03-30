@@ -96,6 +96,10 @@ const heatmapLow = '90, 15, 18';
 const heatmapMid = '163, 58, 31';
 const heatmapHigh = '212, 168, 74';
 
+// #3b0a0c → #7a2a17 → #b8923f
+// #7a1216 → #c2451f → #f0c35a
+// #5a0f12 → #a33a1f → #d4a84a → current
+
 const datasetOptions = {
     backgroundColor: chartColors,
     borderWidth: 5,
