@@ -61,12 +61,6 @@
             <i class="fa-solid fa-wrench"></i>
             <span>Admin</span>
         </button>
-        <button class="toggle--theme" onClick="toggleTheme()">
-            <i class="fa-solid fa-brightness mode--light"></i>
-            <span class="mode--light">Light</span>
-            <i class="fa-solid fa-brightness-low mode--dark"></i>
-            <span class="mode--dark">Dark</span>
-        </button>
     </div>
 </nav>
 <nav class="subnav" data-menu="sites">
@@ -90,8 +84,7 @@
 </nav>
 <nav class="subnav" data-menu="writing">
     <div class="subnav--inner">
-        <a href="../writing/writing.html">Daily Diary</a>
-        <a href="../writing/heatmap.html">Heatmap</a>
+        <a href="../writing/index.html">View Combined</a>
     </div>
 </nav>
 <nav class="subnav" data-menu="admin">
@@ -101,6 +94,7 @@
         <a href="../admin/new-partner.html">Add Partner</a>
         <a href="../admin/new-character.html">Add Character</a>
         <a href="../admin/new-thread.html">Add Thread</a>
+        <a href="../admin/new-record.html">Add Record</a>
         <a href="../admin/update-tag.html">Edit Tags</a>
         <a href="../admin/update-partner.html">Edit Partner</a>
         <a href="../admin/update-character.html">Edit Character</a>
@@ -216,7 +210,7 @@
     </div>
 </div>
 <div class="threads--content">
-    <div id="threads--rows"></div>
+    <div id="threads--rows"><div class="records--spinner"><i class="fa-solid fa-cog fa-spin"></i></div></div>
 </div>
 
 <script>

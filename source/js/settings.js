@@ -75,7 +75,7 @@ const relationshipOptions = `<option value="">(select)</option>
     </optgroup>`;
     
 const activeStatusClasses = `.status--mine, .status--theirs, .status--start, .status--planned`;
-const deployID = 'AKfycbxtpn4Uef_mLCR2nIIkny7D4wXuN7RX8vcLOS3vXe5zLO4T4zqCvynaQlVnxsOOXC-y';
+const deployID = 'AKfycbzId-wGochHwlJ36aqWzVrkGaPfr6l5DK8IZzC8Iex2BeyXbi_h9w-VPINhswVcd-g';
 const sheetID = `1WtJG6Z0Ar1LtKDrgN1VbsIcMGkRDCiQ4oOHImPBla4Y`;
 const oldSheetID = `1XNHsAlHv62PHeXuyWfbegNueYi9QdeyvUPlJ0Qu64i0`;
 const successMessage = `<p class="fullWidth">Submission successful!</p>
@@ -91,6 +91,14 @@ const chartColors = [
     '#D3A79F', 
     '#A69C9E'
 ];
+
+const heatmapLow = '90, 15, 18';
+const heatmapMid = '163, 58, 31';
+const heatmapHigh = '212, 168, 74';
+
+// #3b0a0c → #7a2a17 → #b8923f
+// #7a1216 → #c2451f → #f0c35a
+// #5a0f12 → #a33a1f → #d4a84a → current
 
 const datasetOptions = {
     backgroundColor: chartColors,

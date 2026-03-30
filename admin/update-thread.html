@@ -61,12 +61,12 @@
             <i class="fa-solid fa-wrench"></i>
             <span>Admin</span>
         </button>
-        <button class="toggle--theme" onClick="toggleTheme()">
+        <!--<button class="toggle--theme" onClick="toggleTheme()">
             <i class="fa-solid fa-brightness mode--light"></i>
             <span class="mode--light">Light</span>
             <i class="fa-solid fa-brightness-low mode--dark"></i>
             <span class="mode--dark">Dark</span>
-        </button>
+        </button>-->
     </div>
 </nav>
 <nav class="subnav" data-menu="sites">
@@ -88,12 +88,6 @@
         <a href="../stats/statuses.html">Status Comparison</a>
     </div>
 </nav>
-<nav class="subnav" data-menu="writing">
-    <div class="subnav--inner">
-        <a href="../writing/writing.html">Daily Diary</a>
-        <a href="../writing/heatmap.html">Heatmap</a>
-    </div>
-</nav>
 <nav class="subnav" data-menu="admin">
     <div class="subnav--inner">
         <a href="../admin/new-site.html">Add Site</a>
@@ -101,6 +95,7 @@
         <a href="../admin/new-partner.html">Add Partner</a>
         <a href="../admin/new-character.html">Add Character</a>
         <a href="../admin/new-thread.html">Add Thread</a>
+        <a href="../admin/new-record.html">Add Record</a>
         <a href="../admin/update-tag.html">Edit Tags</a>
         <a href="../admin/update-partner.html">Edit Partner</a>
         <a href="../admin/update-character.html">Edit Character</a>
@@ -109,15 +104,18 @@
 </nav>
         <main>
             <section class="form">
-                <h1>Edit Thread</h1>
+                <div id="loading"><i class="fa-solid fa-cog fa-spin"></i></div>
+<h1>Edit Thread</h1>
 <form data-form="edit-thread">
-    <label>
-        <b>Current Title</b>
-        <span><input type="text" id="title" placeholder="Thread title" required /></span>
-    </label>
     <label>
         <b>Site</b>
         <span><select required id="site">
+            <option value="">(select)</option>
+        </select></span>
+    </label>
+    <label>
+        <b>Current Title</b>
+        <span><select required id="title">
             <option value="">(select)</option>
         </select></span>
     </label>
@@ -176,6 +174,23 @@
     </div>
     <button type="submit" class="fullWidth">Submit</button>
 </form>
+<script>
+    fetch(`https://opensheet.elk.sh/${sheetID}/Tagging`)
+    .then((response) => response.json())
+    .then((tagData) => {
+        storedTags = [...tagData];
+
+        fetch(`https://opensheet.elk.sh/${sheetID}/Threads`)
+        .then((response) => response.json())
+        .then((threadData) => {
+            storedThreads = [...threadData];
+
+        }).then(() => {
+            initSiteSelects();
+            document.querySelector('#loading').remove();
+        });
+    });
+</script>
             </section>
         </main>
         <!--Scripts-->

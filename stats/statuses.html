@@ -63,12 +63,12 @@
             <i class="fa-solid fa-wrench"></i>
             <span>Admin</span>
         </button>
-        <button class="toggle--theme" onClick="toggleTheme()">
+        <!--<button class="toggle--theme" onClick="toggleTheme()">
             <i class="fa-solid fa-brightness mode--light"></i>
             <span class="mode--light">Light</span>
             <i class="fa-solid fa-brightness-low mode--dark"></i>
             <span class="mode--dark">Dark</span>
-        </button>
+        </button>-->
     </div>
 </nav>
 <nav class="subnav" data-menu="sites">
@@ -90,12 +90,6 @@
         <a href="../stats/statuses.html">Status Comparison</a>
     </div>
 </nav>
-<nav class="subnav" data-menu="writing">
-    <div class="subnav--inner">
-        <a href="../writing/writing.html">Daily Diary</a>
-        <a href="../writing/heatmap.html">Heatmap</a>
-    </div>
-</nav>
 <nav class="subnav" data-menu="admin">
     <div class="subnav--inner">
         <a href="../admin/new-site.html">Add Site</a>
@@ -103,6 +97,7 @@
         <a href="../admin/new-partner.html">Add Partner</a>
         <a href="../admin/new-character.html">Add Character</a>
         <a href="../admin/new-thread.html">Add Thread</a>
+        <a href="../admin/new-record.html">Add Record</a>
         <a href="../admin/update-tag.html">Edit Tags</a>
         <a href="../admin/update-partner.html">Edit Partner</a>
         <a href="../admin/update-character.html">Edit Character</a>
@@ -126,7 +121,7 @@
             //set overall variables
             let siteName = 'godly behaviour';
             let siteObject = siteName !== 'all' ? siteData.filter(item => item.Site === siteName) : siteData;
-            let threadStats = createThreadStats(threadData, siteObject);
+            let threadStats = createThreadStats(threadData, siteObject, siteName, siteData);
 
             /*Thread Status*/
             new Chart(document.getElementById('gb'), {
@@ -156,7 +151,7 @@
             //set overall variables
             let siteName = 'where the hell is';
             let siteObject = siteName !== 'all' ? siteData.filter(item => item.Site === siteName) : siteData;
-            let threadStats = createThreadStats(threadData, siteObject);
+            let threadStats = createThreadStats(threadData, siteObject, siteName, siteData);
 
             /*Thread Status*/
             new Chart(document.getElementById('wthi'), {
@@ -186,7 +181,7 @@
             //set overall variables
             let siteName = 'southern winds weyr';
             let siteObject = siteName !== 'all' ? siteData.filter(item => item.Site === siteName) : siteData;
-            let threadStats = createThreadStats(threadData, siteObject);
+            let threadStats = createThreadStats(threadData, siteObject, siteName, siteData);
 
             /*Thread Status*/
             new Chart(document.getElementById('sww'), {
@@ -216,7 +211,7 @@
             //set overall variables
             let siteName = 'start a fire';
             let siteObject = siteName !== 'all' ? siteData.filter(item => item.Site === siteName) : siteData;
-            let threadStats = createThreadStats(threadData, siteObject);
+            let threadStats = createThreadStats(threadData, siteObject, siteName, siteData);
 
             /*Thread Status*/
             new Chart(document.getElementById('saf'), {
@@ -246,7 +241,7 @@
             //set overall variables
             let siteName = 'idols & ichor';
             let siteObject = siteName !== 'all' ? siteData.filter(item => item.Site === siteName) : siteData;
-            let threadStats = createThreadStats(threadData, siteObject);
+            let threadStats = createThreadStats(threadData, siteObject, siteName, siteData);
 
             /*Thread Status*/
             new Chart(document.getElementById('i&i'), {
@@ -278,7 +273,7 @@
             //set overall variables
             let siteName = 'all';
             let siteObject = siteName !== 'all' ? siteData.filter(item => item.Site === siteName) : siteData;
-            let threadStats = createThreadStats(threadData, siteObject);
+            let threadStats = createThreadStats(threadData, siteObject, siteName, siteData);
 
             /*Thread Status*/
             new Chart(document.getElementById('all'), {
