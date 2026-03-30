@@ -9,6 +9,7 @@
 //  5. Insert column names on your destination sheet matching the parameter names of the data you are passing in (exactly matching case)
 
 var SCRIPT_PROP = PropertiesService.getScriptProperties(); // new property service
+var output = "";
 
 // If you don't want to expose either GET or POST methods you can comment out the appropriate function
 function doGet(e){
@@ -20,25 +21,25 @@ function doPost(e){
 }
 
 function submitToSheet(e, sheetName) {
-    var doc = SpreadsheetApp.openById(SCRIPT_PROP.getProperty("key"));
-    var sheet = doc.getSheetByName(sheetName);
-    // we'll assume header is in row 1 but you can override with header_row in GET/POST data
-    var headRow = e.parameter.header_row || 1;
-    var headers = sheet.getRange(1, 1, 1, sheet.getLastColumn()).getValues()[0];
-    var nextRow = sheet.getLastRow()+1; // get next row
-    var row = [];
-    var output = "";
-    // loop through the header columns
-    for (i in headers){
-      if (headers[i] == "Timestamp"){ // special case if you include a 'Timestamp' column
-        row.push(new Date());
-      } else { // else use header name to get data
-        row.push(e.parameter[headers[i]]);
-      }
+  var doc = SpreadsheetApp.openById(SCRIPT_PROP.getProperty("key"));
+  var sheet = doc.getSheetByName(sheetName);
+
+  var headers = sheet.getRange(1, 1, 1, sheet.getLastColumn()).getValues()[0];
+  var nextRow = sheet.getLastRow() + 1;
+  var row = [];
+
+  for (var i = 0; i < headers.length; i++) {
+    if (headers[i] == "Timestamp") {
+      row.push(new Date());
+    } else {
+      row.push(e.parameter[headers[i]]);
     }
-    // more efficient to set values as [][] array than individually
-    sheet.getRange(nextRow, 1, 1, row.length).setValues([row]);
-    output = JSON.stringify({"result":"success", "row": nextRow});
+  }
+
+  sheet.getRange(nextRow, 1, 1, row.length).setValues([row]);
+
+  output = JSON.stringify({ result: "success", row: nextRow }); // <-- IMPORTANT: global
+  return output;
 }
 
 function editRows(e, sheetName, idCol, edittype, altIdCol = null) {
@@ -161,6 +162,8 @@ function handleResponse(e) {
       submitToSheet(e, 'Characters');
     } else if(e.parameter['SubmissionType'] == 'add-thread') {
       submitToSheet(e, 'Threads');
+    } else if(e.parameter['SubmissionType'] == 'add-writing') {
+      submitToSheet(e, 'Writing');
     } else if(e.parameter['SubmissionType'] == 'edit-character') {
       editRows(e, 'Characters', 0, 'characters');
     } else if(e.parameter['SubmissionType'] == 'edit-tags') {
@@ -172,6 +175,7 @@ function handleResponse(e) {
     } else if(e.parameter['SubmissionType'] == 'thread-status') {
       editSheet(e, 'Threads', 6, 'thread-status', 0, 4);
     }
+  }
 
     if (e.parameter.callback){
       // return jsonp success results

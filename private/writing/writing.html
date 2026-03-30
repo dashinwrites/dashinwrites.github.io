@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    @@include('../../source/templates/head.html', {
+      "prefix": "../dist",
+      "siteTitle": "Dashin | Writing Tracker"
+    })
+  </head>
+  <body>
+    @@include('../../source/templates/nav.html', {
+      "prefix": ".."
+    })
+    <main>
+      <section class="writing">
+        @@include('../../source/templates/writing.html', {})
+      </section>
+    </main>
+    @@include('../../source/templates/foot.html', {
+      "prefix": "../dist"
+    })
+  </body>
+</html>

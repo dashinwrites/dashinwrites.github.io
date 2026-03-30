@@ -43,7 +43,9 @@
     "IE >= 11"
   ],
   "devDependencies": {
+    "fast-glob": "^3.3.3",
     "gulp-file-include": "^2.3.0",
+    "js-yaml": "^4.1.1",
     "sass": "^1.89.2",
     "webpack": "^4.39.3"
   }

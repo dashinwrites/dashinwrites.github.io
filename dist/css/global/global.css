@@ -22,11 +22,11 @@ body.theme--light .mode--light {
 main {
   margin-left: var(--size--menu-width);
 }
-main:not(:has(.threads)):not(:has(.characters)):not(:has(.records)) {
+main:not(:has(.threads)) {
   padding: var(--space--lg) var(--space--xs);
 }
 @media (min-width: 601px) {
-  main:not(:has(.threads)):not(:has(.characters)):not(:has(.records)) {
+  main:not(:has(.threads)) {
     padding: var(--space--lg);
   }
 }

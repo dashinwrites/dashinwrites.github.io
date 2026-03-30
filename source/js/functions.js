@@ -699,6 +699,266 @@ function initThreadTags(addTo, existingTags = [], removeTags = false) {
     addTo.innerHTML = html;
 }
 
+function initWritingDropdowns() {
+  const form = document.querySelector('form[data-form="add-writing"], form[data-form="edit-writing"]');
+  if (!form) return;
+
+  const siteSelect = form.querySelector('select#site');
+  const charSelect = form.querySelector('select#character');
+  const partnerSelect = form.querySelector('select#partner');
+  const threadSelect = form.querySelector('select#thread');
+
+  if (!siteSelect || !charSelect || !partnerSelect || !threadSelect) return;
+
+  // 1) populate sites
+  initWritingSiteSelect(siteSelect);
+
+  let typedSite = '';
+
+    document.addEventListener('keypress', (e) => {
+
+        if (document.activeElement !== siteSelect) return;
+
+        if (e.key.length === 1 && !e.ctrlKey && !e.metaKey && !e.altKey) {
+
+            typedSite += e.key;
+
+            activateCustomSite(siteSelect, typedSite);
+
+            e.preventDefault();
+        }
+
+    });
+
+  // 2) cascade: site -> character/partner/thread
+  siteSelect.addEventListener('change', async () => {
+    typedSite = '';
+    if (siteSelect.value === '__custom__') {
+
+        activateCustomSite(siteSelect);
+
+        resetSelect(charSelect, '(not applicable)', true);
+        resetSelect(partnerSelect, '(not applicable)', true);
+        resetSelect(threadSelect, '(not applicable)', true);
+
+        return;
+    }
+
+    const site = siteSelect.options[siteSelect.selectedIndex].innerText.trim().toLowerCase();
+
+    resetSelect(charSelect, site ? '(select)' : '(select site first)', !site);
+    resetSelect(partnerSelect, site ? '(select)' : '(select site first)', !site);
+    resetSelect(threadSelect, site ? '(select)' : '(select site first)', !site);
+
+    if (!site) return;
+
+    await Promise.all([
+      initWritingCharacterSelect(form, site),
+      initWritingPartnerSelect(form, site),
+      initWritingThreadSelect(form, { site })
+    ]);
+  });
+
+  // 3) cascade: character -> thread
+  charSelect.addEventListener('change', async () => {
+    const site = siteSelect.options[siteSelect.selectedIndex].innerText.trim().toLowerCase();
+    const character = charSelect.options[charSelect.selectedIndex].innerText.trim().toLowerCase();
+    const partner = partnerSelect.options[partnerSelect.selectedIndex]?.innerText.trim().toLowerCase() || '';
+    await initWritingThreadSelect(form, { site, character, partner });
+  });
+
+  // 4) cascade: partner -> thread
+  partnerSelect.addEventListener('change', async () => {
+    const site = siteSelect.options[siteSelect.selectedIndex].innerText.trim().toLowerCase();
+    const partner = partnerSelect.options[partnerSelect.selectedIndex].innerText.trim().toLowerCase();
+    const character = charSelect.options[charSelect.selectedIndex]?.innerText.trim().toLowerCase() || '';
+    await initWritingThreadSelect(form, { site, character, partner });
+  });
+}
+
+function activateCustomSite(siteSelect, initialValue = '') {
+
+  const wrapper = siteSelect.parentElement;
+
+  let customWrap = wrapper.querySelector('.custom-site-wrap');
+
+  if (!customWrap) {
+    customWrap = document.createElement('div');
+    customWrap.className = 'custom-site-wrap';
+
+    customWrap.innerHTML = `
+      <input type="text" class="custom-site-input" placeholder="Enter custom site">
+      <a href="#" class="site-back-link">← back to list</a>
+    `;
+
+    wrapper.appendChild(customWrap);
+
+    const back = customWrap.querySelector('.site-back-link');
+
+    back.addEventListener('click', (e) => {
+      e.preventDefault();
+
+      customWrap.style.display = 'none';
+      siteSelect.style.display = '';
+
+      siteSelect.value = '';
+    });
+  }
+
+  const input = customWrap.querySelector('input');
+
+  siteSelect.style.display = 'none';
+  customWrap.style.display = 'flex';
+
+  input.value = initialValue;
+  input.focus();
+}
+
+const writingOnlySites = [
+  'Dungeons & Dragons',
+  '1x1',
+  'Fiction'
+];
+
+function resetSelect(selectEl, placeholderText, disabled) {
+  if (!selectEl) return;
+  selectEl.innerHTML = `<option value="">${placeholderText}</option>`;
+  selectEl.disabled = !!disabled;
+}
+
+function initWritingSiteSelect(siteSelect) {
+  fetch(`https://opensheet.elk.sh/${sheetID}/Sites`)
+    .then(r => r.json())
+    .then(data => {
+
+      data.sort((a, b) => a.Site.localeCompare(b.Site));
+
+      let html = `<option value="" disabled selected>(select)</option>`;
+
+      // --- Tracked sites ---
+      data.forEach(site => {
+        const name = site.Site.trim().toLowerCase();
+        html += `<option value="${name}">
+          ${capitalize(site.Site, [' ', '-'])}
+        </option>`;
+      });
+
+      // --- Divider ---
+      html += `<option disabled>──────────</option>`;
+
+      // --- Writing-only sites (optional) ---
+      writingOnlySites.forEach(site => {
+        const name = site.trim().toLowerCase();
+        html += `<option value="${name}">
+          ${capitalize(site)}
+        </option>`;
+      });
+
+      // --- Custom option ---
+      html += `<option value="__custom__">Other (type manually)…</option>`;
+
+      siteSelect.innerHTML = html;
+    });
+}
+
+function initWritingCharacterSelect(form, site) {
+  const charSelect = form.querySelector('select#character');
+  return fetch(`https://opensheet.elk.sh/${sheetID}/Characters`)
+    .then(r => r.json())
+    .then(data => {
+      data.sort((a, b) => (a.Character < b.Character ? -1 : a.Character > b.Character ? 1 : 0));
+      let html = `<option value="">(select)</option>`;
+
+      data.forEach(character => {
+        try {
+          const sites = JSON.parse(character.Sites || '[]');
+          const onThisSite = sites.some(s => (s.site || '').trim().toLowerCase() === site);
+          if (onThisSite) {
+            const name = character.Character.trim().toLowerCase();
+            html += `<option value="${name}">${capitalize(name)}</option>`;
+          }
+        } catch (e) {
+          // ignore bad JSON rows
+        }
+      });
+
+      charSelect.innerHTML = html;
+      charSelect.disabled = false;
+    });
+}
+
+function initWritingPartnerSelect(form, site) {
+  const partnerSelect = form.querySelector('select#partner');
+  return fetch(`https://opensheet.elk.sh/${sheetID}/Partners`)
+    .then(r => r.json())
+    .then(data => {
+      const partners = data
+        .filter(item => (item.Site || '').trim().toLowerCase() === site)
+        .sort((a, b) => (a.Writer < b.Writer ? -1 : a.Writer > b.Writer ? 1 : 0));
+
+      let html = `<option value="">(select)</option>`;
+      partners.forEach(p => {
+        const writer = (p.Writer || '').trim().toLowerCase();
+        if (writer) html += `<option value="${writer}">${capitalize(writer)}</option>`;
+      });
+
+      partnerSelect.innerHTML = html;
+      partnerSelect.disabled = false;
+    });
+}
+
+function initWritingThreadSelect(form, filters) {
+  const threadSelect = form.querySelector('select#thread');
+  const { site, character = '', partner = '' } = filters;
+
+  return fetch(`https://opensheet.elk.sh/${sheetID}/Threads`)
+    .then(r => r.json())
+    .then(data => {
+      let threads = data.filter(t =>
+        (t.Site || '').trim().toLowerCase() === (site || '').trim().toLowerCase() &&
+        (t.Status || '').trim().toLowerCase() !== 'archived'
+      );
+
+      // filter by character (Thread.Character is JSON string)
+      if (character) {
+        threads = threads.filter(t => {
+          try {
+            const c = JSON.parse(t.Character || '{}');
+            return (c.name || '').trim().toLowerCase() === character;
+          } catch {
+            return false;
+          }
+        });
+      }
+
+      // filter by partner (Thread.Featuring is JSON string array)
+      if (partner) {
+        threads = threads.filter(t => {
+          try {
+            const ft = JSON.parse(t.Featuring || '[]');
+            return ft.some(x => (x.writer || '').trim().toLowerCase() === partner);
+          } catch {
+            return false;
+          }
+        });
+      }
+
+      // sort by title
+      threads.sort((a, b) => (a.Title < b.Title ? -1 : a.Title > b.Title ? 1 : 0));
+
+      let html = `<option value="">(select)</option>`;
+      threads.forEach(t => {
+        const title = (t.Title || '').trim().toLowerCase();
+        if (!title) return;
+        // value is display string; you can switch to ThreadID later if you decide
+        html += `<option value="${title}">${capitalize(title, [' ', '-'])}</option>`;
+      });
+
+      threadSelect.innerHTML = html;
+      threadSelect.disabled = false;
+    });
+}
+
 /***** UTILITY *****/
 function openSubmenu(e) {
     let menu = e.dataset.menu;

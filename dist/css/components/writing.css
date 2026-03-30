@@ -1,0 +1,507 @@
+@charset "UTF-8";
+/* =========================================================
+   WRITING PAGE
+========================================================= */
+.writing {
+  display: grid;
+}
+.writing .writing--sorting button, .writing--sorting .writing button, .writing .writing--filter-group label, .writing--filter-group .writing label, .writing .writing--header > button {
+  font-size: 9px;
+  line-height: 1;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text--primary);
+  transition: 0.3s ease-in-out;
+}
+.writing .writing--sorting button::before, .writing--sorting .writing button::before, .writing .writing--filter-group label > span, .writing--filter-group .writing label > span {
+  width: 20px;
+  height: 20px;
+  opacity: 1;
+  border: var(--border--primary);
+  border-radius: var(--radius--standard);
+  transition: 0.3s ease-in-out;
+}
+@media (min-width: 601px) {
+  .writing {
+    grid-template-columns: var(--size--filters-width) calc(100% - var(--size--filters-width));
+  }
+}
+.writing--header {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  height: 61px;
+  padding: var(--space--md);
+  background: var(--bg--quaternary);
+  border-right: var(--border--primary);
+}
+@media (min-width: 601px) {
+  .writing--header {
+    height: 100vh;
+    padding: var(--space--md) 0 var(--space--md) var(--space--md);
+  }
+}
+.writing--header > button {
+  padding: var(--space--sm);
+  font-weight: 700;
+  cursor: pointer;
+  background: none;
+  border: var(--border--primary);
+  border-radius: var(--radius--standard);
+}
+.writing--header > button:hover {
+  color: var(--text--secondary);
+  background: var(--accent);
+}
+.writing--content {
+  overflow: auto;
+  padding: var(--space--md);
+}
+@media (min-width: 601px) {
+  .writing--content {
+    padding: var(--space--lg);
+  }
+}
+.writing--filters {
+  height: 100%;
+}
+.writing--filters-inner {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space--xs);
+  height: 100%;
+  padding-right: var(--space--md);
+  overflow: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--accent) transparent;
+}
+.writing--filters-inner > input {
+  width: 100%;
+  padding: var(--space--xs) var(--space--sm);
+  font-size: 0.5rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--text--primary);
+  background: var(--bg--primary);
+  border: none;
+  border-left: var(--border--primary);
+  outline: none;
+  transition: 0.3s ease-in-out;
+}
+.writing--filters-inner > input:focus {
+  color: var(--text--secondary);
+  border-left-color: var(--accent);
+}
+.writing--filters-inner .filter--parent > button {
+  width: 100%;
+  padding: var(--space--xs) var(--space--sm);
+  font-size: 0.5rem;
+  letter-spacing: 0.2em;
+  text-align: left;
+  text-transform: uppercase;
+  color: var(--text--primary);
+  cursor: pointer;
+  background: var(--bg--primary);
+  border: none;
+  border-left: var(--border--primary);
+  outline: none;
+  transition: 0.3s ease-in-out;
+}
+.writing--filters-inner .filter--parent.is-active > button {
+  color: var(--text--secondary);
+  border-left-color: var(--accent);
+}
+.writing--filters-inner .filter--parent.is-active .writing--filter-dropdown {
+  display: block;
+}
+.writing--filters-inner .filter--parent.is-active .writing--sorting {
+  display: flex;
+}
+.writing--filter-dropdown {
+  display: none;
+}
+.writing--filter-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space--sm);
+  padding: var(--space--sm);
+}
+.writing--filter-group label {
+  display: flex;
+  align-items: center;
+  gap: var(--space--sm);
+  cursor: pointer;
+}
+.writing--filter-group label:hover {
+  color: var(--text--secondary);
+}
+.writing--filter-group label > span input {
+  display: none;
+}
+.writing--filter-group label:not(.is-checked):hover > span {
+  opacity: 0.5;
+  background: var(--accent);
+  border-color: var(--accent);
+}
+.writing--filter-group label.is-checked {
+  color: var(--text--secondary);
+}
+.writing--filter-group label.is-checked > span {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+.writing--sorting {
+  display: none;
+  flex-direction: column;
+  gap: var(--space--sm);
+  padding: var(--space--sm);
+}
+.writing--sorting button {
+  display: flex;
+  align-items: center;
+  gap: var(--space--sm);
+  font-weight: 700;
+  cursor: pointer;
+  background: none;
+  border: none;
+}
+.writing--sorting button:hover {
+  color: var(--text--secondary);
+}
+.writing--sorting button::before {
+  content: "";
+}
+.writing--sorting button:not(.is-checked):hover::before {
+  opacity: 0.5;
+  background: var(--accent);
+  border-color: var(--accent);
+}
+.writing--sorting button.is-checked {
+  color: var(--text--secondary);
+}
+.writing--sorting button.is-checked::before {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+/* =========================================================
+   COLLAPSIBLE MINI ENTRY FORM
+========================================================= */
+.form.writing-mini {
+  display: block;
+  width: max-content;
+  max-width: 100%;
+  margin: 0 auto var(--space--lg);
+  padding: 0;
+  background: none;
+  border: 0;
+}
+.form.writing-mini > details.form-collapsible {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+}
+.form.writing-mini summary,
+.form.writing-mini details > * {
+  box-sizing: border-box;
+}
+.form.writing-mini .form-collapsible {
+  display: block;
+  width: 100%;
+  background: var(--bg--tertiary);
+  border: var(--border--primary);
+}
+.form.writing-mini .form-collapsible[open] .form-collapsible__summary::after {
+  transform: rotate(-135deg);
+}
+.form.writing-mini .form-collapsible__summary {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space--md);
+  padding: var(--space--md) var(--space--lg);
+  cursor: pointer;
+  list-style: none;
+  user-select: none;
+  border-bottom: var(--border--primary);
+}
+.form.writing-mini .form-collapsible__summary::-webkit-details-marker {
+  display: none;
+}
+.form.writing-mini .form-collapsible__summary .title {
+  font-size: 1.1rem;
+  font-family: var(--font--serif);
+  font-weight: 900;
+}
+.form.writing-mini .form-collapsible__summary .meta {
+  font-size: 0.55rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  opacity: 0.6;
+}
+.form.writing-mini .form-collapsible__summary::after {
+  content: "";
+  width: 8px;
+  height: 8px;
+  opacity: 0.7;
+  border-right: 2px solid var(--text--primary);
+  border-bottom: 2px solid var(--text--primary);
+  transform: rotate(45deg);
+  transition: 0.2s ease-in-out;
+}
+.form.writing-mini .form-collapsible__body {
+  min-width: 0;
+  padding: var(--space--lg);
+}
+.form.writing-mini form[data-form=add-writing] {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space--md);
+  width: max-content;
+  max-width: 100%;
+  min-width: 0;
+}
+.form.writing-mini label {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+.form.writing-mini label > span {
+  position: relative;
+}
+.form.writing-mini label > span::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: var(--space--sm);
+  width: 8px;
+  height: 8px;
+  opacity: 0.7;
+  pointer-events: none;
+  border-right: 2px solid var(--text--primary);
+  border-bottom: 2px solid var(--text--primary);
+  transform: translateY(-60%) rotate(45deg);
+}
+.form.writing-mini small {
+  margin-bottom: 4px;
+  font-size: 0.55rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  opacity: 0.6;
+}
+.form.writing-mini input,
+.form.writing-mini textarea,
+.form.writing-mini select {
+  display: block;
+  width: 100%;
+  min-width: 0;
+  padding: var(--space--xs) var(--space--sm);
+  font-size: 0.8rem;
+  color: var(--text--primary);
+  background: var(--bg--primary);
+  border: 0;
+  border-left: var(--border--secondary);
+  outline: none;
+}
+.form.writing-mini input:focus,
+.form.writing-mini textarea:focus,
+.form.writing-mini select:focus {
+  border-left-color: var(--accent);
+}
+.form.writing-mini input,
+.form.writing-mini select {
+  height: 34px;
+}
+.form.writing-mini textarea {
+  height: 80px;
+  resize: vertical;
+  box-sizing: border-box;
+}
+.form.writing-mini select {
+  line-height: 1;
+  padding-right: calc(var(--space--sm) + 18px);
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+.form.writing-mini select:hover {
+  border-left-color: var(--accent);
+}
+.form.writing-mini select:invalid {
+  color: rgba(255, 255, 255, 0.55);
+}
+.form.writing-mini .full {
+  grid-column: 1/-1;
+  width: 100%;
+}
+.form.writing-mini .row-compact {
+  display: grid;
+  width: max-content;
+  min-width: 0;
+  gap: var(--space--md);
+  grid-template-columns: repeat(4, minmax(180px, 1fr));
+}
+.form.writing-mini .row-compact > * {
+  min-width: 0;
+}
+@media (max-width: 900px) {
+  .form.writing-mini .row-compact {
+    width: 100%;
+    grid-template-columns: repeat(2, minmax(180px, 1fr));
+  }
+}
+@media (max-width: 600px) {
+  .form.writing-mini .row-compact {
+    grid-template-columns: minmax(180px, 1fr);
+  }
+}
+
+.custom-site-wrap {
+  display: none;
+  flex-direction: column;
+  gap: 6px;
+}
+.custom-site-wrap input {
+  width: 100%;
+}
+
+.site-back-link {
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  opacity: 0.6;
+}
+
+/* =========================================================
+   WRITING CARD GRID
+========================================================= */
+#writing--rows {
+  display: grid;
+  gap: 28px;
+  grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
+}
+#writing--rows .writing-entry {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 32px;
+  padding: 28px 32px;
+  font-size: 8px;
+  font-family: var(--font--body);
+  text-transform: uppercase;
+  background: var(--dash-accent);
+  border-left: 5px solid var(--accent);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+#writing--rows .writing-entry:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+}
+#writing--rows .writing-entry__meta {
+  display: grid;
+  grid-template-columns: repeat(2, auto);
+  gap: 6px 24px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+#writing--rows .writing-entry__meta > div {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+}
+#writing--rows .writing-entry__meta span {
+  opacity: 0.6;
+}
+#writing--rows .writing-entry__title {
+  max-width: 100%;
+  margin: 6px;
+  overflow: hidden;
+  font-size: 24px;
+  font-family: var(--font--serif);
+  text-overflow: ellipsis;
+  text-transform: lowercase;
+  white-space: nowrap;
+  cursor: help;
+}
+#writing--rows .writing-entry__details {
+  display: grid;
+}
+#writing--rows .writing-entry__details span {
+  margin-right: 6px;
+  opacity: 0.6;
+}
+#writing--rows .writing-entry__right {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding-left: 24px;
+  border-left: 1px solid rgba(255, 255, 255, 0.25);
+}
+#writing--rows .writing-entry__words {
+  font-size: 28px;
+  line-height: 1;
+  font-family: var(--font--serif);
+  text-align: right;
+  white-space: nowrap;
+}
+#writing--rows .writing-entry__words span {
+  display: block;
+  font-size: 11px;
+  font-family: var(--font--body);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  opacity: 0.6;
+}
+#writing--rows .writing-entry__notes {
+  font-size: 13px;
+  line-height: 1.6;
+  opacity: 0.8;
+}
+#writing--rows .writing-entry__mobile-meta {
+  display: none;
+}
+@media (max-width: 900px) {
+  #writing--rows {
+    grid-template-columns: 1fr;
+  }
+}
+@media (max-width: 700px) {
+  #writing--rows {
+    gap: 16px;
+    grid-template-columns: 1fr;
+  }
+  #writing--rows .writing-entry {
+    grid-template-columns: 1fr;
+    gap: 10px;
+    padding: 18px 20px;
+  }
+  #writing--rows .writing-entry__meta, #writing--rows .writing-entry__details, #writing--rows .writing-entry__notes {
+    display: none;
+  }
+  #writing--rows .writing-entry__mobile-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 10px;
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    opacity: 0.75;
+  }
+  #writing--rows .writing-entry__mobile-meta span:not(:last-child)::after {
+    content: "•";
+    margin-left: 10px;
+    opacity: 0.5;
+  }
+  #writing--rows .writing-entry__right {
+    padding: 0;
+    border: 0;
+  }
+  #writing--rows .writing-entry__words {
+    font-size: 22px;
+    text-align: left;
+  }
+  #writing--rows .writing-entry__title {
+    margin: 0;
+    font-size: 20px;
+  }
+}

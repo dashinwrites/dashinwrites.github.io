@@ -1,0 +1,58 @@
+<div class="writing--header filters--wrap">
+  <button onClick="toggleFilters(this)" class="mobileOnly">View Filters</button>
+
+  <div class="filters--collapsible">
+    <div class="writing--filters">
+      <div class="writing--filters-inner">
+
+        <!-- Year -->
+        <div class="writing--filter filter--parent is-active">
+          <button onClick="openFilters(this)">Year</button>
+          <div class="writing--filter-dropdown">
+            <div class="writing--filter-group" data-filter-group="year" id="hm-years">
+              <!-- injected -->
+              <label class="all is-checked"><span><input type="checkbox" class="all" value="" checked></span><b>all</b></label>
+            </div>
+          </div>
+        </div>
+
+        <!-- Metric -->
+        <div class="writing--filter filter--parent">
+          <button onClick="openFilters(this)">Metric</button>
+          <div class="writing--filter-dropdown">
+            <div class="writing--filter-group" data-filter-group="metric" id="hm-metric">
+              <label class="is-checked"><span><input type="checkbox" value="words" checked></span><b>words</b></label>
+              <label><span><input type="checkbox" value="posts"></span><b>posts</b></label>
+            </div>
+          </div>
+        </div>
+
+        <!-- Category -->
+        <div class="writing--filter filter--parent">
+          <button onClick="openFilters(this)">Category</button>
+          <div class="writing--filter-dropdown">
+            <div class="writing--filter-group" data-filter-group="category" id="hm-category">
+              <label class="all is-checked"><span><input type="checkbox" class="all" value="" checked></span><b>all</b></label>
+              <!-- optional: if you want fixed categories, keep your rp/dnd/hobby labels here
+                   OR we can dynamically inject from sheet like your character/partner/site menus -->
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="writing--content">
+  <div class="writing-heatmap">
+    <div class="writing-heatmap__top">
+      <h2 class="writing-heatmap__title">Heatmap</h2>
+      <p class="writing-heatmap__meta" id="hm-summary"></p>
+    </div>
+
+    <section class="heatmap">
+        <div class="heatmap--months" id="heatmap-months"></div>
+    </section>
+  </div>
+</div>
