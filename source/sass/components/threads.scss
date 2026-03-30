@@ -326,11 +326,6 @@
     &:has(.status--mine),
     &:has([data-status="mine"]) {
         border-color: var(--bg-accent);
-        background-color: var(--dash-accent);
-
-        .thread--buttons button {
-            border: 1px solid var(--)
-        }
     }
 
     &.status--mine,

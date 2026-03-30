@@ -22,11 +22,11 @@ body.theme--light .mode--light {
 main {
   margin-left: var(--size--menu-width);
 }
-main:not(:has(.threads)) {
+main:not(:has(.threads)):not(:has(.characters)):not(:has(.records)) {
   padding: var(--space--lg) var(--space--xs);
 }
 @media (min-width: 601px) {
-  main:not(:has(.threads)) {
+  main:not(:has(.threads)):not(:has(.characters)):not(:has(.records)) {
     padding: var(--space--lg);
   }
 }
@@ -78,8 +78,12 @@ body.index h2 {
 }
 body.index .grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
   gap: var(--space--md);
+}
+@media (min-width: 1025px) {
+  body.index .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
 .site {
