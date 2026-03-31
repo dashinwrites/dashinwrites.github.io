@@ -47,35 +47,45 @@ function initMenus() {
             }
         });
 
-        const body = document.querySelector('body');
-        const prefix = body?.classList.contains('index') ? '.' : '..';
-
-        // cache menus ONCE
-        const menus = {
-        sites: document.querySelector('.subnav[data-menu="sites"] .subnav--inner'),
-        characters: document.querySelector('.subnav[data-menu="characters"] .subnav--inner'),
-        threads: document.querySelector('.subnav[data-menu="threads"] .subnav--inner'),
-        stats: document.querySelector('.subnav[data-menu="stats"] .subnav--inner'),
-        writing: document.querySelector('.subnav[data-menu="writing"] .subnav--inner'),
-        };
-
         data.forEach((site, i) => {
-        const showHeader = i === 0 || site.Status !== data[i - 1].Status;
-
-        const links = {
-            sites: `<a href="${site.URL}" target="_blank" class="${site.Status}">${site.Site}</a>`,
-            characters: `<a href="${prefix}/characters/${site.ID}.html" class="${site.Status}">${site.Site}</a>`,
-            threads: `<a href="${prefix}/threads/${site.ID}.html" class="${site.Status}">${site.Site}</a>`,
-            stats: `<a href="${prefix}/stats/${site.ID}.html" class="${site.Status}">${site.Site}</a>`,
-            writing: `<a href="${prefix}/writing/${site.ID}.html" class="${site.Status}">${site.Site}</a>`,
-        };
-
-        Object.entries(menus).forEach(([key, menu]) => {
-            if (!menu) return; // 🔑 prevents crash
-
-            const header = showHeader ? `<strong>${site.Status}</strong>` : '';
-            menu.insertAdjacentHTML('beforeend', `${header}${links[key]}`);
-        });
+            let prefix = `..`;
+            if (document.querySelector('body').classList.contains('index')) {
+                prefix = '.';
+            }
+            if(i === 0) {
+                document.querySelector('.subnav[data-menu="sites"] .subnav--inner')
+                    .insertAdjacentHTML('beforeend', `<strong>${site.Status}</strong><a href="${site.URL}" target="_blank" class="${site.Status}">${site.Site}</a>`);
+                document.querySelector('.subnav[data-menu="characters"] .subnav--inner')
+                    .insertAdjacentHTML('beforeend', `<strong>${site.Status}</strong><a href="${prefix}/characters/${site.ID}.html" class="${site.Status}">${site.Site}</a>`);
+                document.querySelector('.subnav[data-menu="threads"] .subnav--inner')
+                    .insertAdjacentHTML('beforeend', `<strong>${site.Status}</strong><a href="${prefix}/threads/${site.ID}.html" class="${site.Status}">${site.Site}</a>`);
+                document.querySelector('.subnav[data-menu="stats"] .subnav--inner')
+                    .insertAdjacentHTML('beforeend', `<strong>${site.Status}</strong><a href="${prefix}/stats/${site.ID}.html" class="${site.Status}">${site.Site}</a>`);
+                document.querySelector('.subnav[data-menu="writing"] .subnav--inner')
+                    .insertAdjacentHTML('beforeend', `<strong>${site.Status}</strong><a href="${prefix}/writing/${site.ID}.html" class="${site.Status}">${site.Site}</a>`);
+            } else if(site.Status !== data[i - 1].Status) {
+                document.querySelector('.subnav[data-menu="sites"] .subnav--inner')
+                    .insertAdjacentHTML('beforeend', `<strong>${site.Status}</strong><a href="${site.URL}" target="_blank" class="${site.Status}">${site.Site}</a>`);
+                document.querySelector('.subnav[data-menu="characters"] .subnav--inner')
+                    .insertAdjacentHTML('beforeend', `<strong>${site.Status}</strong><a href="${prefix}/characters/${site.ID}.html" class="${site.Status}">${site.Site}</a>`);
+                document.querySelector('.subnav[data-menu="threads"] .subnav--inner')
+                    .insertAdjacentHTML('beforeend', `<strong>${site.Status}</strong><a href="${prefix}/threads/${site.ID}.html" class="${site.Status}">${site.Site}</a>`);
+                document.querySelector('.subnav[data-menu="stats"] .subnav--inner')
+                    .insertAdjacentHTML('beforeend', `<strong>${site.Status}</strong><a href="${prefix}/stats/${site.ID}.html" class="${site.Status}">${site.Site}</a>`);
+                document.querySelector('.subnav[data-menu="writing"] .subnav--inner')
+                    .insertAdjacentHTML('beforeend', `<strong>${site.Status}</strong><a href="${prefix}/writing/${site.ID}.html" class="${site.Status}">${site.Site}</a>`);
+            } else {
+                document.querySelector('.subnav[data-menu="sites"] .subnav--inner')
+                    .insertAdjacentHTML('beforeend', `<a href="${site.URL}" target="_blank" class="${site.Status}">${site.Site}</a>`);
+                document.querySelector('.subnav[data-menu="characters"] .subnav--inner')
+                    .insertAdjacentHTML('beforeend', `<a href="${prefix}/characters/${site.ID}.html" class="${site.Status}">${site.Site}</a>`);
+                document.querySelector('.subnav[data-menu="threads"] .subnav--inner')
+                    .insertAdjacentHTML('beforeend', `<a href="${prefix}/threads/${site.ID}.html" class="${site.Status}">${site.Site}</a>`);
+                document.querySelector('.subnav[data-menu="stats"] .subnav--inner')
+                    .insertAdjacentHTML('beforeend', `<a href="${prefix}/stats/${site.ID}.html" class="${site.Status}">${site.Site}</a>`);
+                document.querySelector('.subnav[data-menu="writing"] .subnav--inner')
+                    .insertAdjacentHTML('beforeend', `<a href="${prefix}/writing/${site.ID}.html" class="${site.Status}">${site.Site}</a>`);
+            }
         });
     }).then(() => {
         //add partner form ONLY needs this so run this in that instance instead of in-situ
@@ -689,266 +699,6 @@ function initThreadTags(addTo, existingTags = [], removeTags = false) {
     addTo.innerHTML = html;
 }
 
-function initWritingDropdowns() {
-  const form = document.querySelector('form[data-form="add-writing"], form[data-form="edit-writing"]');
-  if (!form) return;
-
-  const siteSelect = form.querySelector('select#site');
-  const charSelect = form.querySelector('select#character');
-  const partnerSelect = form.querySelector('select#partner');
-  const threadSelect = form.querySelector('select#thread');
-
-  if (!siteSelect || !charSelect || !partnerSelect || !threadSelect) return;
-
-  // 1) populate sites
-  initWritingSiteSelect(siteSelect);
-
-  let typedSite = '';
-
-    document.addEventListener('keypress', (e) => {
-
-        if (document.activeElement !== siteSelect) return;
-
-        if (e.key.length === 1 && !e.ctrlKey && !e.metaKey && !e.altKey) {
-
-            typedSite += e.key;
-
-            activateCustomSite(siteSelect, typedSite);
-
-            e.preventDefault();
-        }
-
-    });
-
-  // 2) cascade: site -> character/partner/thread
-  siteSelect.addEventListener('change', async () => {
-    typedSite = '';
-    if (siteSelect.value === '__custom__') {
-
-        activateCustomSite(siteSelect);
-
-        resetSelect(charSelect, '(not applicable)', true);
-        resetSelect(partnerSelect, '(not applicable)', true);
-        resetSelect(threadSelect, '(not applicable)', true);
-
-        return;
-    }
-
-    const site = siteSelect.options[siteSelect.selectedIndex].innerText.trim().toLowerCase();
-
-    resetSelect(charSelect, site ? '(select)' : '(select site first)', !site);
-    resetSelect(partnerSelect, site ? '(select)' : '(select site first)', !site);
-    resetSelect(threadSelect, site ? '(select)' : '(select site first)', !site);
-
-    if (!site) return;
-
-    await Promise.all([
-      initWritingCharacterSelect(form, site),
-      initWritingPartnerSelect(form, site),
-      initWritingThreadSelect(form, { site })
-    ]);
-  });
-
-  // 3) cascade: character -> thread
-  charSelect.addEventListener('change', async () => {
-    const site = siteSelect.options[siteSelect.selectedIndex].innerText.trim().toLowerCase();
-    const character = charSelect.options[charSelect.selectedIndex].innerText.trim().toLowerCase();
-    const partner = partnerSelect.options[partnerSelect.selectedIndex]?.innerText.trim().toLowerCase() || '';
-    await initWritingThreadSelect(form, { site, character, partner });
-  });
-
-  // 4) cascade: partner -> thread
-  partnerSelect.addEventListener('change', async () => {
-    const site = siteSelect.options[siteSelect.selectedIndex].innerText.trim().toLowerCase();
-    const partner = partnerSelect.options[partnerSelect.selectedIndex].innerText.trim().toLowerCase();
-    const character = charSelect.options[charSelect.selectedIndex]?.innerText.trim().toLowerCase() || '';
-    await initWritingThreadSelect(form, { site, character, partner });
-  });
-}
-
-function activateCustomSite(siteSelect, initialValue = '') {
-
-  const wrapper = siteSelect.parentElement;
-
-  let customWrap = wrapper.querySelector('.custom-site-wrap');
-
-  if (!customWrap) {
-    customWrap = document.createElement('div');
-    customWrap.className = 'custom-site-wrap';
-
-    customWrap.innerHTML = `
-      <input type="text" class="custom-site-input" placeholder="Enter custom site">
-      <a href="#" class="site-back-link">← back to list</a>
-    `;
-
-    wrapper.appendChild(customWrap);
-
-    const back = customWrap.querySelector('.site-back-link');
-
-    back.addEventListener('click', (e) => {
-      e.preventDefault();
-
-      customWrap.style.display = 'none';
-      siteSelect.style.display = '';
-
-      siteSelect.value = '';
-    });
-  }
-
-  const input = customWrap.querySelector('input');
-
-  siteSelect.style.display = 'none';
-  customWrap.style.display = 'flex';
-
-  input.value = initialValue;
-  input.focus();
-}
-
-const writingOnlySites = [
-  'Dungeons & Dragons',
-  '1x1',
-  'Fiction'
-];
-
-function resetSelect(selectEl, placeholderText, disabled) {
-  if (!selectEl) return;
-  selectEl.innerHTML = `<option value="">${placeholderText}</option>`;
-  selectEl.disabled = !!disabled;
-}
-
-function initWritingSiteSelect(siteSelect) {
-  fetch(`https://opensheet.elk.sh/${sheetID}/Sites`)
-    .then(r => r.json())
-    .then(data => {
-
-      data.sort((a, b) => a.Site.localeCompare(b.Site));
-
-      let html = `<option value="" disabled selected>(select)</option>`;
-
-      // --- Tracked sites ---
-      data.forEach(site => {
-        const name = site.Site.trim().toLowerCase();
-        html += `<option value="${name}">
-          ${capitalize(site.Site, [' ', '-'])}
-        </option>`;
-      });
-
-      // --- Divider ---
-      html += `<option disabled>──────────</option>`;
-
-      // --- Writing-only sites (optional) ---
-      writingOnlySites.forEach(site => {
-        const name = site.trim().toLowerCase();
-        html += `<option value="${name}">
-          ${capitalize(site)}
-        </option>`;
-      });
-
-      // --- Custom option ---
-      html += `<option value="__custom__">Other (type manually)…</option>`;
-
-      siteSelect.innerHTML = html;
-    });
-}
-
-function initWritingCharacterSelect(form, site) {
-  const charSelect = form.querySelector('select#character');
-  return fetch(`https://opensheet.elk.sh/${sheetID}/Characters`)
-    .then(r => r.json())
-    .then(data => {
-      data.sort((a, b) => (a.Character < b.Character ? -1 : a.Character > b.Character ? 1 : 0));
-      let html = `<option value="">(select)</option>`;
-
-      data.forEach(character => {
-        try {
-          const sites = JSON.parse(character.Sites || '[]');
-          const onThisSite = sites.some(s => (s.site || '').trim().toLowerCase() === site);
-          if (onThisSite) {
-            const name = character.Character.trim().toLowerCase();
-            html += `<option value="${name}">${capitalize(name)}</option>`;
-          }
-        } catch (e) {
-          // ignore bad JSON rows
-        }
-      });
-
-      charSelect.innerHTML = html;
-      charSelect.disabled = false;
-    });
-}
-
-function initWritingPartnerSelect(form, site) {
-  const partnerSelect = form.querySelector('select#partner');
-  return fetch(`https://opensheet.elk.sh/${sheetID}/Partners`)
-    .then(r => r.json())
-    .then(data => {
-      const partners = data
-        .filter(item => (item.Site || '').trim().toLowerCase() === site)
-        .sort((a, b) => (a.Writer < b.Writer ? -1 : a.Writer > b.Writer ? 1 : 0));
-
-      let html = `<option value="">(select)</option>`;
-      partners.forEach(p => {
-        const writer = (p.Writer || '').trim().toLowerCase();
-        if (writer) html += `<option value="${writer}">${capitalize(writer)}</option>`;
-      });
-
-      partnerSelect.innerHTML = html;
-      partnerSelect.disabled = false;
-    });
-}
-
-function initWritingThreadSelect(form, filters) {
-  const threadSelect = form.querySelector('select#thread');
-  const { site, character = '', partner = '' } = filters;
-
-  return fetch(`https://opensheet.elk.sh/${sheetID}/Threads`)
-    .then(r => r.json())
-    .then(data => {
-      let threads = data.filter(t =>
-        (t.Site || '').trim().toLowerCase() === (site || '').trim().toLowerCase() &&
-        (t.Status || '').trim().toLowerCase() !== 'archived'
-      );
-
-      // filter by character (Thread.Character is JSON string)
-      if (character) {
-        threads = threads.filter(t => {
-          try {
-            const c = JSON.parse(t.Character || '{}');
-            return (c.name || '').trim().toLowerCase() === character;
-          } catch {
-            return false;
-          }
-        });
-      }
-
-      // filter by partner (Thread.Featuring is JSON string array)
-      if (partner) {
-        threads = threads.filter(t => {
-          try {
-            const ft = JSON.parse(t.Featuring || '[]');
-            return ft.some(x => (x.writer || '').trim().toLowerCase() === partner);
-          } catch {
-            return false;
-          }
-        });
-      }
-
-      // sort by title
-      threads.sort((a, b) => (a.Title < b.Title ? -1 : a.Title > b.Title ? 1 : 0));
-
-      let html = `<option value="">(select)</option>`;
-      threads.forEach(t => {
-        const title = (t.Title || '').trim().toLowerCase();
-        if (!title) return;
-        // value is display string; you can switch to ThreadID later if you decide
-        html += `<option value="${title}">${capitalize(title, [' ', '-'])}</option>`;
-      });
-
-      threadSelect.innerHTML = html;
-      threadSelect.disabled = false;
-    });
-}
-
 /***** UTILITY *****/
 function openSubmenu(e) {
     let menu = e.dataset.menu;
@@ -1168,7 +918,7 @@ function addRow(e) {
         initPartnerSelect(e, storedPartners, 'initial', '#characterSite', true);
     } else if(e.closest('.multi-buttons').dataset.rowType === 'add-info') {
         e.closest('.adjustable').querySelector('.rows').insertAdjacentHTML('beforeend', formatInfoRow(e));
-        } else if(e.closest('.multi-buttons').dataset.rowType === 'add-appinfo') {
+    } else if(e.closest('.multi-buttons').dataset.rowType === 'add-appinfo') {
         e.closest('.adjustable').querySelector('.rows').insertAdjacentHTML('beforeend', formatAppInfoRow(e));
     } else if(e.closest('.multi-buttons').dataset.rowType === 'records') {
         e.closest('.adjustable').querySelector('.rows').insertAdjacentHTML('beforeend', formatRecordsRow(e));
@@ -1652,7 +1402,6 @@ function submitApp(form) {
     if(existing.length > 0) {
         data.SubmissionType = 'replace-longform';
     }
-    console.log(data);
 
     sendAjax(form, data, successMessage);
 }
@@ -1968,10 +1717,8 @@ function updateCharacter(form, data) {
 function updateThread(form, data) {
     let currentTitle = form.querySelector('#title').options[form.querySelector('#title').selectedIndex].innerText.trim().toLowerCase();
     let site = form.querySelector('#site').options[form.querySelector('#site').selectedIndex].innerText.trim().toLowerCase();
-
     console.log(currentTitle);
     console.log(site);
-    
     let existing = data.filter(item => item.Title === currentTitle && item.Site === site)[0];
     let selected = Array.from(form.querySelectorAll('.updates input:checked')).map(item => item.value);
 
@@ -2047,7 +1794,6 @@ function addRecord(form) {
         sendAjaxSync(item, form, data.length, i);
     });
 }
-
 function countWords(e) {
     let form = e.closest('form');
     let content = form.querySelector('textarea');
@@ -2700,7 +2446,7 @@ function prepTags(data, site) {
     
     document.querySelector('.characters--filters-inner').insertAdjacentHTML('beforeend', html);
 }
-function prepCharacters(data, site, longform = []) {
+function prepCharacters(data, site, longform) {
     data.forEach((item, i) => {
         data[i].Sites = JSON.parse(item.Sites);
         data[i].Links = JSON.parse(item.Links);
@@ -2928,6 +2674,7 @@ function formatSingleInstance(character, sites) {
             }
         }
     }
+    
     
     return `<div class="character lux-track grid-item has-modal ${tagsString} ${character.character.split(' ')[0]}">
         <div class="character--wrap">
@@ -3663,30 +3410,17 @@ function initRecords(sites, records, init = false) {
         else return 0;
     });
 
-    const root = document.querySelector('.records');
-    if (!root) return;
-
-    const getData = (selector, key, fallback = null) => {
-    const el = root.querySelector(selector);
-    return el?.dataset?.[key] ?? fallback;
-    };
-
+    //get active filters
     let selectedFilters = {
-    year: (() => {
-        const year = getData('.filter--year .is-active', 'year', 'all');
-        return year === 'all' ? 'all' : parseInt(year);
-        })(),
-
-        month: getData('.filter--month .is-active', 'month'),
-        character: getData('.filter--characters .is-active', 'character'),
-        ship: getData('.filter--ships .is-active', 'ship'),
-
-        site: getData('.filter--sites .is-active', 'site', sites?.[0]?.Site),
-
-        type: getData('.filter--type .is-active', 'type'),
-        partner: getData('.filter--partners .is-active', 'partner'),
-        metric: getData('.filter--metric .is-active', 'metric'),
-    };
+        year: document.querySelector('.records .filter--year .is-active').dataset.year === 'all' ? document.querySelector('.records .filter--year .is-active').dataset.year : parseInt(document.querySelector('.records .filter--year .is-active').dataset.year),
+        month: document.querySelector('.records .filter--month .is-active').dataset.month,
+        character: document.querySelector('.records .filter--characters .is-active').dataset.character,
+        ship: document.querySelector('.records .filter--ships .is-active').dataset.ship,
+        site: document.querySelector('.records .filter--sites') ? document.querySelector('.records .filter--sites .is-active').dataset.site : sites[0].Site,
+        type: document.querySelector('.records .filter--type .is-active').dataset.type,
+        partner: document.querySelector('.records .filter--partners .is-active').dataset.partner,
+        metric: document.querySelector('.records .filter--metric .is-active').dataset.metric,
+    }
 
     //filter records and threads by the relevant data
     let filteredRecords = records.filter(item => 
