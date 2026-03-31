@@ -89,6 +89,7 @@
 </nav>
 <nav class="subnav" data-menu="admin">
     <div class="subnav--inner">
+        <a href="../admin/count-words.html">Count Words</a>
         <strong>Add New</strong>
         <a href="../admin/new-site.html">Add Site</a>
         <a href="../admin/new-tag.html">Add Tags</a>
@@ -204,7 +205,7 @@
     <div class="records--list"><div class="records--spinner"><i class="fa-solid fa-cog fa-spin"></i></div></div>
 </div>
 <script>
-    let siteName = 'dungeons & dragons';
+    let siteName = 'retrospect';
     let siteObject, staticThreads, staticRecords;
 
     fetch(`https://opensheet.elk.sh/${sheetID}/Sites`)
