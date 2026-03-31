@@ -2700,7 +2700,7 @@ function prepTags(data, site) {
     
     document.querySelector('.characters--filters-inner').insertAdjacentHTML('beforeend', html);
 }
-function prepCharacters(data, site, longform) {
+function prepCharacters(data, site, longform = []) {
     data.forEach((item, i) => {
         data[i].Sites = JSON.parse(item.Sites);
         data[i].Links = JSON.parse(item.Links);
