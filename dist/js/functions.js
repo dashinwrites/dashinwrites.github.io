@@ -2319,10 +2319,7 @@ function markComplete(e) {
         SubmissionType: 'thread-status',
         ThreadID: e.dataset.id,
         Site: e.dataset.site,
-        Character: JSON.stringify({
-            name: character,
-            id: characterID,
-        }),
+        Character: e.dataset.character,
         Status: 'complete'
     }, thread, null, 'complete');
 }
