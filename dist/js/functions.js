@@ -3030,7 +3030,6 @@ function recordReplySend(e) {
   sendInlineRecordAjax(data, container);
 }
 function markComplete(e) {
-<<<<<<< HEAD
     e.dataset.status = 'complete';
     let thread = e.parentNode.parentNode.parentNode;
     e.classList.add('is-updating');
@@ -3042,27 +3041,6 @@ function markComplete(e) {
         Character: e.dataset.character,
         Status: 'complete'
     }, thread, null, 'complete');
-=======
-  e.dataset.status = "complete";
-  let thread = e.parentNode.parentNode.parentNode;
-  e.classList.add("is-updating");
-  e.setAttribute("disabled", true);
-  sendThreadAjax(
-    {
-      SubmissionType: "thread-status",
-      ThreadID: e.dataset.id,
-      Site: e.dataset.site,
-      Character: JSON.stringify({
-        name: character,
-        id: characterID,
-      }),
-      Status: "complete",
-    },
-    thread,
-    null,
-    "complete",
-  );
->>>>>>> 430df730d3e24fb93e53bb34a63f1221dc16eccf
 }
 function reactivateThread(e) {
   e.dataset.status = "mine";

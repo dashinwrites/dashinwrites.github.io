@@ -5,13 +5,35 @@
   --size--menu-width: 50px;
   --size--submenu-width: 200px;
   --size--filters-width: 200px;
+}
+@media (min-width: 601px) {
+  :root {
+    --size--menu-width: 60px;
+    --size--submenu-width: 300px;
+  }
+}
+@media (min-width: 769px) {
+  :root {
+    --size--menu-width: 100px;
+    --size--submenu-width: 300px;
+    --size--filters-width: 225px;
+  }
+}
+@media (min-width: 1025px) {
+  :root {
+    --size--menu-width: 100px;
+    --size--submenu-width: 300px;
+    --size--filters-width: 275px;
+  }
+}
+:root {
   --space--xs: 5px;
   --space--sm: 10px;
   --space--md: 15px;
   --space--lg: 30px;
   --space--xl: 60px;
-  --font--body: "Nunito Sans", sans-serif;
-  --font--serif: "Playfair", serif;
+  --font--body: 'Nunito Sans', sans-serif;
+  --font--serif: 'Playfair', serif;
   --radius-standard: 5px;
   --accent: rgb(167, 86, 86);
   --bg-accent: rgb(167, 86, 86);
@@ -33,26 +55,6 @@
   --text--primary: #d3d3d3;
   --text--secondary: #f8f8f8;
   --text--on-accent: #f8f8f8;
-}
-@media (min-width: 601px) {
-  :root {
-    --size--menu-width: 60px;
-    --size--submenu-width: 300px;
-  }
-}
-@media (min-width: 769px) {
-  :root {
-    --size--menu-width: 100px;
-    --size--submenu-width: 300px;
-    --size--filters-width: 225px;
-  }
-}
-@media (min-width: 1025px) {
-  :root {
-    --size--menu-width: 100px;
-    --size--submenu-width: 300px;
-    --size--filters-width: 275px;
-  }
 }
 
 body.theme--light {
